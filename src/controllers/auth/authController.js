@@ -11,6 +11,7 @@ module.exports = {
         console.log("Registrando organização e usuário administrador")
         const { empresa, email, name, phone, password } = req.body
         try {
+            console.log("dbconfig1",dbConfig)
             const connection = await mysql.createConnection(dbConfig);
             const gerarHashOrg = (dados) => {
                 const dadosComTimestamp = dados + Date.now().toString();

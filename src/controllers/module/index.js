@@ -8,7 +8,7 @@ module.exports = {
             const moduleName = req.body.name
             if (!orgId || !moduleName) {
                 return res.status(400).json({ error: "Missing orgId or moduleName in request" });
-            }
+            } 
             const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
             const query = `CREATE TABLE IF NOT EXISTS ${moduleName} (
                 id VARCHAR(19) PRIMARY KEY,

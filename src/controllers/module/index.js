@@ -12,6 +12,7 @@ module.exports = {
             const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
             const query = `CREATE TABLE IF NOT EXISTS ${moduleName} (
                 id VARCHAR(19) PRIMARY KEY,
+                related_id VARCHAR(255),
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )`;
@@ -57,6 +58,20 @@ module.exports = {
             const [result] = await connection.execute(query);
             await connection.end();
             res.json({ success: true, message: "Module Name", result });
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+    readRelatedModule: async (req, res) => {
+        try {
+            const orgId = req.params.org
+            const module = req.params.module
+            // const moduleName = req.params.module
+            const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
+            const query = `SELECT related_module, related_id FROM modules WHERE name = ?;`
+            const [result] = await connection.execute(query, [module]);
+            await connection.end();
+            res.json({ success: true, message: "Related Module", result });
         } catch (error) {
             res.status(500).json({ error: error.message });
         }

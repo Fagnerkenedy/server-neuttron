@@ -77,6 +77,37 @@ module.exports = {
             res.status(500).json({ error: error.message });
         }
     },
+    readRelatedData: async (req, res) => {
+        try {
+            const orgId = req.params.org
+            const module = req.params.module
+            const related_id = req.params.related_id
+            const api_name = req.params.api_name
+            const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
+            
+            const row = await connection.execute(`SELECT * FROM ${module} WHERE ${api_name} = ?;`, [related_id]);
+            await connection.end();
+
+            res.json(row[0]);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+    readRelatedData2: async (req, res) => {
+        try {
+            const orgId = req.params.org
+            const module = req.params.module
+            const related_id = req.params.related_id
+            const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
+            
+            const row = await connection.execute(`SELECT * FROM ${module} WHERE related_id = ?;`, [related_id]);
+            await connection.end();
+
+            res.json(row[0]);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
     update: async (req, res) => {
         try {
             const orgId = req.params.org

@@ -5,6 +5,7 @@ const crypto = require('crypto')
 const mysql = require('mysql2/promise');
 const dbConfig = require('../../database/index')
 const authConfig = require('../../config/auth.json')
+const sampleData = require('../sample data/index')
 
 module.exports = {
     registerOrg: async (req, res) => {
@@ -55,6 +56,8 @@ module.exports = {
                 FOREIGN KEY (orgId) REFERENCES organizations(orgId)
             );`);
 
+            sampleData(orgId)
+
             const gerarHash = (dados) => {
                 const dadosComTimestamp = dados + Date.now().toString();
                 const hash = crypto.createHash('sha256').update(dadosComTimestamp).digest('hex')
@@ -98,7 +101,7 @@ module.exports = {
             console.log("userNeuttron",userNeuttron)
 
             const connection = await mysql.createConnection({ ...dbConfig, database: `org${userNeuttron.orgId}` });
-            const [row] = await connection.execute('SELECT email, password, dark_mode FROM users WHERE email = ?;', [email])
+            const [row] = await connection.execute('SELECT email, password, dark_mode, name FROM users WHERE email = ?;', [email])
             await connection.end();
 
             const user = row[0];

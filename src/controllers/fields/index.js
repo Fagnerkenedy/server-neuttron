@@ -178,8 +178,8 @@ module.exports = {
 
             // Itera sobre cada objeto no array de dados e insere no banco de dados
             
-            // const row = await connection.execute(`UPDATE modulos_relacionados SET related_id = ?, module_id = ? WHERE related_module = ?;`, [ related_id, module_id, related_module]);
-            const row = await connection.execute(`INSERT INTO modulos_relacionados (related_id, module_id, related_module, module_name) VALUES (?, ?, ?, ?);`, [ related_id, module_id, related_module, module]);
+            const row = await connection.execute(`UPDATE modulos_relacionados SET related_id = ?, module_id = ? WHERE related_module = ?;`, [ related_id, module_id, related_module]);
+            // const row = await connection.execute(`INSERT INTO modulos_relacionados (related_id, module_id, related_module, module_name) VALUES (?, ?, ?, ?);`, [ related_id, module_id, related_module, module]);
             
             await connection.end();
             res.json(row[0]);

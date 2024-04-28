@@ -5,14 +5,13 @@ const crypto = require('crypto')
 const mysql = require('mysql2/promise');
 const dbConfig = require('../../database/index')
 const authConfig = require('../../config/auth.json')
-const sampleData = require('../sample data/index')
+const {sampleData} = require('../sample data/index')
 
 module.exports = {
     registerOrg: async (req, res) => {
         console.log("Registrando organização e usuário administrador")
         const { empresa, email, name, phone, password } = req.body
         try {
-            console.log("dbconfig1",dbConfig)
             const connection = await mysql.createConnection(dbConfig);
             const gerarHashOrg = (dados) => {
                 const dadosComTimestamp = dados + Date.now().toString();
@@ -24,7 +23,6 @@ module.exports = {
                 return orgId;
             }
             const orgId = gerarHashOrg(JSON.stringify({ empresa }));
-            console.log("orgid", orgId)
 
             await connection.execute(`CREATE DATABASE IF NOT EXISTS org${orgId};`);
             await connection.end();
@@ -56,7 +54,7 @@ module.exports = {
                 FOREIGN KEY (orgId) REFERENCES organizations(orgId)
             );`);
 
-            sampleData(orgId)
+            await sampleData(orgId)
 
             const gerarHash = (dados) => {
                 const dadosComTimestamp = dados + Date.now().toString();
@@ -98,14 +96,11 @@ module.exports = {
             if (!userNeuttron)
                 return res.status(200).json({ success: false, message: 'user_not_found' })
 
-            console.log("userNeuttron",userNeuttron)
-
             const connection = await mysql.createConnection({ ...dbConfig, database: `org${userNeuttron.orgId}` });
             const [row] = await connection.execute('SELECT email, password, dark_mode, name FROM users WHERE email = ?;', [email])
             await connection.end();
 
             const user = row[0];
-            console.log("user",user)
 
             if (!user)
                 return res.status(200).json({ success: false, message: 'user_not_found' })

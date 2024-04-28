@@ -14,12 +14,16 @@ module.exports = {
             const insertPromises = fields.map(async (field) => {
                 const { name, type } = field;
                 let { related_module } = field
-                let { related_id } = field
+                let { related_id } = field   
+                let { field_type } = field
                 if (!field.hasOwnProperty("related_module")) {
                     related_module = null
                 }
                 if (!field.hasOwnProperty("related_id")) {
                     related_id = null
+                }
+                if (!field.hasOwnProperty("field_type")) {
+                    field_type = null
                 }
                 let apiName = name.replace(/[^\w\s]|[\sç]/gi, '_').toLowerCase();
                 const query = `CREATE TABLE IF NOT EXISTS fields (
@@ -27,6 +31,7 @@ module.exports = {
                     name VARCHAR(255),
                     api_name VARCHAR(255),
                     type VARCHAR(255),
+                    field_type VARCHAR(255),
                     related_module VARCHAR(255),
                     related_id VARCHAR(255),
                     module VARCHAR(255),
@@ -34,9 +39,9 @@ module.exports = {
                     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )`;
                 await connection.execute(query);
-                const [insertResult1] = await connection.execute(`INSERT INTO fields (name, api_name, type, related_module, related_id, module) VALUES (?, ?, ?, ?, ?, ?);`, [name, apiName, type, related_module, related_id, module]);
-                if (related_module != null) {
-                    const query = `CREATE TABLE IF NOT EXISTS modulos_relacionados (
+                const [insertResult1] = await connection.execute(`INSERT INTO fields (name, api_name, type, field_type, related_module, related_id, module) VALUES (?, ?, ?, ?, ?, ?, ?);`, [name, apiName, type, field_type, related_module, related_id, module]);
+
+                const queryModulosRelacionados = `CREATE TABLE IF NOT EXISTS modulos_relacionados (
                         id INT PRIMARY KEY AUTO_INCREMENT,
                         module_name VARCHAR(255),
                         module_id VARCHAR(255),
@@ -46,8 +51,8 @@ module.exports = {
                         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                     )`;
-                    await connection.execute(query);
-
+                await connection.execute(queryModulosRelacionados);
+                if (related_module != null) {
                     await connection.execute(`INSERT INTO modulos_relacionados (related_module, related_id, module_name, api_name) VALUES (?, ?, ?, ?);`, [related_module, related_id, module, apiName]);
                 }
                 const table = await connection.execute(`SELECT column_name
@@ -85,12 +90,11 @@ module.exports = {
     readRelatedField: async (req, res) => {
         try {
             const orgId = req.params.org
-            const module = req.params.module
-            const field = req.body
-            let { related_module } = field
+            const moduleName = req.params.module
+            const related_id = req.params.record_id
+            console.log("body", related_id)
             const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
-            const row = await connection.execute(`SELECT DISTINCT * FROM modulos_relacionados WHERE related_module = ?;`, [module]);
-            console.log("ROWWW",row)
+            const row = await connection.execute(`SELECT DISTINCT module_name FROM modulos_relacionados WHERE related_module = ? AND related_id = ?;`, [moduleName, related_id]);
             await connection.end();
             res.json(row[0]);
         } catch (error) {
@@ -102,11 +106,11 @@ module.exports = {
             const orgId = req.params.org
             const module = req.params.module
             const name = req.body.name
-            const api_name = req.body.api_name
             const newName = req.body.new_name
             const field = req.body
             let { id } = field
             let { related_id } = field
+            let { api_name } = field
             let data = req.body;
             if (!Array.isArray(data)) {
                 data = [data];
@@ -117,21 +121,20 @@ module.exports = {
             if (!field.hasOwnProperty("related_id")) {
                 related_id = null
             }
+            if (!field.hasOwnProperty("api_name")) {
+                api_name = null
+            }
             const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
 
             const update = [];
 
-            // Itera sobre cada objeto no array de dados e insere no banco de dados
             for (const obj of data) {
-                // const fieldNames = Object.keys(obj).join(', '); // Obtenha os nomes dos campos
-                const fieldValues = Object.values(obj); // Obtenha os valores dos campos
+                const fieldValues = Object.values(obj);
                 if (fieldValues.length === 0) {
-                    continue; // Se não houver valores, passe para o próximo objeto
+                    continue;
                 }
                 const setClause = Object.entries(obj).map(([fieldName, fieldValue]) => `${fieldName} = ?`).join(', ');
                 const query = `UPDATE fields SET ${setClause} WHERE id = ?;`;
-                console.log("teste", query, [...fieldValues, id])
-                console.log("teste2", query, [...fieldValues, id])
                 const [updateRow] = await connection.execute(query, [...fieldValues, id]);
                 update.push({ ...updateRow[0] });
             }
@@ -147,7 +150,7 @@ module.exports = {
     updateRelatedField: async (req, res) => {
         try {
             const orgId = req.params.org
-            const module = req.params.module
+            const moduleName = req.params.module
             const name = req.body.name
             const api_name = req.body.api_name
             const newName = req.body.new_name
@@ -174,15 +177,18 @@ module.exports = {
             }
             const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
 
-            const update = [];
+            const [row] = await connection.execute(`UPDATE modulos_relacionados SET related_id = ? WHERE module_id = ? AND related_module = ?;`, [related_id, module_id, related_module]);
+            console.log("teste", row)
+            insertRow = null
+            if (row.affectedRows === 0) {
+                console.log("teste")
+                const [insertResult] = await connection.execute(`INSERT INTO modulos_relacionados (related_id, module_id, related_module, module_name) VALUES (?, ?, ?, ?);`, [related_id, module_id, related_module, moduleName]);
+                insertRow = insertResult
+            }
 
-            // Itera sobre cada objeto no array de dados e insere no banco de dados
-            
-            const row = await connection.execute(`UPDATE modulos_relacionados SET related_id = ?, module_id = ? WHERE related_module = ?;`, [ related_id, module_id, related_module]);
-            // const row = await connection.execute(`INSERT INTO modulos_relacionados (related_id, module_id, related_module, module_name) VALUES (?, ?, ?, ?);`, [ related_id, module_id, related_module, module]);
-            
+
             await connection.end();
-            res.json(row[0]);
+            res.json({ updateResult: row[0], insertResult: insertRow });
         } catch (error) {
             res.status(500).json({ error: error.message });
         }

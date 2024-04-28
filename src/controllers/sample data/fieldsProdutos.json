@@ -1,0 +1,41 @@
+[
+    {
+        "name": "Nome Produto",
+        "type": "VARCHAR(255)"
+    },
+    {
+        "name": "Descrição",
+        "type": "TEXT(16000)",
+        "field_type": "multi_line"
+    },
+    {
+        "name": "Código Produto",
+        "type": "VARCHAR(255)",
+        "field_type": "number"
+    },
+    {
+        "name": "Pontuação",
+        "type": "VARCHAR(255)",
+        "field_type": "number"
+    },
+    {
+        "name": "Produto Ativo",
+        "type": "VARCHAR(255)",
+        "field_type": "checkbox"
+    },
+    {
+        "name": "Quantidade em Estoque",
+        "type": "VARCHAR(255)",
+        "field_type": "number"
+    },
+    {
+        "name": "Valor de Compra",
+        "type": "VARCHAR(255)",
+        "field_type": "number"
+    },
+    {
+        "name": "Valor de Venda",
+        "type": "VARCHAR(255)",
+        "field_type": "number"
+    }
+]

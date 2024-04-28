@@ -1,10 +1,4 @@
 module.exports = (req, res, next) => {
-  // console.log("process.env.USER_API_TOKEN:", process.env.USER_API_TOKEN)
-  // console.log("process.env.USER_API_TOKEN:", req.headers["authorization"])
-  // console.log("process.env.USER_API_TOKEN:", req.headers["Authorization"])
-  // console.log("process.env.USER_API_TOKEN:", req.headers.authorization)
-  // console.log("process.env.USER_API_TOKENreq.params:", req.params)
-  // console.log("process.env.USER_API_TOKENreq.params:", req.Authorization)
   if (process.env.USER_API_TOKEN === req.headers["Authorization"]) {
     next();
   }

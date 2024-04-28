@@ -1,53 +1,55 @@
 const mysql = require('mysql2/promise');
 const dbConfig = require('../../database/index')
+const {createFields} = require('./createFields')
+const fieldsClientes = require('./fieldsClientes.json')
+const fieldsProdutos = require('./fieldsProdutos.json')
+const fieldsPedidos = require('./fieldsPedidos.json')
 
 module.exports = {
     sampleData: async (orgId) => {
-        const connection = await mysql.createConnection({ ...dbConfig, database: `org${orgId}` });
-        const queryClientes = `CREATE TABLE IF NOT EXISTS Clientes (
+        try {
+            const connection = await mysql.createConnection({ ...dbConfig, database: `org${orgId}` });
+            const queryClientes = `CREATE TABLE IF NOT EXISTS Clientes (
             id VARCHAR(19) PRIMARY KEY,
             related_id VARCHAR(255),
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )`;
-        const queryProdutos = `CREATE TABLE IF NOT EXISTS Produtos (
+            )`;
+            const queryProdutos = `CREATE TABLE IF NOT EXISTS Produtos (
             id VARCHAR(19) PRIMARY KEY,
             related_id VARCHAR(255),
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )`;
-        const queryPedidos = `CREATE TABLE IF NOT EXISTS Pedidos (
+            )`;
+            const queryPedidos = `CREATE TABLE IF NOT EXISTS Pedidos (
             id VARCHAR(19) PRIMARY KEY,
             related_id VARCHAR(255),
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )`;
-        const queryModules = `CREATE TABLE IF NOT EXISTS modules (
+            )`;
+            const queryModules = `CREATE TABLE IF NOT EXISTS modules (
             id INT PRIMARY KEY AUTO_INCREMENT,
             name VARCHAR(255),
             perfil VARCHAR(2000),
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )`;
-        await connection.execute(queryModules);
-        await connection.execute('INSERT INTO modules (name) VALUES ("Clientes"),("Pedidos");');
+            )`;
+            await connection.execute(queryModules);
+            await connection.execute('INSERT INTO modules (name) VALUES ("Clientes"),("Produtos"),("Pedidos");');
 
-        const [resultClientes] = await connection.execute(queryClientes);
-        const [resultProdutos] = await connection.execute(queryProdutos);
-        const [resultPedidos] = await connection.execute(queryPedidos);
+            const [resultClientes] = await connection.execute(queryClientes);
+            const [resultProdutos] = await connection.execute(queryProdutos);
+            const [resultPedidos] = await connection.execute(queryPedidos);
 
-        const query = `CREATE TABLE IF NOT EXISTS fields (
-            id INT PRIMARY KEY AUTO_INCREMENT,
-            name VARCHAR(255),
-            api_name VARCHAR(255),
-            type VARCHAR(255),
-            related_module VARCHAR(255),
-            related_id VARCHAR(255),
-            module VARCHAR(255),
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )`;
-        await connection.execute(query);
 
+            const createFieldsClientes = await createFields(fieldsClientes, connection, orgId, 'Clientes')
+            const createFieldsProdutos = await createFields(fieldsProdutos, connection, orgId, 'Produtos')
+            const createFieldsPedidos = await createFields(fieldsPedidos, connection, orgId, 'Pedidos')
+
+            await connection.end();
+        } catch (error) {
+            console.error("Erro ao criar tabelas e inserir dados:", error);
+            throw error; // Rejete o erro para que quem chama a função possa lidar com ele
+        }
     }
 }

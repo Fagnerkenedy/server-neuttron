@@ -25,15 +25,14 @@ module.exports = {
 
             const inserts = [];
 
-            // Itera sobre cada objeto no array de dados e insere no banco de dados
             for (const obj of data) {
                 const record_id = gerarHash(JSON.stringify({ orgId, module, obj }));
-                const fieldNames = Object.keys(obj).join(', '); // Obtenha os nomes dos campos
-                const fieldValues = Object.values(obj); // Obtenha os valores dos campos
+                const fieldNames = Object.keys(obj).join(', ');
+                const fieldValues = Object.values(obj);
                 if (fieldValues.length === 0) {
-                    continue; // Se não houver valores, passe para o próximo objeto
+                    continue;
                 }
-                const placeholders = fieldValues.map(() => '?').join(', '); // Crie placeholders para os valores
+                const placeholders = fieldValues.map(() => '?').join(', ');
                 const query = `INSERT INTO ${module} (id, ${fieldNames}) VALUES (?, ${placeholders})`;
                 const [insertRow] = await connection.execute(query, [record_id, ...fieldValues]);
                 inserts.push({ record_id, ...insertRow[0] });
@@ -78,20 +77,20 @@ module.exports = {
         }
     },
     readRelatedData: async (req, res) => {
-        try {
-            const orgId = req.params.org
-            const module = req.params.module
-            const related_id = req.params.related_id
-            const api_name = req.params.api_name
-            const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
+        // try {
+        //     const orgId = req.params.org
+        //     const module = req.params.module
+        //     const related_id = req.params.related_id
+        //     const api_name = req.params.api_name
+        //     const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
             
-            const row = await connection.execute(`SELECT * FROM ${module} WHERE ${api_name} = ?;`, [related_id]);
-            await connection.end();
+        //     const row = await connection.execute(`SELECT * FROM ${module} WHERE ${api_name} = ?;`, [related_id]);
+        //     await connection.end();
 
-            res.json(row[0]);
-        } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
+        //     res.json(row[0]);
+        // } catch (error) {
+        //     res.status(500).json({ error: error.message });
+        // }
     },
     readRelatedData2: async (req, res) => {
         try {
@@ -100,10 +99,22 @@ module.exports = {
             const related_id = req.params.related_id
             const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
             
-            const row = await connection.execute(`SELECT * FROM ${module} WHERE related_id = ?;`, [related_id]);
-            await connection.end();
+            const [row] = await connection.execute(`SELECT module_id, module_name FROM modulos_relacionados WHERE related_id = ? AND module_name = ?;`, [related_id, module]);
+            console.log("rowowowowow", row)
 
-            res.json(row[0]);
+            const recordsPromises = row.map(async (result) => {
+                console.log("registro 1", result)
+                const [row2] = await connection.execute(`SELECT * FROM ${result.module_name} WHERE id = ?;`, [result.module_id]);
+                console.log("fasdas", row2)
+                return row2[0];
+            });
+    
+            let records = await Promise.all(recordsPromises);
+            records = records.filter(record => !!record);
+            await connection.end();
+            console.log("records",records)
+
+            res.json(records);
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
@@ -208,21 +219,17 @@ module.exports = {
         try {
             const orgId = req.params.org
             const module = req.params.module;
-            const ids = req.params.id.split(','); // Aqui estamos separando os IDs em uma lista
+            const ids = req.params.id.split(',');
             const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
 
-            // Verifica se temos apenas um ID ou uma lista de IDs
             if (ids.length === 1) {
-                // Se tiver apenas um ID, deletamos um registro
                 const deleteSql = `DELETE FROM ${module} WHERE id = ?`;
                 const deleteValues = [ids[0]];
-
                 await connection.execute(deleteSql, deleteValues);
             } else {
-                // Se tiver uma lista de IDs, deletamos múltiplos registros de uma vez
-                const placeholders = ids.map(() => '?').join(', '); // Cria uma string de placeholders ('?, ?, ?')
+                const placeholders = ids.map(() => '?').join(', ');
                 deleteSql = `DELETE FROM ${module} WHERE id IN (${placeholders})`;
-                deleteValues = [...ids]; // Adiciona os IDs, module_id e orgId aos valores
+                deleteValues = [...ids];
                 await connection.execute(deleteSql, deleteValues);
             }
 

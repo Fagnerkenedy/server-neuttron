@@ -119,6 +119,33 @@ module.exports = {
             res.status(500).json({ error: error.message });
         }
     },
+    readRelatedDataById: async (req, res) => {
+        try {
+            const orgId = req.params.org
+            const module = req.params.module
+            const module_id = req.params.module_id
+            const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
+            
+            const [row] = await connection.execute(`SELECT related_id FROM modulos_relacionados WHERE module_id = ? AND related_module = ?;`, [module_id, module]);
+            console.log("rowowowowow", row)
+
+            // const recordsPromises = row.map(async (result) => {
+            //     console.log("registro 1", result)
+            //     const [row2] = await connection.execute(`SELECT * FROM ${result.module_name} WHERE id = ?;`, [result.module_id]);
+            //     console.log("fasdas", row2)
+            //     return row2[0];
+            // });
+    
+            // let records = await Promise.all(recordsPromises);
+            // records = records.filter(record => !!record);
+            await connection.end();
+            // console.log("records",records)
+
+            res.json(row);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
     update: async (req, res) => {
         try {
             const orgId = req.params.org

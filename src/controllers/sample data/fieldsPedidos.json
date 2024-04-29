@@ -43,11 +43,11 @@
     {
         "name": "Valor Unitário",
         "type": "VARCHAR(255)",
-        "field_type": "number"
+        "field_type": "currency"
     },
     {
         "name": "Valor Total",
         "type": "VARCHAR(255)",
-        "field_type": "number"
+        "field_type": "currency"
     }
 ]

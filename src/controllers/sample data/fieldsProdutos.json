@@ -31,11 +31,11 @@
     {
         "name": "Valor de Compra",
         "type": "VARCHAR(255)",
-        "field_type": "number"
+        "field_type": "currency"
     },
     {
         "name": "Valor de Venda",
         "type": "VARCHAR(255)",
-        "field_type": "number"
+        "field_type": "currency"
     }
 ]

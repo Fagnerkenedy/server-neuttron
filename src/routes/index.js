@@ -27,6 +27,7 @@ router.get("/:org/:module", authMiddleware, recordController.fetch);
 router.get("/:org/:module/:id", authMiddleware, recordController.read);
 router.get("/:org/:module/relatedData/:related_id/:api_name", authMiddleware, recordController.readRelatedData);
 router.get("/:org/:module/relatedData/:related_id", authMiddleware, recordController.readRelatedData2);
+router.get("/:org/:module/relatedDataById/:module_id", authMiddleware, recordController.readRelatedDataById);
 router.put("/:org/:module/:id", authMiddleware, recordController.update);
 router.delete("/:org/:module/:id", authMiddleware, recordController.delete);
 

@@ -26,7 +26,7 @@ module.exports = {
 
             await connection.execute(`CREATE DATABASE IF NOT EXISTS org${orgId};`);
             await connection.end();
-            const connectionNeuttron = await mysql.createConnection({ ...dbConfig, database: "neuttron_v2" });
+            const connectionNeuttron = await mysql.createConnection({ ...dbConfig, database: process.env.DB_NAME });
 
             await connectionNeuttron.execute(`INSERT INTO users SET name = ?, email = ?, phone = ?, organization = ?, orgId = ?;`, [name, email, phone, empresa, orgId]);
             await connectionNeuttron.end();

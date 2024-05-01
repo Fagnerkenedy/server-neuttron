@@ -1,0 +1,102 @@
+[
+    {
+        "nome_produto": "Smartwatch Fitness",
+        "descri__o": "Smartwatch com monitor de atividades físicas, resistente à água.",
+        "c_digo_produto": "021",
+        "pontua__o": "4.8",
+        "produto_ativo": "Sim",
+        "quantidade_em_estoque": "110",
+        "valor_de_compra": "70.00",
+        "valor_de_venda": "100.00"
+    },
+    {
+        "nome_produto": "Bateria Externa",
+        "descri__o": "Bateria externa portátil de 10000mAh, compatível com diversos dispositivos.",
+        "c_digo_produto": "022",
+        "pontua__o": "4.6",
+        "produto_ativo": "Sim",
+        "quantidade_em_estoque": "95",
+        "valor_de_compra": "20.00",
+        "valor_de_venda": "35.00"
+    },
+    {
+        "nome_produto": "Tábua de Corte",
+        "descri__o": "Tábua de corte em bambu, resistente e fácil de limpar.",
+        "c_digo_produto": "023",
+        "pontua__o": "4.7",
+        "produto_ativo": "Sim",
+        "quantidade_em_estoque": "85",
+        "valor_de_compra": "15.00",
+        "valor_de_venda": "25.00"
+    },
+    {
+        "nome_produto": "Notebook Ultrafino",
+        "descri__o": "Notebook ultrafino com processador Intel Core i5, 8GB de RAM.",
+        "c_digo_produto": "024",
+        "pontua__o": "4.9",
+        "produto_ativo": "Sim",
+        "quantidade_em_estoque": "75",
+        "valor_de_compra": "600.00",
+        "valor_de_venda": "800.00"
+    },
+    {
+        "nome_produto": "Cadeado com Segredo",
+        "descri__o": "Cadeado com segredo de 4 dígitos, ideal para malas de viagem.",
+        "c_digo_produto": "025",
+        "pontua__o": "4.5",
+        "produto_ativo": "Sim",
+        "quantidade_em_estoque": "100",
+        "valor_de_compra": "10.00",
+        "valor_de_venda": "15.00"
+    },
+    {
+        "nome_produto": "Panela Antiaderente",
+        "descri__o": "Panela antiaderente de 24cm, fácil de limpar e resistente ao calor.",
+        "c_digo_produto": "026",
+        "pontua__o": "4.4",
+        "produto_ativo": "Sim",
+        "quantidade_em_estoque": "65",
+        "valor_de_compra": "30.00",
+        "valor_de_venda": "45.00"
+    },
+    {
+        "nome_produto": "Cinto de Couro",
+        "descri__o": "Cinto de couro legítimo, fivela prateada.",
+        "c_digo_produto": "027",
+        "pontua__o": "4.8",
+        "produto_ativo": "Sim",
+        "quantidade_em_estoque": "80",
+        "valor_de_compra": "20.00",
+        "valor_de_venda": "35.00"
+    },
+    {
+        "nome_produto": "Pulseira de Prata",
+        "descri__o": "Pulseira feminina de prata 925, design elegante.",
+        "c_digo_produto": "028",
+        "pontua__o": "4.7",
+        "produto_ativo": "Sim",
+        "quantidade_em_estoque": "90",
+        "valor_de_compra": "50.00",
+        "valor_de_venda": "80.00"
+    },
+    {
+        "nome_produto": "Cabide Organizador",
+        "descri__o": "Cabide organizador com múltiplos ganchos, ideal para closets.",
+        "c_digo_produto": "029",
+        "pontua__o": "4.6",
+        "produto_ativo": "Sim",
+        "quantidade_em_estoque": "70",
+        "valor_de_compra": "10.00",
+        "valor_de_venda": "20.00"
+    },
+    {
+        "nome_produto": "Máscara Facial",
+        "descri__o": "Máscara facial de argila, hidrata e revitaliza a pele.",
+        "c_digo_produto": "030",
+        "pontua__o": "4.9",
+        "produto_ativo": "Sim",
+        "quantidade_em_estoque": "105",
+        "valor_de_compra": "5.00",
+        "valor_de_venda": "10.00"
+    }
+]

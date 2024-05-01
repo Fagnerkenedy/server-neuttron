@@ -1,0 +1,72 @@
+[
+    {
+        "nome_cliente": "João Silva",
+        "e_mail": "joao.silva@example.com",
+        "celular": "+5511987654321",
+        "data_de_anivers_rio": "1990-05-15",
+        "cidade": "São Paulo"
+    },
+    {
+        "nome_cliente": "Maria Oliveira",
+        "e_mail": "maria.oliveira@example.com",
+        "celular": "+5521987654322",
+        "data_de_anivers_rio": "1985-09-20",
+        "cidade": "Rio de Janeiro"
+    },
+    {
+        "nome_cliente": "Pedro Santos",
+        "e_mail": "pedro.santos@example.com",
+        "celular": "+5531987654323",
+        "data_de_anivers_rio": "1978-11-10",
+        "cidade": "Belo Horizonte"
+    },
+    {
+        "nome_cliente": "Ana Costa",
+        "e_mail": "ana.costa@example.com",
+        "celular": "+5541987654324",
+        "data_de_anivers_rio": "1983-07-25",
+        "cidade": "Salvador"
+    },
+    {
+        "nome_cliente": "Carlos Pereira",
+        "e_mail": "carlos.pereira@example.com",
+        "celular": "+5551987654325",
+        "data_de_anivers_rio": "1995-03-08",
+        "cidade": "Brasília"
+    },
+    {
+        "nome_cliente": "Luiza Souza",
+        "e_mail": "luiza.souza@example.com",
+        "celular": "+5561987654326",
+        "data_de_anivers_rio": "1980-12-18",
+        "cidade": "Recife"
+    },
+    {
+        "nome_cliente": "Marcos Almeida",
+        "e_mail": "marcos.almeida@example.com",
+        "celular": "+5571987654327",
+        "data_de_anivers_rio": "1992-06-30",
+        "cidade": "Curitiba"
+    },
+    {
+        "nome_cliente": "Juliana Lima",
+        "e_mail": "juliana.lima@example.com",
+        "celular": "+5581987654328",
+        "data_de_anivers_rio": "1987-08-12",
+        "cidade": "Fortaleza"
+    },
+    {
+        "nome_cliente": "Rafaela Rocha",
+        "e_mail": "rafaela.rocha@example.com",
+        "celular": "+5591987654329",
+        "data_de_anivers_rio": "1975-04-05",
+        "cidade": "Porto Alegre"
+    },
+    {
+        "nome_cliente": "Fernando Santos",
+        "e_mail": "fernando.santos@example.com",
+        "celular": "+5510987654330",
+        "data_de_anivers_rio": "1989-10-22",
+        "cidade": "Manaus"
+    }
+]

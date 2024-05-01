@@ -4,6 +4,7 @@ const router = express.Router();
 const moduleController = require("../controllers/module/index.js");
 const fieldController = require("../controllers/fields/index.js");
 const recordController = require("../controllers/records/index.js");
+const uploadController = require("../controllers/uploads/index.js");
 const authMiddleware = require('../middleware/auth')
 
 // Modulos
@@ -30,5 +31,8 @@ router.get("/:org/:module/relatedData/:related_id", authMiddleware, recordContro
 router.get("/:org/:module/relatedDataById/:module_id", authMiddleware, recordController.readRelatedDataById);
 router.put("/:org/:module/:id", authMiddleware, recordController.update);
 router.delete("/:org/:module/:id", authMiddleware, recordController.delete);
+
+// Uploads
+router.put("/:org/:module/upload", authMiddleware, uploadController.upload);
 
 module.exports = router;

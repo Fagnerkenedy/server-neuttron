@@ -4,6 +4,9 @@ const {createFields} = require('./createFields')
 const fieldsClientes = require('./fieldsClientes.json')
 const fieldsProdutos = require('./fieldsProdutos.json')
 const fieldsPedidos = require('./fieldsPedidos.json')
+const {insertData} = require('./insertData')
+const dataClientes = require('./dataClientes.json')
+const dataProdutos = require('./dataProdutos.json')
 
 module.exports = {
     sampleData: async (orgId) => {
@@ -46,10 +49,13 @@ module.exports = {
             const createFieldsProdutos = await createFields(fieldsProdutos, connection, orgId, 'Produtos')
             const createFieldsPedidos = await createFields(fieldsPedidos, connection, orgId, 'Pedidos')
 
+            const insertDataClientes = await insertData(dataClientes, connection, orgId, 'Clientes')
+            const insertDataProdutos = await insertData(dataProdutos, connection, orgId, 'Produtos')
+
             await connection.end();
         } catch (error) {
             console.error("Erro ao criar tabelas e inserir dados:", error);
-            throw error; // Rejete o erro para que quem chama a função possa lidar com ele
+            throw error;
         }
     }
 }

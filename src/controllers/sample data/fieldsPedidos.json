@@ -4,6 +4,11 @@
         "type": "VARCHAR(255)"
     },
     {
+        "name": "Data do Pedido",
+        "type": "VARCHAR(255)",
+        "field_type": "date"
+    },
+    {
         "name": "Nome Cliente",
         "type": "VARCHAR(255)",
         "field_type": "loockup",
@@ -14,11 +19,6 @@
         "type": "VARCHAR(255)",
         "field_type": "loockup",
         "related_module": "Produtos"
-    },
-    {
-        "name": "Data do Pedido",
-        "type": "VARCHAR(255)",
-        "field_type": "date"
     },
     {
         "name": "Entregue?",

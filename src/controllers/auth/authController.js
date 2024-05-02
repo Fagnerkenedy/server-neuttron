@@ -81,7 +81,7 @@ module.exports = {
 
     registerUser: async (req, res) => {
         console.log("Registrando usuário")
-        const orgId = req.params
+        const orgId = req.params.orgId
         const { empresa, email, name, phone, password } = req.body
         try {
             const connectionNeuttron = await mysql.createConnection({ ...dbConfig, database: process.env.DB_NAME });

@@ -86,7 +86,7 @@ module.exports = {
         try {
             const connectionNeuttron = await mysql.createConnection({ ...dbConfig, database: process.env.DB_NAME });
 
-            await connectionNeuttron.execute(`INSERT INTO users SET name = ?, email = ?, phone = ?, organization = ?, orgId = ?;`, [name, email, phone, orgId]);
+            await connectionNeuttron.execute(`INSERT INTO users SET name = ?, email = ?, phone = ?, orgId = ?;`, [name, email, phone, orgId]);
             await connectionNeuttron.end();
 
             const connection2 = await mysql.createConnection({ ...dbConfig, database: orgId });

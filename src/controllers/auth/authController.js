@@ -33,7 +33,7 @@ module.exports = {
 
             const connection2 = await mysql.createConnection({ ...dbConfig, database: `org${orgId}` });
             const organizationTable = await connection2.execute(`CREATE TABLE IF NOT EXISTS organizations (
-                id INT PRIMARY KEY AUTO_INCREMENT
+                id INT PRIMARY KEY AUTO_INCREMENT,
                 orgId VARCHAR(255),
                 name VARCHAR(255),
                 email VARCHAR(255),

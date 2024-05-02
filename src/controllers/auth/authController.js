@@ -118,7 +118,7 @@ module.exports = {
             await connection2.end();
             user.password = undefined
 
-            return res.status(200).json({ success: true, message: 'User Created Successfuly!', organizationTable, userTable, org, user })
+            return res.status(200).json({ success: true, message: 'User Created Successfuly!', user })
 
         } catch (err) {
             console.log('Error Creating User', err)

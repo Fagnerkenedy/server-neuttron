@@ -33,7 +33,8 @@ module.exports = {
 
             const connection2 = await mysql.createConnection({ ...dbConfig, database: `org${orgId}` });
             const organizationTable = await connection2.execute(`CREATE TABLE IF NOT EXISTS organizations (
-                orgId VARCHAR(8) PRIMARY KEY,
+                id INT PRIMARY KEY AUTO_INCREMENT
+                orgId VARCHAR(255),
                 name VARCHAR(255),
                 email VARCHAR(255),
                 phone VARCHAR(255),
@@ -47,7 +48,7 @@ module.exports = {
                 email VARCHAR(255),
                 password VARCHAR(255),
                 phone VARCHAR(255),
-                orgId VARCHAR(8),
+                orgId VARCHAR(255),
                 dark_mode BOOLEAN,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -89,9 +90,10 @@ module.exports = {
             await connectionNeuttron.execute(`INSERT INTO users SET name = ?, email = ?, phone = ?, organization = ?, orgId = ?;`, [name, email, phone, empresa, orgId]);
             await connectionNeuttron.end();
 
-            const connection2 = await mysql.createConnection({ ...dbConfig, database: `org${orgId}` });
+            const connection2 = await mysql.createConnection({ ...dbConfig, database: orgId });
             const organizationTable = await connection2.execute(`CREATE TABLE IF NOT EXISTS organizations (
-                orgId VARCHAR(8) PRIMARY KEY,
+                id INT PRIMARY KEY AUTO_INCREMENT
+                orgId VARCHAR(255),
                 name VARCHAR(255),
                 email VARCHAR(255),
                 phone VARCHAR(255),
@@ -105,7 +107,7 @@ module.exports = {
                 email VARCHAR(255),
                 password VARCHAR(255),
                 phone VARCHAR(255),
-                orgId VARCHAR(8),
+                orgId VARCHAR(255),
                 dark_mode BOOLEAN,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

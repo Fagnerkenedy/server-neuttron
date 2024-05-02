@@ -97,9 +97,11 @@ module.exports = {
             const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
             //const row = await connection.execute('DELETE FROM modules WHERE module_id = ? AND organization_id = ?; DELETE FROM module_fields WHERE module_id = ? AND organization_id = ?; DELETE FROM module_data WHERE module_id = ? AND organization_id = ?;', [module_id, orgId, module_id, orgId, module_id, orgId]);
             const deleteModuleQuery = 'DELETE FROM modules WHERE name = ?;';
+            const deleteFieldsQuery = 'DELETE FROM fields WHERE module = ?;';
             const deleteModuleTableQuery = `DROP TABLE ${moduleName};`;
 
             let row = await connection.execute(deleteModuleQuery, [moduleName]);
+            let rowfields = await connection.execute(deleteFieldsQuery, [moduleName]);
             row = await connection.execute(deleteModuleTableQuery);
 
             await connection.end();

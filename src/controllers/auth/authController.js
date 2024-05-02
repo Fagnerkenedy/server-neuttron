@@ -134,7 +134,7 @@ module.exports = {
                 return res.status(400).json({ success: false, message: "missing_email_or_password" });
             }
 
-            const connectionNeuttron = await mysql.createConnection({ ...dbConfig, database: "neuttron_v2" });
+            const connectionNeuttron = await mysql.createConnection({ ...dbConfig, database: process.env.DB_NAME });
             const [rows] = await connectionNeuttron.execute('SELECT orgId FROM users WHERE email = ?;', [email])
             await connectionNeuttron.end();
 

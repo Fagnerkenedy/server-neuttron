@@ -79,6 +79,62 @@ module.exports = {
         }
     },
 
+    registerUser: async (req, res) => {
+        console.log("Registrando usuário")
+        const orgId = req.params
+        const { empresa, email, name, phone, password } = req.body
+        try {
+            const connectionNeuttron = await mysql.createConnection({ ...dbConfig, database: process.env.DB_NAME });
+
+            await connectionNeuttron.execute(`INSERT INTO users SET name = ?, email = ?, phone = ?, organization = ?, orgId = ?;`, [name, email, phone, empresa, orgId]);
+            await connectionNeuttron.end();
+
+            const connection2 = await mysql.createConnection({ ...dbConfig, database: `org${orgId}` });
+            const organizationTable = await connection2.execute(`CREATE TABLE IF NOT EXISTS organizations (
+                orgId VARCHAR(8) PRIMARY KEY,
+                name VARCHAR(255),
+                email VARCHAR(255),
+                phone VARCHAR(255),
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );`);
+
+            const userTable = await connection2.execute(`CREATE TABLE IF NOT EXISTS users (
+                id VARCHAR(19) PRIMARY KEY,
+                name VARCHAR(255),
+                email VARCHAR(255),
+                password VARCHAR(255),
+                phone VARCHAR(255),
+                orgId VARCHAR(8),
+                dark_mode BOOLEAN,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (orgId) REFERENCES organizations(orgId)
+            );`);
+
+            const gerarHash = (dados) => {
+                const dadosComTimestamp = dados + Date.now().toString();
+                const hash = crypto.createHash('sha256').update(dadosComTimestamp).digest('hex')
+                return hash.substring(0, 19)
+            }
+
+            const user_id = gerarHash(JSON.stringify({ empresa, name, email, phone }));
+            const hashedPassword = await bcrypt.hash(password, 10);
+
+            const org = await connection2.execute(`INSERT INTO organizations SET orgId = ?, name = ?, email = ?, phone = ?;`, [orgId, empresa, email, phone]);
+            const user = await connection2.execute(`INSERT INTO users SET id = ?, orgId = ?, name = ?, email = ?, phone = ?, password = ?, dark_mode = ?;`, [user_id, orgId, name, email, phone, hashedPassword, false]);
+
+            await connection2.end();
+            user.password = undefined
+
+            return res.status(200).json({ success: true, message: 'User Created Successfuly!', organizationTable, userTable, org, user })
+
+        } catch (err) {
+            console.log('Error Creating User', err)
+            return res.status(400).json({ success: false, message: 'Error Creating User', error: err })
+        }
+    },
+
     login: async (req, res) => {
         try {
             const { email, password } = req.body

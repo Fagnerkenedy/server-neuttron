@@ -89,7 +89,7 @@ module.exports = {
             await connectionNeuttron.execute(`INSERT INTO users SET name = ?, email = ?, phone = ?, orgId = ?;`, [name, email, phone, orgId]);
             await connectionNeuttron.end();
 
-            const connection2 = await mysql.createConnection({ ...dbConfig, database: orgId });
+            const connection2 = await mysql.createConnection({ ...dbConfig, database: `org${orgId}` });
 
             const userTable = await connection2.execute(`CREATE TABLE IF NOT EXISTS users (
                 id VARCHAR(19) PRIMARY KEY,

@@ -33,8 +33,7 @@ module.exports = {
 
             const connection2 = await mysql.createConnection({ ...dbConfig, database: `org${orgId}` });
             const organizationTable = await connection2.execute(`CREATE TABLE IF NOT EXISTS organizations (
-                id INT PRIMARY KEY AUTO_INCREMENT,
-                orgId VARCHAR(255),
+                orgId VARCHAR(255) PRIMARY KEY,
                 name VARCHAR(255),
                 email VARCHAR(255),
                 phone VARCHAR(255),
@@ -83,7 +82,7 @@ module.exports = {
     registerUser: async (req, res) => {
         console.log("Registrando usuário")
         const orgId = req.params.orgId
-        const { empresa, email, name, phone, password } = req.body
+        const { email, name, phone, password } = req.body
         try {
             const connectionNeuttron = await mysql.createConnection({ ...dbConfig, database: process.env.DB_NAME });
 
@@ -91,15 +90,6 @@ module.exports = {
             await connectionNeuttron.end();
 
             const connection2 = await mysql.createConnection({ ...dbConfig, database: orgId });
-            const organizationTable = await connection2.execute(`CREATE TABLE IF NOT EXISTS organizations (
-                id INT PRIMARY KEY AUTO_INCREMENT,
-                orgId VARCHAR(255),
-                name VARCHAR(255),
-                email VARCHAR(255),
-                phone VARCHAR(255),
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            );`);
 
             const userTable = await connection2.execute(`CREATE TABLE IF NOT EXISTS users (
                 id VARCHAR(19) PRIMARY KEY,
@@ -120,10 +110,9 @@ module.exports = {
                 return hash.substring(0, 19)
             }
 
-            const user_id = gerarHash(JSON.stringify({ empresa, name, email, phone }));
+            const user_id = gerarHash(JSON.stringify({ name, email, phone }));
             const hashedPassword = await bcrypt.hash(password, 10);
 
-            const org = await connection2.execute(`INSERT INTO organizations SET orgId = ?, name = ?, email = ?, phone = ?;`, [orgId, empresa, email, phone]);
             const user = await connection2.execute(`INSERT INTO users SET id = ?, orgId = ?, name = ?, email = ?, phone = ?, password = ?, dark_mode = ?;`, [user_id, orgId, name, email, phone, hashedPassword, false]);
 
             await connection2.end();

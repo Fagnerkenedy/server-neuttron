@@ -20,6 +20,7 @@ app.use(bodyParser.json())
 
 app.use('/auth', require("./routes/userRoutes"))
 app.use("/crm", require('./routes'))
+app.use("/payment", require('./routes/payments'))
 
 app.listen(process.env.EXPRESS_PORT, () => {
     console.log(`App running in port: ${process.env.EXPRESS_PORT}`)

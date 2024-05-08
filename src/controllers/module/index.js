@@ -3,14 +3,16 @@ const dbConfig = require('../../database/index')
 
 module.exports = {
     create: async (req, res) => {
+        let connection
         try {
             const orgId = req.params.org
             const moduleName = req.body.name
             if (!orgId || !moduleName) {
                 return res.status(400).json({ error: "Missing orgId or moduleName in request" });
-            } 
-            const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
+            }
+            connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
             let moduleNameApi = moduleName.replace(/[^\w\s]|[\sç]/gi, '_').toLowerCase();
+            await connection.beginTransaction();
             const query = `CREATE TABLE IF NOT EXISTS ${moduleNameApi} (
                 id VARCHAR(19) PRIMARY KEY,
                 related_id VARCHAR(255),
@@ -27,14 +29,23 @@ module.exports = {
             await connection.execute(query2);
             await connection.execute(
                 'INSERT INTO modules (name) VALUES (?);',
-                [ moduleName ]
+                [moduleName]
             );
-
             const [result] = await connection.execute(query);
-            await connection.end();
+
+            await connection.commit();
+            // await connection.end();
+
             res.json({ success: true, message: "Table created successfully", result });
         } catch (error) {
+            if (connection) {
+                await connection.rollback();
+            }
             res.status(500).json({ error: error.message });
+        } finally {
+            if (connection) {
+                await connection.end();
+            }
         }
     },
     // read: async (req, res) => {

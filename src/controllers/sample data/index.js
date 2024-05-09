@@ -33,13 +33,12 @@ module.exports = {
             const queryModules = `CREATE TABLE IF NOT EXISTS modules (
             id INT PRIMARY KEY AUTO_INCREMENT,
             name VARCHAR(255),
-            api_name VARCHAR(255),
             perfil VARCHAR(2000),
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )`;
             await connection.execute(queryModules);
-            await connection.execute('INSERT INTO modules (name, api_name) VALUES ("Clientes", "Clientes"), ("Produtos", "Produtos"), ("Pedidos", "Pedidos");');
+            await connection.execute('INSERT INTO modules (name) VALUES ("Clientes"),("Produtos"),("Pedidos");');
 
             const [resultClientes] = await connection.execute(queryClientes);
             const [resultProdutos] = await connection.execute(queryProdutos);

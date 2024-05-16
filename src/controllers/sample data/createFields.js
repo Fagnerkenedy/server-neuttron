@@ -5,6 +5,7 @@ module.exports = {
             let { related_module } = field
             let { related_id } = field
             let { field_type } = field
+            let { options } = field
             if (!field.hasOwnProperty("related_module")) {
                 related_module = null
             }
@@ -13,6 +14,9 @@ module.exports = {
             }
             if (!field.hasOwnProperty("field_type")) {
                 field_type = null
+            }
+            if (!field.hasOwnProperty("options")) {
+                options = null
             }
             let apiName = name.replace(/[^\w\s]|[\sç]/gi, '_').toLowerCase();
             const query = `CREATE TABLE IF NOT EXISTS fields (
@@ -28,6 +32,24 @@ module.exports = {
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )`;
             await connection.execute(query);
+
+            const queryOptions = `CREATE TABLE IF NOT EXISTS options (
+                id INT PRIMARY KEY AUTO_INCREMENT,
+                name VARCHAR(255),
+                field_api_name VARCHAR(255),
+                module VARCHAR(255),
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )`;
+            await connection.execute(queryOptions);
+            if (options != null) {
+                for (const option of options) {
+                    console.log("optionsssss",option)
+
+                    await connection.execute(`INSERT INTO options (name, field_api_name, module) VALUES (?, ?, ?);`, [option, apiName, module]);
+                }
+            }
+
             const [insertResult1] = await connection.execute(`INSERT INTO fields (name, api_name, type, field_type, related_module, related_id, module) VALUES (?, ?, ?, ?, ?, ?, ?);`, [name, apiName, type, field_type, related_module, related_id, module]);
 
             const queryModulosRelacionados = `CREATE TABLE IF NOT EXISTS modulos_relacionados (

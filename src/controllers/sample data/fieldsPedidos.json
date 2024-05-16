@@ -28,7 +28,8 @@
     {
         "name": "Status",
         "type": "VARCHAR(255)",
-        "field_type": "select"
+        "field_type": "select",
+        "options": ["Pago", "Pendente"]
     },
     {
         "name": "Data de Entrega",

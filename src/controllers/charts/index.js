@@ -11,6 +11,7 @@ module.exports = {
             const query = req.body.query
             const xField = req.body.xField
             const yField = req.body.yField
+            const type = req.body.type
 
             connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
             await connection.beginTransaction();
@@ -19,12 +20,13 @@ module.exports = {
                 name VARCHAR(255),
                 query VARCHAR(2000),
                 xField VARCHAR(255),
-                yField VARCHAR(255)
+                yField VARCHAR(255),
+                type VARCHAR(255)
             )`;
             await connection.execute(queryCharts);
             const [result] = await connection.execute(
-                'INSERT INTO charts (name, query, xField, yField) VALUES (?, ?, ?, ?);',
-                [name, query, xField, yField]
+                'INSERT INTO charts (name, query, xField, yField, type) VALUES (?, ?, ?, ?, ?);',
+                [name, query, xField, yField, type]
             );
 
             await connection.commit();

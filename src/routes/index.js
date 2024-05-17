@@ -5,6 +5,7 @@ const moduleController = require("../controllers/module/index.js");
 const fieldController = require("../controllers/fields/index.js");
 const recordController = require("../controllers/records/index.js");
 const uploadController = require("../controllers/uploads/index.js");
+const chartController = require("../controllers/charts/index.js");
 const authMiddleware = require('../middleware/auth')
 
 // Modulos

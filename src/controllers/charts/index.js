@@ -51,14 +51,15 @@ module.exports = {
             await connection.beginTransaction();
             const query = `SELECT * FROM charts;`
             let [result] = await connection.execute(query);
-            const dataChart = await Promise.all(result.map(async (item) => {
-                const result = await connection.execute(item.query);
-                return result
+            result = await Promise.all(result.map(async (item) => {
+                const [result] = await connection.execute(item.query);
+                const json = {
+                    query: item,
+                    data: result
+                }
+                return json
             }));
-            result = {
-                query: result,
-                data: dataChart[0][0]
-            }
+
             await connection.commit();
             res.json({ success: true, message: "Charts", result });
             

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const cors = require("cors");
-const chartController = require("../controllers/charts")
+const settingsController = require("../controllers/settings")
 const authMiddleware = require('../middleware/auth')
 
 router.use(express.urlencoded({ extended: false }));
@@ -10,8 +10,8 @@ router.use(cors());
 
 router.get('/', (req, res) => {res.status(200).json( {success: true, message: "You're Lost, There's Nothing Here!"})})
 
-// Charts Routes
-router.post("/:org/create", authMiddleware.auth, chartController.create);
-router.get("/:org", authMiddleware.auth, chartController.read);
+// Settings Routes
+router.post("/:org/create", authMiddleware.auth, settingsController.create);
+router.get("/:org/:module", authMiddleware.auth, settingsController.read);
 
 module.exports = router

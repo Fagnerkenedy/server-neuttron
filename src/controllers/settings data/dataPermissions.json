@@ -1,0 +1,114 @@
+[
+    {
+        "action": "read",
+        "subject": "profiles"
+    },
+    {
+        "action": "create",
+        "subject": "profiles"
+    },
+    {
+        "action": "update",
+        "subject": "profiles"
+    },
+    {
+        "action": "delete",
+        "subject": "profiles"
+    },
+    {
+        "action": "read",
+        "subject": "users"
+    },
+    {
+        "action": "create",
+        "subject": "users"
+    },
+    {
+        "action": "update",
+        "subject": "users"
+    },
+    {
+        "action": "delete",
+        "subject": "users"
+    },
+    {
+        "action": "read",
+        "subject": "functions"
+    },
+    {
+        "action": "create",
+        "subject": "functions"
+    },
+    {
+        "action": "update",
+        "subject": "functions"
+    },
+    {
+        "action": "delete",
+        "subject": "functions"
+    },
+    {
+        "action": "read",
+        "subject": "modules"
+    },
+    {
+        "action": "create",
+        "subject": "modules"
+    },
+    {
+        "action": "update",
+        "subject": "modules"
+    },
+    {
+        "action": "delete",
+        "subject": "modules"
+    },
+    {
+        "action": "read",
+        "subject": "Clientes"
+    },
+    {
+        "action": "create",
+        "subject": "Clientes"
+    },
+    {
+        "action": "update",
+        "subject": "Clientes"
+    },
+    {
+        "action": "delete",
+        "subject": "Clientes"
+    },
+    {
+        "action": "read",
+        "subject": "Produtos"
+    },
+    {
+        "action": "create",
+        "subject": "Produtos"
+    },
+    {
+        "action": "update",
+        "subject": "Produtos"
+    },
+    {
+        "action": "delete",
+        "subject": "Produtos"
+    },
+    {
+        "action": "read",
+        "subject": "Pedidos"
+    },
+    {
+        "action": "create",
+        "subject": "Pedidos"
+    },
+    {
+        "action": "update",
+        "subject": "Pedidos"
+    },
+    {
+        "action": "delete",
+        "subject": "Pedidos"
+    }
+]

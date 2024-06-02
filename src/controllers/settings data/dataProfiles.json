@@ -1,0 +1,10 @@
+[
+    {
+        "perfil": "Administrador",
+        "descri__o": "Administrador do sistema"
+    },
+    {
+        "perfil": "Padrão",
+        "descri__o": "Usuário padrão do sistema"
+    }
+]

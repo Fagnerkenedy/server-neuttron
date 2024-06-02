@@ -6,6 +6,7 @@ const mysql = require('mysql2/promise');
 const dbConfig = require('../../database/index')
 const authConfig = require('../../config/auth.json')
 const {sampleData} = require('../sample data/index')
+const {settingsData} = require('../settings data/index')
 
 module.exports = {
     registerOrg: async (req, res) => {
@@ -65,8 +66,10 @@ module.exports = {
             const user_id = gerarHash(JSON.stringify({ empresa, name, email, phone }));
             const hashedPassword = await bcrypt.hash(password, 10);
 
+            await settingsData(orgId, user_id)
+            
             const org = await connection2.execute(`INSERT INTO organizations SET orgId = ?, name = ?, email = ?, phone = ?;`, [orgId, empresa, email, phone]);
-            const user = await connection2.execute(`INSERT INTO users SET id = ?, orgId = ?, name = ?, email = ?, phone = ?, password = ?, dark_mode = ?;`, [user_id, orgId, name, email, phone, hashedPassword, false]);
+            const user = await connection2.execute(`INSERT INTO users SET id = ?, orgId = ?, name = ?, email = ?, phone = ?, password = ?, dark_mode = ?, perfil = 'Administrador';`, [user_id, orgId, name, email, phone, hashedPassword, false]);
 
             await connection2.end();
             user.password = undefined
@@ -94,6 +97,7 @@ module.exports = {
             const userTable = await connection2.execute(`CREATE TABLE IF NOT EXISTS users (
                 id VARCHAR(19) PRIMARY KEY,
                 name VARCHAR(255),
+                last_name VARCHAR(255),
                 email VARCHAR(255),
                 password VARCHAR(255),
                 phone VARCHAR(255),
@@ -144,7 +148,10 @@ module.exports = {
                 return res.status(200).json({ success: false, message: 'user_not_found' })
 
             const connection = await mysql.createConnection({ ...dbConfig, database: `org${userNeuttron.orgId}` });
-            const [row] = await connection.execute('SELECT email, password, dark_mode, name FROM users WHERE email = ?;', [email])
+            
+            const [row] = await connection.execute('SELECT email, password, dark_mode, name, id FROM users WHERE email = ?;', [email])
+            // await settingsData(userNeuttron.orgId)
+            // await settingsData(userNeuttron.orgId, row[0].id)
             await connection.end();
 
             const user = row[0];
@@ -156,7 +163,7 @@ module.exports = {
             const org = `org${userNeuttron.orgId}`
             if (match) {
                 user.password = undefined;
-                const token = jwt.sign({ orgId: user.orgId }, authConfig.secret, {
+                const token = jwt.sign({ orgId: user.orgId, userId: user.id }, authConfig.secret, {
                     expiresIn: 604800,
                 });
 

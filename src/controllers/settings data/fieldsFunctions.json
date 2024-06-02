@@ -1,0 +1,23 @@
+[
+    {
+        "name": "Nome",
+        "type": "VARCHAR(255)"
+    },
+    {
+        "name": "Módulo",
+        "type": "VARCHAR(255)",
+        "field_type": "loockup",
+        "related_module": "modules"
+    },
+    {
+        "name": "Função",
+        "type": "TEXT",
+        "field_type": "function"
+    },
+    {
+        "name": "Executar quando",
+        "type": "VARCHAR(255)",
+        "field_type": "select",
+        "options": ["Criar", "Criar ou editar", "Editar", "Excluir"]
+    }
+]

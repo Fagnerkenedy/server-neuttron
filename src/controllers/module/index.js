@@ -1,5 +1,6 @@
 const mysql = require('mysql2/promise');
-const dbConfig = require('../../database/index')
+const dbConfig = require('../../database/index');
+const { createProfilesPermissions, createPermissions } = require('../settings data/createPermissions');
 
 module.exports = {
     create: async (req, res) => {
@@ -33,6 +34,24 @@ module.exports = {
                 [moduleName, moduleNameApi]
             );
             const [result] = await connection.execute(query);
+
+            const insertDataPermissions = await createPermissions(req={ params: { org: orgId}, body: [{action: 'read', subject: moduleNameApi},{action: 'create', subject: moduleNameApi},{action: 'update', subject: moduleNameApi},{action: 'delete', subject: moduleNameApi}] })
+
+            const [idProfile] = await connection.execute(
+                `SELECT id FROM profiles WHERE perfil = 'Administrador';`
+            );
+
+            for(const id_permission of insertDataPermissions) {
+                const req = {
+                    params: { org: orgId},
+                    body: {
+                        id_profile: idProfile[0].id,
+                        id_permission: id_permission
+                    }
+                }
+                const createPP = await createProfilesPermissions(req)
+                console.log("createPP", createPP)
+            }
 
             await connection.commit();
             // await connection.end();

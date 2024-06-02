@@ -1,6 +1,7 @@
 const mysql = require('mysql2/promise');
 const dbConfig = require('../../database/index')
 const crypto = require('crypto');
+const { executeCustomFunctions } = require('../customFunctions/customFunctions');
 
 module.exports = {
     create: async (req, res) => {
@@ -26,7 +27,12 @@ module.exports = {
             const inserts = [];
 
             for (const obj of data) {
+                console.log("obj",obj)
                 const record_id = gerarHash(JSON.stringify({ orgId, module, obj }));
+                // await executeCustomFunctions('Criar', orgId, module, obj, record_id, obj.related_record )
+                let related_record = null
+                if (obj.hasOwnProperty("related_record")) related_record = obj.related_record
+                delete obj.related_record
                 const fieldNames = Object.keys(obj).join(', ');
                 const fieldValues = Object.values(obj);
                 if (fieldValues.length === 0) {
@@ -36,9 +42,21 @@ module.exports = {
                 const query = `INSERT INTO ${module} (id, ${fieldNames}) VALUES (?, ${placeholders})`;
                 const [insertRow] = await connection.execute(query, [record_id, ...fieldValues]);
                 inserts.push({ record_id, ...insertRow[0] });
+                [obj].forEach(item => {
+                    if (related_record != null) {
+                        for (let key in item) {
+                            if (related_record[key]) {
+                                item[key] = related_record[key];
+                            }
+                        }
+                    }
+                });                
+                console.log("asduasdhj",obj)
+                await executeCustomFunctions('Criar', orgId, module, obj, record_id )
             }
 
             const row = await Promise.all(inserts);
+
 
             await connection.end();
             res.json(row[0]);
@@ -100,19 +118,15 @@ module.exports = {
             const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
             
             const [row] = await connection.execute(`SELECT module_id, module_name FROM modulos_relacionados WHERE related_id = ? AND module_name = ?;`, [related_id, module]);
-            console.log("rowowowowow", row)
 
             const recordsPromises = row.map(async (result) => {
-                console.log("registro 1", result)
                 const [row2] = await connection.execute(`SELECT * FROM ${result.module_name} WHERE id = ?;`, [result.module_id]);
-                console.log("fasdas", row2)
                 return row2[0];
             });
     
             let records = await Promise.all(recordsPromises);
             records = records.filter(record => !!record);
             await connection.end();
-            console.log("records",records)
 
             res.json(records);
         } catch (error) {
@@ -127,7 +141,6 @@ module.exports = {
             const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
             
             const [row] = await connection.execute(`SELECT related_id FROM modulos_relacionados WHERE module_id = ? AND related_module = ?;`, [module_id, module]);
-            console.log("rowowowowow", row)
 
             // const recordsPromises = row.map(async (result) => {
             //     console.log("registro 1", result)
@@ -139,7 +152,6 @@ module.exports = {
             // let records = await Promise.all(recordsPromises);
             // records = records.filter(record => !!record);
             await connection.end();
-            // console.log("records",records)
 
             res.json(row);
         } catch (error) {
@@ -161,15 +173,26 @@ module.exports = {
 
             // Itera sobre cada objeto no array de dados e insere no banco de dados
             for (const obj of data) {
-                // const fieldNames = Object.keys(obj).join(', '); // Obtenha os nomes dos campos
-                const fieldValues = Object.values(obj); // Obtenha os valores dos campos
-                if (fieldValues.length === 0) {
-                    continue; // Se não houver valores, passe para o próximo objeto
-                }
+                let related_record = null
+                if (obj.hasOwnProperty("related_record")) related_record = obj.related_record
+                delete obj.related_record
+                const fieldValues = Object.values(obj)
+                if (fieldValues.length === 0) continue
                 const setClause = Object.entries(obj).map(([fieldName, fieldValue]) => `${fieldName} = ?`).join(', ');
                 const query = `UPDATE ${module} SET ${setClause} WHERE id = ?`;
                 const [updateRow] = await connection.execute(query, [...fieldValues, record_id]);
                 update.push({ ...updateRow[0] });
+                [obj].forEach(item => {
+                    if (related_record != null) {
+                        for (let key in item) {
+                            if (related_record[key]) {
+                                item[key] = related_record[key];
+                            }
+                        }
+                    }
+                })
+                console.log("update obj: ",obj)
+                await executeCustomFunctions('Editar', orgId, module, obj, record_id)
             }
 
             const row = await Promise.all(update);

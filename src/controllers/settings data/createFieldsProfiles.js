@@ -1,11 +1,12 @@
 module.exports = {
-    createFields: async (fields, connection, orgId, module) => {
+    createFieldsProfiles: async (fields, connection, orgId, module) => {
         const insertPromises = fields.map(async (field) => {
             const { name, type } = field;
             let { related_module } = field
             let { related_id } = field
             let { field_type } = field
             let { options } = field
+            // let { apiName } = field
             if (!field.hasOwnProperty("related_module")) {
                 related_module = null
             }
@@ -18,6 +19,9 @@ module.exports = {
             if (!field.hasOwnProperty("options")) {
                 options = null
             }
+            // if (!field.hasOwnProperty("apiName")) {
+            //     apiName = null
+            // }
             let apiName = name.replace(/[^\w\s]|[\sç]/gi, '_').toLowerCase();
             const query = `CREATE TABLE IF NOT EXISTS fields (
             id INT PRIMARY KEY AUTO_INCREMENT,
@@ -42,6 +46,7 @@ module.exports = {
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )`;
             await connection.execute(queryOptions);
+
             if (options != null) {
                 for (const option of options) {
                     await connection.execute(`INSERT INTO options (name, field_api_name, module) VALUES (?, ?, ?);`, [option, apiName, module]);
@@ -61,15 +66,18 @@ module.exports = {
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )`;
             await connection.execute(queryModulosRelacionados);
+            
             if (related_module != null) {
                 await connection.execute(`INSERT INTO modulos_relacionados (related_module, related_id, module_name, api_name) VALUES (?, ?, ?, ?);`, [related_module, related_id, module, apiName]);
             }
+
             const table = await connection.execute(`SELECT column_name
                 FROM information_schema.columns
                 WHERE table_schema = '${orgId}'
                 AND table_name = '${module}'
                 AND column_name = '${apiName}';
                 `);
+
             if (table[0][0] == null) {
                 const [insertResult] = await connection.execute(`ALTER TABLE ${module} ADD ${apiName} ${type};`);
 

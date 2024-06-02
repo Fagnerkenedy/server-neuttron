@@ -53,11 +53,8 @@ module.exports = {
                     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )`;
                 await connection.execute(queryOptions);
-                console.log("optionsssss",options)
                 if (options != null) {
                     for (const option of options) {
-                        console.log("optionsssss",option)
-
                         await connection.execute(`INSERT INTO options (name, field_api_name, module) VALUES (?, ?, ?);`, [option, apiName, module]);
                     }
                 }
@@ -128,7 +125,6 @@ module.exports = {
             const orgId = req.params.org
             const moduleName = req.params.module
             const related_id = req.params.record_id
-            console.log("body", related_id)
             const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
             const row = await connection.execute(`SELECT DISTINCT module_name FROM modulos_relacionados WHERE related_module = ? AND related_id = ?;`, [moduleName, related_id]);
             await connection.end();
@@ -214,10 +210,8 @@ module.exports = {
             const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
 
             const [row] = await connection.execute(`UPDATE modulos_relacionados SET related_id = ? WHERE module_id = ? AND related_module = ?;`, [related_id, module_id, related_module]);
-            console.log("teste", row)
             insertRow = null
             if (row.affectedRows === 0) {
-                console.log("teste")
                 const [insertResult] = await connection.execute(`INSERT INTO modulos_relacionados (related_id, module_id, related_module, module_name) VALUES (?, ?, ?, ?);`, [related_id, module_id, related_module, moduleName]);
                 insertRow = insertResult
             }

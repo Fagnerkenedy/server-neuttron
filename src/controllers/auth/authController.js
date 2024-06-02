@@ -151,7 +151,7 @@ module.exports = {
             
             const [row] = await connection.execute('SELECT email, password, dark_mode, name, id FROM users WHERE email = ?;', [email])
             // await settingsData(userNeuttron.orgId)
-            await settingsData(userNeuttron.orgId, row[0].id)
+            // await settingsData(userNeuttron.orgId, row[0].id)
             await connection.end();
 
             const user = row[0];

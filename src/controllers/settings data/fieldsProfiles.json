@@ -1,11 +1,21 @@
 [
     {
-        "name": "Perfil",
-        "type": "VARCHAR(255)"
-    },
-    {
-        "name": "Descrição",
-        "type": "TEXT(16000)",
-        "field_type": "multi_line"
+        "id": "51456146",
+        "name": "Informações Perfil",
+        "fields": {
+            "left": [
+                {
+                    "name": "Perfil",
+                    "type": "VARCHAR(255)"
+                }
+            ],
+            "right": [
+                {
+                    "name": "Descrição",
+                    "type": "TEXT(16000)",
+                    "field_type": "multi_line"
+                }
+            ]
+        }
     }
 ]

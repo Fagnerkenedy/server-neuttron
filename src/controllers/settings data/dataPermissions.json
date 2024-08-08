@@ -65,6 +65,22 @@
     },
     {
         "action": "read",
+        "subject": "charts"
+    },
+    {
+        "action": "create",
+        "subject": "charts"
+    },
+    {
+        "action": "update",
+        "subject": "charts"
+    },
+    {
+        "action": "delete",
+        "subject": "charts"
+    },
+    {
+        "action": "read",
         "subject": "Clientes"
     },
     {

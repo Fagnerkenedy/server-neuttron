@@ -12,6 +12,7 @@ module.exports = {
     registerOrg: async (req, res) => {
         console.log("Registrando organização e usuário administrador")
         const { empresa, email, name, phone, password } = req.body
+
         try {
             const connection = await mysql.createConnection(dbConfig);
             const gerarHashOrg = (dados) => {
@@ -50,6 +51,7 @@ module.exports = {
                 phone VARCHAR(255),
                 orgId VARCHAR(255),
                 dark_mode BOOLEAN,
+                perfil VARCHAR(255),
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (orgId) REFERENCES organizations(orgId)

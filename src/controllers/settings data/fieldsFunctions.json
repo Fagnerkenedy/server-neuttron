@@ -1,23 +1,33 @@
 [
     {
-        "name": "Nome",
-        "type": "VARCHAR(255)"
-    },
-    {
-        "name": "Módulo",
-        "type": "VARCHAR(255)",
-        "field_type": "loockup",
-        "related_module": "modules"
-    },
-    {
-        "name": "Função",
-        "type": "TEXT",
-        "field_type": "function"
-    },
-    {
-        "name": "Executar quando",
-        "type": "VARCHAR(255)",
-        "field_type": "select",
-        "options": ["Criar", "Criar ou editar", "Editar", "Excluir"]
+        "id": "7bc84946",
+        "name": "Função Personalizada",
+        "fields": {
+            "left": [
+                {
+                    "name": "Nome",
+                    "type": "VARCHAR(255)"
+                },
+                {
+                    "name": "Módulo",
+                    "type": "VARCHAR(255)",
+                    "field_type": "loockup",
+                    "related_module": "modules"
+                },
+                {
+                    "name": "Executar quando",
+                    "type": "VARCHAR(255)",
+                    "field_type": "select",
+                    "options": ["Criar", "Criar ou editar", "Editar", "Excluir"]
+                }
+            ],
+            "right": [
+                {
+                    "name": "Função",
+                    "type": "TEXT",
+                    "field_type": "function"
+                }
+            ]
+        }
     }
 ]

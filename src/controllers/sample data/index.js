@@ -6,7 +6,8 @@ const fieldsProdutos = require('./fieldsProdutos.json')
 const fieldsPedidos = require('./fieldsPedidos.json')
 const {insertData} = require('./insertData')
 const dataClientes = require('./dataClientes.json')
-const dataProdutos = require('./dataProdutos.json')
+const dataProdutos = require('./dataProdutos.json');
+const { createSectionFields } = require('../../utility/functions');
 
 module.exports = {
     sampleData: async (orgId) => {
@@ -46,9 +47,13 @@ module.exports = {
             const [resultPedidos] = await connection.execute(queryPedidos);
 
 
-            const createFieldsClientes = await createFields(fieldsClientes, connection, orgId, 'Clientes')
-            const createFieldsProdutos = await createFields(fieldsProdutos, connection, orgId, 'Produtos')
-            const createFieldsPedidos = await createFields(fieldsPedidos, connection, orgId, 'Pedidos')
+            // const createFieldsClientes = await createFields(fieldsClientes, connection, orgId, 'Clientes')
+            // const createFieldsProdutos = await createFields(fieldsProdutos, connection, orgId, 'Produtos')
+            // const createFieldsPedidos = await createFields(fieldsPedidos, connection, orgId, 'Pedidos')
+
+            const createFieldsClientes = await createSectionFields(fieldsClientes, connection, orgId, 'Clientes')
+            const createFieldsProdutos = await createSectionFields(fieldsProdutos, connection, orgId, 'Produtos')
+            const createFieldsPedidos = await createSectionFields(fieldsPedidos, connection, orgId, 'Pedidos')
 
             const insertDataClientes = await insertData(dataClientes, connection, orgId, 'Clientes')
             const insertDataProdutos = await insertData(dataProdutos, connection, orgId, 'Produtos')

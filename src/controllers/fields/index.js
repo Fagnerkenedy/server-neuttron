@@ -39,6 +39,7 @@ module.exports = {
                     related_module VARCHAR(255),
                     related_id VARCHAR(255),
                     module VARCHAR(255),
+                    unused BOOLEAN,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )`;
@@ -101,6 +102,18 @@ module.exports = {
             const module = req.params.module
             const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
             const row = await connection.execute('SELECT * FROM fields WHERE module = ?;', [module]);
+            await connection.end();
+            res.json(row[0]);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+    readUnusedFields: async (req, res) => {
+        try {
+            const orgId = req.params.org
+            const module = req.params.module
+            const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
+            const row = await connection.execute('SELECT * FROM fields WHERE module = ? AND unused = true;', [module]);
             await connection.end();
             res.json(row[0]);
         } catch (error) {
@@ -173,6 +186,60 @@ module.exports = {
 
             const row = await Promise.all(update);
             await connection.execute(`ALTER TABLE ${module} RENAME COLUMN  ${api_name} TO ${newName == null ? api_name : newName}`);
+            await connection.end();
+            res.json(row[0]);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+    updateUnusedFields: async (req, res) => {
+        try {
+            const orgId = req.params.org
+            const module = req.params.module
+            const name = req.body.name
+            const newName = req.body.new_name
+            const field = req.body
+            let { id } = field
+            let { related_id } = field
+            let { api_name } = field
+            let { unused } = field
+            let data = req.body;
+            if (!Array.isArray(data)) {
+                data = [data];
+            }
+            if (!field.hasOwnProperty("id")) {
+                id = null
+            }
+            if (!field.hasOwnProperty("related_id")) {
+                related_id = null
+            }
+            if (!field.hasOwnProperty("api_name")) {
+                api_name = null
+            }
+            if (!field.hasOwnProperty("unused")) {
+                unused = null
+            }
+            const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
+
+            const update = [];
+
+            for (const obj of data) {
+                const query = `UPDATE fields SET unused = ? WHERE id = ?;`;
+                const [updateRow] = await connection.execute(query, [obj.unused, obj.id]);
+                update.push({ ...updateRow[0] });
+            }
+
+            const row = await Promise.all(update);
+
+            const update2 = [];
+            for (const obj of data) {
+                const query = `DELETE FROM section_fields WHERE field_id = ?;`;
+                const [updateRow] = await connection.execute(query, [obj.id]);
+                update2.push({ ...updateRow[0] });
+            }
+
+            const row2 = await Promise.all(update2);
+
             await connection.end();
             res.json(row[0]);
         } catch (error) {

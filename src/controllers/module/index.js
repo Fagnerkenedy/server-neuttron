@@ -49,8 +49,7 @@ module.exports = {
                         id_permission: id_permission
                     }
                 }
-                const createPP = await createProfilesPermissions(req)
-                console.log("createPP", createPP)
+                await createProfilesPermissions(req)
             }
 
             await connection.commit();

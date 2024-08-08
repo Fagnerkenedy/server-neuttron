@@ -9,12 +9,15 @@ const {insertData} = require('./insertData')
 const dataProfiles = require('./dataProfiles.json')
 const dataPermissions = require('./dataPermissions.json');
 const { createProfilesPermissions, createPermissions } = require('./createPermissions');
+const { createSectionFields } = require('../../utility/functions');
 
 module.exports = {
     settingsData: async (orgId, userId) => {
         let connection
         try {
             connection = await mysql.createConnection({ ...dbConfig, database: `org${orgId}` });
+            console.log("dbConfig dbConfig: ",dbConfig)
+
             await connection.beginTransaction();
             const queryCharts = `CREATE TABLE IF NOT EXISTS charts (
                 id INT PRIMARY KEY AUTO_INCREMENT,
@@ -28,14 +31,19 @@ module.exports = {
             await connection.execute(`CREATE TABLE IF NOT EXISTS profiles (
                 id VARCHAR(19) PRIMARY KEY,
                 orgId VARCHAR(255),
+                perfil VARCHAR(255),
+                descri__o TEXT,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (orgId) REFERENCES organizations(orgId)
             );`);
 
-            await createFieldsProfiles(fieldsProfiles, connection, `org${orgId}`, 'profiles')
+            // await createFieldsProfiles(fieldsProfiles, connection, `org${orgId}`, 'profiles')
             const insertDataProfiles = await insertData(dataProfiles, connection, `org${orgId}`, 'profiles')
-            await createFields(fieldsUsers, connection, `org${orgId}`, 'users', insertDataProfiles[0].record_id, userId)
+            // await createFields(fieldsUsers, connection, `org${orgId}`, 'users', insertDataProfiles[0].record_id, userId)
+
+            await createSectionFields(fieldsProfiles, connection, `org${orgId}`, 'profiles')
+            await createSectionFields(fieldsUsers, connection, `org${orgId}`, 'users', insertDataProfiles[0].record_id, userId)
 
             await connection.execute(`CREATE TABLE IF NOT EXISTS permissions (
                 id INT PRIMARY KEY AUTO_INCREMENT,
@@ -69,7 +77,9 @@ module.exports = {
                 trigger_event ENUM('onCreate', 'onUpdate', 'onCreateOrOnUpdate', 'onDelete') NOT NULL,
                 body TEXT
             );`)
-            const functionss = await createFieldsProfiles(fieldsFunctions, connection, `org${orgId}`, 'functions')
+            // const functionss = await createFieldsProfiles(fieldsFunctions, connection, `org${orgId}`, 'functions')
+            const functionss = await createSectionFields(fieldsFunctions, connection, `org${orgId}`, 'functions')
+
             console.log("functuions", functionss)
             await connection.end();
         } catch (error) {

@@ -1,55 +1,69 @@
 [
     {
-        "name": "Nome",
-        "type": "VARCHAR(255)",
-        "apiName": "name"
-    },
-    {
-        "name": "Sobrenome",
-        "type": "VARCHAR(255)",
-        "alter_table": true,
-        "apiName": "last_name"
-    },
-    {
-        "name": "E-mail",
-        "type": "VARCHAR(255)",
-        "field_type": "email",
-        "apiName": "email"
-    },
-    {
-        "name": "Celular",
-        "type": "VARCHAR(255)",
-        "field_type": "phone",
-        "apiName": "phone"
-    },
-    {
-        "name": "Perfil",
-        "type": "VARCHAR(255)",
-        "field_type": "loockup",
-        "related_module": "profiles",
-        "alter_table": true,
-        "apiName": "perfil"
-    },
-    {
-        "name": "Data de nascimento",
-        "type": "VARCHAR(255)",
-        "field_type": "date",
-        "alter_table": true,
-        "apiName": "Data_de_nascimento"
-    },
-    {
-        "name": "Gênero",
-        "type": "VARCHAR(255)",
-        "field_type": "select",
-        "options": ["Masculino", "Feminino", "Prefiro não dizer"],
-        "alter_table": true,
-        "apiName": "genero"
-    },
-    {
-        "name": "Enviar e-mail de notificação",
-        "type": "VARCHAR(255)",
-        "field_type": "checkbox",
-        "alter_table": true,
-        "apiName": "notification"
+        "id": "51264946",
+        "name": "Informações Usuário",
+        "fields": {
+            "left": [
+                {
+                    "name": "Nome",
+                    "type": "VARCHAR(255)",
+                    "apiName": "name"
+                },
+                {
+                    "name": "E-mail",
+                    "type": "VARCHAR(255)",
+                    "field_type": "email",
+                    "apiName": "email"
+                },
+                {
+                    "name": "Perfil",
+                    "type": "VARCHAR(255)",
+                    "field_type": "loockup",
+                    "related_module": "profiles",
+                    "alter_table": true,
+                    "apiName": "perfil"
+                },
+                {
+                    "name": "Enviar e-mail de notificação",
+                    "type": "VARCHAR(255)",
+                    "field_type": "checkbox",
+                    "alter_table": true,
+                    "apiName": "notification"
+                }
+            ],
+            "right": [
+                {
+                    "name": "Sobrenome",
+                    "type": "VARCHAR(255)",
+                    "alter_table": true,
+                    "apiName": "last_name"
+                },
+                {
+                    "name": "Celular",
+                    "type": "VARCHAR(255)",
+                    "field_type": "phone",
+                    "apiName": "phone"
+                },
+                {
+                    "name": "Data de nascimento",
+                    "type": "VARCHAR(255)",
+                    "field_type": "date",
+                    "alter_table": true,
+                    "apiName": "Data_de_nascimento"
+                },
+                {
+                    "name": "Gênero",
+                    "type": "VARCHAR(255)",
+                    "field_type": "select",
+                    "options": [
+                        "Masculino",
+                        "Feminino",
+                        "Prefiro não dizer"
+                    ],
+                    "alter_table": true,
+                    "apiName": "genero"
+                }
+            ]
+        }
     }
 ]

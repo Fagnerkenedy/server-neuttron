@@ -18,9 +18,11 @@ router.delete("/:org/module", authMiddleware.auth,                              
 // Campos
 router.post("/:org/:module/field", authMiddleware.auth,                              authorize('create'), fieldController.create);
 router.get("/:org/:module/fields", authMiddleware.auth,                              authorize('read'), fieldController.read);
+router.get("/:org/:module/unused_fields", authMiddleware.auth,                       authorize('read'), fieldController.readUnusedFields);
 router.get("/:org/:module/field/:api_name", authMiddleware.auth,                     authorize('read'), fieldController.readOptions);
 router.get("/:org/:module/relatedField/:record_id", authMiddleware.auth,             authorize('read'), fieldController.readRelatedField);
 router.put("/:org/:module/field", authMiddleware.auth,                               authorize('update'), fieldController.update);
+router.put("/:org/:module/unused_field", authMiddleware.auth,                        authorize('update'), fieldController.updateUnusedFields);
 router.put("/:org/:module/relatedField", authMiddleware.auth,                        authorize('update'), fieldController.updateRelatedField);
 router.delete("/:org/:module/field", authMiddleware.auth,                            authorize('delete'), fieldController.delete);
 

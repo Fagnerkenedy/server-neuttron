@@ -32,6 +32,7 @@ module.exports = {
             related_module VARCHAR(255),
             related_id VARCHAR(255),
             module VARCHAR(255),
+            unused BOOLEAN,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )`;

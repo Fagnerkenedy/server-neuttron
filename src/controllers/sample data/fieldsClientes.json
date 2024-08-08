@@ -1,25 +1,35 @@
 [
     {
-        "name": "Nome Cliente",
-        "type": "VARCHAR(255)"
-    },
-    {
-        "name": "E-mail",
-        "type": "VARCHAR(255)",
-        "field_type": "email"
-    },
-    {
-        "name": "Celular",
-        "type": "VARCHAR(255)",
-        "field_type": "phone"
-    },
-    {
-        "name": "Data de Aniversário",
-        "type": "VARCHAR(255)",
-        "field_type": "date"
-    },
-    {
-        "name": "Cidade",
-        "type": "VARCHAR(255)"
+        "id": "64516541",
+        "name": "Informações Clientes",
+        "fields": {
+            "left": [
+                {
+                    "name": "Nome Cliente",
+                    "type": "VARCHAR(255)"
+                },
+                {
+                    "name": "Celular",
+                    "type": "VARCHAR(255)",
+                    "field_type": "phone"
+                },
+                {
+                    "name": "Cidade",
+                    "type": "VARCHAR(255)"
+                }
+            ],
+            "right": [
+                {
+                    "name": "E-mail",
+                    "type": "VARCHAR(255)",
+                    "field_type": "email"
+                },
+                {
+                    "name": "Data de Aniversário",
+                    "type": "VARCHAR(255)",
+                    "field_type": "date"
+                }
+            ]
+        }
     }
 ]

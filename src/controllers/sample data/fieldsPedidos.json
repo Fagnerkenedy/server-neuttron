@@ -1,54 +1,67 @@
 [
     {
-        "name": "Nome Pedido",
-        "type": "VARCHAR(255)"
-    },
-    {
-        "name": "Data do Pedido",
-        "type": "VARCHAR(255)",
-        "field_type": "date"
-    },
-    {
-        "name": "Nome Cliente",
-        "type": "VARCHAR(255)",
-        "field_type": "loockup",
-        "related_module": "Clientes"
-    },
-    {
-        "name": "Nome Produto",
-        "type": "VARCHAR(255)",
-        "field_type": "loockup",
-        "related_module": "Produtos"
-    },
-    {
-        "name": "Entregue?",
-        "type": "VARCHAR(255)",
-        "field_type": "checkbox"
-    },
-    {
-        "name": "Status",
-        "type": "VARCHAR(255)",
-        "field_type": "select",
-        "options": ["Pago", "Pendente"]
-    },
-    {
-        "name": "Data de Entrega",
-        "type": "VARCHAR(255)",
-        "field_type": "date"
-    },
-    {
-        "name": "Quantidade",
-        "type": "VARCHAR(255)",
-        "field_type": "number"
-    },
-    {
-        "name": "Valor Unitário",
-        "type": "VARCHAR(255)",
-        "field_type": "currency"
-    },
-    {
-        "name": "Valor Total",
-        "type": "VARCHAR(255)",
-        "field_type": "currency"
+        "id": "52sdf552",
+        "name": "Informações Pedidos",
+        "fields": {
+            "left": [
+                {
+                    "name": "Nome Pedido",
+                    "type": "VARCHAR(255)"
+                },
+                {
+                    "name": "Nome Cliente",
+                    "type": "VARCHAR(255)",
+                    "field_type": "loockup",
+                    "related_module": "Clientes"
+                },
+                {
+                    "name": "Entregue?",
+                    "type": "VARCHAR(255)",
+                    "field_type": "checkbox"
+                },
+                {
+                    "name": "Data de Entrega",
+                    "type": "VARCHAR(255)",
+                    "field_type": "date"
+                },
+                {
+                    "name": "Valor Unitário",
+                    "type": "VARCHAR(255)",
+                    "field_type": "currency"
+                }
+            ],
+            "right": [
+                {
+                    "name": "Data do Pedido",
+                    "type": "VARCHAR(255)",
+                    "field_type": "date"
+                },
+                {
+                    "name": "Nome Produto",
+                    "type": "VARCHAR(255)",
+                    "field_type": "loockup",
+                    "related_module": "Produtos"
+                },
+                {
+                    "name": "Status",
+                    "type": "VARCHAR(255)",
+                    "field_type": "select",
+                    "options": [
+                        "Pago",
+                        "Pendente"
+                    ]
+                },
+                {
+                    "name": "Quantidade",
+                    "type": "VARCHAR(255)",
+                    "field_type": "number"
+                },
+                {
+                    "name": "Valor Total",
+                    "type": "VARCHAR(255)",
+                    "field_type": "currency"
+                }
+            ]
+        }
     }
 ]

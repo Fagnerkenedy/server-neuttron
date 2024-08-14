@@ -137,12 +137,12 @@ const createFields = async (fields, connection, orgId, module) => {
             }
 
             const [table] = await connection.execute(`
-            SELECT column_name
-            FROM information_schema.columns
-            WHERE table_schema = ?
-            AND table_name = ?
-            AND column_name = ?;
-        `, [orgId, module, uniqueApiName]);
+                SELECT column_name
+                FROM information_schema.columns
+                WHERE table_schema = ?
+                AND table_name = ?
+                AND column_name = ?;
+            `, [orgId, module, uniqueApiName]);
 
             if (table.length === 0) {
                 await connection.execute(`ALTER TABLE ${module} ADD ${uniqueApiName} ${type};`);

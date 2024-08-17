@@ -38,6 +38,7 @@ module.exports = {
                     field_type VARCHAR(255),
                     related_module VARCHAR(255),
                     related_id VARCHAR(255),
+                    search_field VARCHAR(255),
                     module VARCHAR(255),
                     unused BOOLEAN,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -68,6 +69,7 @@ module.exports = {
                         module_id VARCHAR(255),
                         related_module VARCHAR(255),
                         related_id VARCHAR(255),
+                        search_field VARCHAR(255),
                         api_name VARCHAR(255),
                         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

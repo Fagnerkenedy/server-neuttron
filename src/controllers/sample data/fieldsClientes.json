@@ -6,7 +6,8 @@
             "left": [
                 {
                     "name": "Nome Cliente",
-                    "type": "VARCHAR(255)"
+                    "type": "VARCHAR(255)",
+                    "field_type": "single_line"
                 },
                 {
                     "name": "Celular",
@@ -15,7 +16,8 @@
                 },
                 {
                     "name": "Cidade",
-                    "type": "VARCHAR(255)"
+                    "type": "VARCHAR(255)",
+                    "field_type": "single_line"
                 }
             ],
             "right": [

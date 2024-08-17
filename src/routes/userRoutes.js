@@ -15,9 +15,9 @@ router.put('/update/:uuid', authForUserApis, authController.update)
 router.put('/:org/updateDarkMode', authForUserApis, authController.updateDarkMode)
 
 // router.post('/checksitename', authController.checkSiteName)
-// router.post('/checkemail', authController.checkEmail)
-// router.post('/mailconfirmation', authController.sendMailConfirmation)
-// router.post('/confirmation', authController.confirmation)
+router.post('/checkemail', authForUserApis, authController.checkEmail)
+router.post('/mailconfirmation', authForUserApis, authController.sendMailConfirmation)
+router.post('/confirmation', authForUserApis, authController.confirmation)
 // router.get('/myaccount/:uuid', authController.getUser)
 
 module.exports = router

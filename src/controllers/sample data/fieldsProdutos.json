@@ -6,7 +6,8 @@
             "left": [
                 {
                     "name": "Nome Produto",
-                    "type": "VARCHAR(255)"
+                    "type": "VARCHAR(255)",
+                    "field_type": "single_line"
                 },
                 {
                     "name": "Código Produto",

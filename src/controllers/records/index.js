@@ -140,7 +140,7 @@ module.exports = {
             const module_id = req.params.module_id
             const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
             
-            const [row] = await connection.execute(`SELECT related_id FROM modulos_relacionados WHERE module_id = ? AND related_module = ?;`, [module_id, module]);
+            const row = await connection.execute(`SELECT related_id FROM modulos_relacionados WHERE module_id = ? AND related_module = ?;`, [module_id, module]);
 
             // const recordsPromises = row.map(async (result) => {
             //     console.log("registro 1", result)

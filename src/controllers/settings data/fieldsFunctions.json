@@ -6,13 +6,15 @@
             "left": [
                 {
                     "name": "Nome",
-                    "type": "VARCHAR(255)"
+                    "type": "VARCHAR(255)",
+                    "field_type": "single_line"
                 },
                 {
                     "name": "Módulo",
                     "type": "VARCHAR(255)",
                     "field_type": "loockup",
-                    "related_module": "modules"
+                    "related_module": "modules",
+                    "search_field": "name"
                 },
                 {
                     "name": "Executar quando",

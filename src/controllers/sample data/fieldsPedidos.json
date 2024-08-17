@@ -6,13 +6,15 @@
             "left": [
                 {
                     "name": "Nome Pedido",
-                    "type": "VARCHAR(255)"
+                    "type": "VARCHAR(255)",
+                    "field_type": "single_line"
                 },
                 {
                     "name": "Nome Cliente",
                     "type": "VARCHAR(255)",
                     "field_type": "loockup",
-                    "related_module": "Clientes"
+                    "related_module": "Clientes",
+                    "search_field": "nome_cliente"
                 },
                 {
                     "name": "Entregue?",
@@ -40,7 +42,8 @@
                     "name": "Nome Produto",
                     "type": "VARCHAR(255)",
                     "field_type": "loockup",
-                    "related_module": "Produtos"
+                    "related_module": "Produtos",
+                    "search_field": "nome_produto"
                 },
                 {
                     "name": "Status",

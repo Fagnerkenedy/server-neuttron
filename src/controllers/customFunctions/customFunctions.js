@@ -1,22 +1,58 @@
 const mysql = require('mysql2/promise');
 const dbConfig = require('../../database/index')
 const vm = require('vm')
-const { getRecordById } = require('./functions.js')
-const { updateRecordById } = require('./functions.js')
-const { get } = require('./functions.js')
+const { getRecordById, updateRecord, get, today } = require('./functions.js')
 
 module.exports = {
     executeCustomFunctions: async (event, orgId, module, fields, record_id, related_record) => {
         try {
             const connection = await mysql.createConnection({ ...dbConfig, database: orgId });
             const [functions] = await connection.execute(`SELECT * FROM functions WHERE executar_quando = '${event}' AND m_dulo = '${module}';`)
-            console.log("!",functions)
+            console.log("!", functions)
+            function createGetRecordById(connection) {
+                return (module, id) => getRecordById(module, id, connection);
+            }
+
+            function createUpdateRecordById(connection) {
+                return (module, id, data) => updateRecord(module, id, data, connection);
+            }
+
+            function getFields(fields) {
+                const getModuleFields = (path) => get(fields, path);
+                return getModuleFields
+            }
+
             functions.map(async func => {
-            console.log("fieldikdklsjkdroek",fields)
+                console.log("fieldikdklsjkdroek", fields)
 
-                const sum = new Function('connection', 'module', 'fields', 'record_id', 'related_record', 'getRecordById', 'updateRecordById', 'get', func.fun__o);
-                console.log("SUM", sum(connection, module, fields, record_id, related_record, getRecordById, updateRecordById, get))
+                const customGetRecordById = createGetRecordById(connection);
+                const customUpdateRecordById = createUpdateRecordById(connection);
+                const customGetFields = getFields(fields)
 
+                const customFunction = new Function(
+                    'module', 
+                    'fields', 
+                    'record_id', 
+                    'related_record', 
+                    'getRecordById', 
+                    'updateRecord', 
+                    'get', 
+                    'today',
+                    `return (async () => {
+                        ${func.fun__o}
+                    })();`
+                );
+                const result = await customFunction(
+                    module, 
+                    fields, 
+                    record_id, 
+                    related_record, 
+                    customGetRecordById, 
+                    customUpdateRecordById, 
+                    customGetFields, 
+                    today
+                )
+                console.log("customFunction", result)
             })
             // await connection.end()
         } catch (e) {

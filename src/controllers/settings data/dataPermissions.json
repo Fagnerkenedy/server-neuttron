@@ -81,50 +81,66 @@
     },
     {
         "action": "read",
-        "subject": "Clientes"
+        "subject": "Leads"
     },
     {
         "action": "create",
-        "subject": "Clientes"
+        "subject": "Leads"
     },
     {
         "action": "update",
-        "subject": "Clientes"
+        "subject": "Leads"
     },
     {
         "action": "delete",
-        "subject": "Clientes"
+        "subject": "Leads"
     },
     {
         "action": "read",
-        "subject": "Produtos"
+        "subject": "Empresas"
     },
     {
         "action": "create",
-        "subject": "Produtos"
+        "subject": "Empresas"
     },
     {
         "action": "update",
-        "subject": "Produtos"
+        "subject": "Empresas"
     },
     {
         "action": "delete",
-        "subject": "Produtos"
+        "subject": "Empresas"
     },
     {
         "action": "read",
-        "subject": "Pedidos"
+        "subject": "Contatos"
     },
     {
         "action": "create",
-        "subject": "Pedidos"
+        "subject": "Contatos"
     },
     {
         "action": "update",
-        "subject": "Pedidos"
+        "subject": "Contatos"
     },
     {
         "action": "delete",
-        "subject": "Pedidos"
+        "subject": "Contatos"
+    },
+    {
+        "action": "read",
+        "subject": "Negocios"
+    },
+    {
+        "action": "create",
+        "subject": "Negocios"
+    },
+    {
+        "action": "update",
+        "subject": "Negocios"
+    },
+    {
+        "action": "delete",
+        "subject": "Negocios"
     }
 ]

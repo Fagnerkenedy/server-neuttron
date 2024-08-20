@@ -1,0 +1,115 @@
+[
+    {
+        "id": "64516541",
+        "name": "Informações Contato",
+        "fields": {
+            "left": [
+                {
+                    "name": "Nome Contato",
+                    "type": "VARCHAR(255)",
+                    "field_type": "single_line"
+                },
+                {
+                    "name": "Nome Empresa",
+                    "type": "VARCHAR(255)",
+                    "field_type": "loockup",
+                    "related_module": "Empresas"
+                },
+                {
+                    "name": "Site",
+                    "type": "VARCHAR(255)",
+                    "field_type": "single_line"
+                },
+                {
+                    "name": "Cargo",
+                    "type": "VARCHAR(255)",
+                    "field_type": "single_line"
+                },
+                {
+                    "name": "Fonte",
+                    "type": "VARCHAR(255)",
+                    "field_type": "select",
+                    "options": [
+                        "Redes Sociais",
+                        "Marketing de Conteúdo",
+                        "Campanhas de Email Marketing",
+                        "Eventos e Conferências",
+                        "Parcerias e Indicações",
+                        "Pesquisa de Mercado",
+                        "Webinars e Workshops",
+                        "Programas de Referência",
+                        "Publicidade Paga",
+                        "Grupos de Discussão e Fóruns"
+                    ]
+                },
+                {
+                    "name": "LinkedIn",
+                    "type": "VARCHAR(255)",
+                    "field_type": "single_line"
+                },
+                {
+                    "name": "Instagram",
+                    "type": "VARCHAR(255)",
+                    "field_type": "single_line"
+                },
+                {
+                    "name": "Cidade",
+                    "type": "VARCHAR(255)",
+                    "field_type": "single_line"
+                },
+                {
+                    "name": "CEP",
+                    "type": "VARCHAR(255)",
+                    "field_type": "single_line"
+                }
+            ],
+            "right": [
+                {
+                    "name": "E-mail",
+                    "type": "VARCHAR(255)",
+                    "field_type": "email"
+                },
+                {
+                    "name": "Telefone",
+                    "type": "VARCHAR(255)",
+                    "field_type": "phone"
+                },
+                {
+                    "name": "Celular",
+                    "type": "VARCHAR(255)",
+                    "field_type": "phone"
+                },
+                {
+                    "name": "Departamento",
+                    "type": "VARCHAR(255)",
+                    "field_type": "single_line"
+                },
+                {
+                    "name": "Data de Nascimento",
+                    "type": "VARCHAR(255)",
+                    "field_type": "date"
+                },
+                {
+                    "name": "E-mail secundário",
+                    "type": "VARCHAR(255)",
+                    "field_type": "email"
+                },
+                {
+                    "name": "Rua",
+                    "type": "VARCHAR(255)",
+                    "field_type": "single_line"
+                },
+                {
+                    "name": "Estado",
+                    "type": "VARCHAR(255)",
+                    "field_type": "single_line"
+                },
+                {
+                    "name": "País",
+                    "type": "VARCHAR(255)",
+                    "field_type": "single_line"
+                }
+            ]
+        }
+    }
+]

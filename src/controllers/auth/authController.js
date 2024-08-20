@@ -37,8 +37,7 @@ module.exports = {
             await connection.end();
             const connectionNeuttron = await mysql.createConnection({ ...dbConfig, database: process.env.DB_NAME });
 
-            await connectionNeuttron.execute(`INSERT INTO users SET id = ?, name = ?, email = ?, phone = ?, organization = ?, orgId = ?;`, [uuid, name, email, phone, empresa, orgId]);
-            await connectionNeuttron.end();
+            
 
             const connection2 = await mysql.createConnection({ ...dbConfig, database: `org${orgId}` });
             const organizationTable = await connection2.execute(`CREATE TABLE IF NOT EXISTS organizations (
@@ -59,6 +58,8 @@ module.exports = {
                 orgId VARCHAR(255),
                 dark_mode BOOLEAN,
                 perfil VARCHAR(255),
+                open_tour BOOLEAN DEFAULT true,
+                modules_tour BOOLEAN DEFAULT true,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (orgId) REFERENCES organizations(orgId)
@@ -72,11 +73,14 @@ module.exports = {
             await settingsData(orgId, user_id)
             
             const org = await connection2.execute(`INSERT INTO organizations SET orgId = ?, name = ?, email = ?, phone = ?;`, [orgId, empresa, email, phone]);
-            const user = await connection2.execute(`INSERT INTO users SET id = ?, orgId = ?, name = ?, email = ?, phone = ?, password = ?, dark_mode = ?, perfil = 'Administrador';`, [user_id, orgId, name, email, phone, hashedPassword, false]);
+            const user = await connection2.execute(`INSERT INTO users SET id = ?, orgId = ?, name = ?, email = ?, phone = ?, password = ?, dark_mode = ?, perfil = 'Administrador', open_tour = true;`, [user_id, orgId, name, email, phone, hashedPassword, false]);
 
             await connection2.end();
             user.password = undefined
 
+            await connectionNeuttron.execute(`INSERT INTO users SET id = ?, name = ?, email = ?, phone = ?, organization = ?, orgId = ?;`, [uuid, name, email, phone, empresa, orgId]);
+            await connectionNeuttron.end();
+            
             return res.status(200).json({ success: true, message: 'User and Organization Created Successfuly!', organizationTable, userTable, org, user, email, uuid })
 
         } catch (err) {
@@ -106,6 +110,9 @@ module.exports = {
                 phone VARCHAR(255),
                 orgId VARCHAR(255),
                 dark_mode BOOLEAN,
+                perfil VARCHAR(255),
+                open_tour BOOLEAN DEFAULT true,
+                modules_tour BOOLEAN DEFAULT true;
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (orgId) REFERENCES organizations(orgId)
@@ -120,7 +127,7 @@ module.exports = {
             const user_id = gerarHash(JSON.stringify({ name, email, phone }));
             const hashedPassword = await bcrypt.hash(password, 10);
 
-            const user = await connection2.execute(`INSERT INTO users SET id = ?, orgId = ?, name = ?, email = ?, phone = ?, password = ?, dark_mode = ?;`, [user_id, orgId, name, email, phone, hashedPassword, false]);
+            const user = await connection2.execute(`INSERT INTO users SET id = ?, orgId = ?, name = ?, email = ?, phone = ?, password = ?, dark_mode = ?, open_tour = true;`, [user_id, orgId, name, email, phone, hashedPassword, false]);
 
             await connection2.end();
             user.password = undefined
@@ -210,6 +217,66 @@ module.exports = {
         } catch (err) {
             console.log('Error Updating User', err)
             return res.status(400).json({ success: false, message: 'Error Updating User Dark Mode', error: err })
+        }
+    },
+
+    getOpenTour: async (req, res) => {
+        const orgId = req.params.org
+        const userId = req.params.userId
+        try {
+            const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
+            const [tour] = await connection.execute('SELECT open_tour FROM users WHERE id = ?', [ userId ]);
+            await connection.end();
+            return res.status(200).json({ success: true, message: 'Tour Successfuly Recovered', data: tour })
+        } catch (err) {
+            console.log('Error Recovering Tour', err)
+            return res.status(400).json({ success: false, message: 'Error Recovering Tour', error: err })
+        }
+    },
+
+    updateOpenTour: async (req, res) => {
+        const orgId = req.params.org
+        const userId = req.params.userId
+        try {
+            const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
+            const [user] = await connection.execute('UPDATE users SET open_tour = false WHERE id = ?', [ userId ]);
+            let openTour = ''
+            if(user.affectedRows > 0) openTour = false
+            await connection.end();
+            return res.status(200).json({ success: true, message: 'User Tour Updated Successfuly', openTour: openTour })
+        } catch (err) {
+            console.log('Error Updating User', err)
+            return res.status(400).json({ success: false, message: 'Error Updating User Tour', error: err })
+        }
+    },
+
+    getModulesTour: async (req, res) => {
+        const orgId = req.params.org
+        const userId = req.params.userId
+        try {
+            const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
+            const [tour] = await connection.execute('SELECT modules_tour FROM users WHERE id = ?', [ userId ]);
+            await connection.end();
+            return res.status(200).json({ success: true, message: 'Tour Successfuly Recovered', data: tour })
+        } catch (err) {
+            console.log('Error Recovering Tour', err)
+            return res.status(400).json({ success: false, message: 'Error Recovering Tour', error: err })
+        }
+    },
+
+    updateModulesTour: async (req, res) => {
+        const orgId = req.params.org
+        const userId = req.params.userId
+        try {
+            const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
+            const [user] = await connection.execute('UPDATE users SET modules_tour = false WHERE id = ?', [ userId ]);
+            let modulesTour = ''
+            if(user.affectedRows > 0) modulesTour = false
+            await connection.end();
+            return res.status(200).json({ success: true, message: 'Modules Tour Updated Successfuly', modulesTour: modulesTour })
+        } catch (err) {
+            console.log('Error Updating Modules Tour', err)
+            return res.status(400).json({ success: false, message: 'Error Updating Modules Tour', error: err })
         }
     },
 

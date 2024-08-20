@@ -275,11 +275,11 @@ const createFields2 = async (fields, connection, orgId, module, idPerfil, userId
                 WHERE table_schema = ?
                 AND table_name = ?
                 AND column_name = ?;`, 
-                [orgId, module, apiName]
+                [orgId, module, uniqueApiName]
             );
 
             if (table.length === 0) {
-                await connection.execute(`ALTER TABLE ${module} ADD ${apiName} ${type};`);
+                await connection.execute(`ALTER TABLE ${module} ADD ${uniqueApiName} ${type};`);
             }
             results.push({ idField, id })
 

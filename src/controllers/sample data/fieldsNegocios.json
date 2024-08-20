@@ -1,0 +1,152 @@
+[
+    {
+        "id": "64584532",
+        "name": "Informações Negócio",
+        "fields": {
+            "left": [
+                {
+                    "name": "Nome Negócio",
+                    "type": "VARCHAR(255)",
+                    "field_type": "single_line"
+                },
+                {
+                    "name": "Nome Empresa",
+                    "type": "VARCHAR(255)",
+                    "field_type": "loockup",
+                    "related_module": "Empresas"
+                },
+                {
+                    "name": "Nome Contato",
+                    "type": "VARCHAR(255)",
+                    "field_type": "loockup",
+                    "related_module": "Contatos"
+                },
+                {
+                    "name": "Estágio",
+                    "type": "VARCHAR(255)",
+                    "field_type": "select",
+                    "options": [
+                        "Mapeando Necessidades",
+                        "Adiado/suspenso",
+                        "Desenho da Solução",
+                        "Gerando Proposta",
+                        "Proposta Enviada",
+                        "Negociação/Revisão",
+                        "Assinando Contrato",
+                        "Fechado Ganho",
+                        "Fechado Perdido"
+                    ]
+                },
+                {
+                    "name": "Motivo da Perda",
+                    "type": "VARCHAR(255)",
+                    "field_type": "select",
+                    "options": [
+                        "Cliente Desistiu",
+                        "Perdido para Concorrência",
+                        "Preço",
+                        "Prazo de Entrega",
+                        "Limitações do Produto/Projeto"
+                    ]
+                },
+                {
+                    "name": "Receita Esperada",
+                    "type": "VARCHAR(255)",
+                    "field_type": "currency"
+                },
+                {
+                    "name": "Principais dores da empresa",
+                    "type": "TEXT(16000)",
+                    "field_type": "multi_line"
+                }
+            ],
+            "right": [
+                {
+                    "name": "Montante",
+                    "type": "VARCHAR(255)",
+                    "field_type": "currency"
+                },
+                {
+                    "name": "Data de Fechamento",
+                    "type": "VARCHAR(255)",
+                    "field_type": "date"
+                },
+                {
+                    "name": "Tipo",
+                    "type": "VARCHAR(255)",
+                    "field_type": "select",
+                    "options": [
+                        "Novo Negócio",
+                        "Negócio Existente"
+                    ]
+                },
+                {
+                    "name": "Probabilidade",
+                    "type": "VARCHAR(255)",
+                    "field_type": "number"
+                },
+                {
+                    "name": "Fonte",
+                    "type": "VARCHAR(255)",
+                    "field_type": "select",
+                    "options": [
+                        "Redes Sociais",
+                        "Marketing de Conteúdo",
+                        "Campanhas de Email Marketing",
+                        "Eventos e Conferências",
+                        "Parcerias e Indicações",
+                        "Pesquisa de Mercado",
+                        "Webinars e Workshops",
+                        "Programas de Referência",
+                        "Publicidade Paga",
+                        "Grupos de Discussão e Fóruns"
+                    ]
+                },
+                {
+                    "name": "Estado",
+                    "type": "VARCHAR(255)",
+                    "field_type": "select",
+                    "options": [
+                        "Acre",
+                        "Alagoas",
+                        "Amapá",
+                        "Amazonas",
+                        "Bahia",
+                        "Ceará",
+                        "Distrito Federal",
+                        "Espírito Santo",
+                        "Goiás",
+                        "Maranhão",
+                        "Mato Grosso",
+                        "Mato Grosso do Sul",
+                        "Minas Gerais",
+                        "Pará",
+                        "Paraíba",
+                        "Paraná",
+                        "Pernambuco",
+                        "Piauí",
+                        "Rio de Janeiro",
+                        "Rio Grande do Norte",
+                        "Rio Grande do Sul",
+                        "Rondônia",
+                        "Roraima",
+                        "Santa Catarina",
+                        "São Paulo",
+                        "Sergipe",
+                        "Tocantins"
+                    ]
+                },
+                {
+                    "name": "Ligar novamente em",
+                    "type": "VARCHAR(255)",
+                    "field_type": "date_time"
+                },
+                {
+                    "name": "Informações adicionais",
+                    "type": "TEXT(16000)",
+                    "field_type": "multi_line"
+                }
+            ]
+        }
+    }
+]

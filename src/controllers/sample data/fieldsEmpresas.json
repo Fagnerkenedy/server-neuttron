@@ -1,0 +1,124 @@
+[
+    {
+        "id": "64464656",
+        "name": "Informações Empresa",
+        "fields": {
+            "left": [
+                {
+                    "name": "Nome Empresa",
+                    "type": "VARCHAR(255)",
+                    "field_type": "single_line"
+                },
+                {
+                    "name": "Telefone",
+                    "type": "VARCHAR(255)",
+                    "field_type": "phone"
+                },
+                {
+                    "name": "Tipo de Empresa",
+                    "type": "VARCHAR(255)",
+                    "field_type": "select",
+                    "options": [
+                        "Cliente",
+                        "Concorrente",
+                        "Distribuidor",
+                        "Parceiro",
+                        "Imprensa",
+                        "Revendedor",
+                        "Fornecedor",
+                        "Outro"
+                    ]
+                },
+                {
+                    "name": "N.º de funcionários",
+                    "type": "VARCHAR(255)",
+                    "field_type": "number"
+                },
+                {
+                    "name": "LinkedIn",
+                    "type": "VARCHAR(255)",
+                    "field_type": "single_line"
+                },
+                {
+                    "name": "E-mail secundário",
+                    "type": "VARCHAR(255)",
+                    "field_type": "email"
+                },
+                {
+                    "name": "Cidade",
+                    "type": "VARCHAR(255)",
+                    "field_type": "single_line"
+                },
+                {
+                    "name": "CEP",
+                    "type": "VARCHAR(255)",
+                    "field_type": "single_line"
+                }
+            ],
+            "right": [
+                {
+                    "name": "E-mail",
+                    "type": "VARCHAR(255)",
+                    "field_type": "email"
+                },
+                {
+                    "name": "Site",
+                    "type": "VARCHAR(255)",
+                    "field_type": "single_line"
+                },
+                {
+                    "name": "Indústria",
+                    "type": "VARCHAR(255)",
+                    "field_type": "select",
+                    "options": [
+                        "Tecnologia da Informação",
+                        "Saúde e Bem-Estar",
+                        "Educação",
+                        "Serviços Financeiros",
+                        "Varejo",
+                        "Imobiliário",
+                        "Alimentação e Bebidas",
+                        "Consultoria",
+                        "Indústria Automotiva",
+                        "Turismo e Hospitalidade",
+                        "Moda e Vestuário",
+                        "Entretenimento e Mídia",
+                        "Recursos Humanos",
+                        "Meio Ambiente e Sustentabilidade",
+                        "Serviços Jurídicos",
+                        "Artes e Design",
+                        "Construção e Engenharia",
+                        "Transporte e Logística",
+                        "Marketing e Publicidade",
+                        "Telecomunicações"
+                    ]
+                },
+                {
+                    "name": "Receita Anual",
+                    "type": "VARCHAR(255)",
+                    "field_type": "currency"
+                },
+                {
+                    "name": "Instagram",
+                    "type": "VARCHAR(255)",
+                    "field_type": "single_line"
+                },
+                {
+                    "name": "Rua",
+                    "type": "VARCHAR(255)",
+                    "field_type": "single_line"
+                },
+                {
+                    "name": "Estado",
+                    "type": "VARCHAR(255)",
+                    "field_type": "single_line"
+                },
+                {
+                    "name": "País",
+                    "type": "VARCHAR(255)",
+                    "field_type": "single_line"
+                }
+            ]
+        }
+    }
+]

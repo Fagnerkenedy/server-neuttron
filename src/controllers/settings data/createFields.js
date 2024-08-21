@@ -209,7 +209,7 @@ const createFields2 = async (fields, connection, orgId, module, idPerfil, userId
             if (field.hasOwnProperty("related_module") && field.related_module == 'profiles') {
                 related_id = idPerfil
             }
-            let apiName = field.apiName || name.replace(/[^\w\s]|[\sç]/gi, '_').toLowerCase();
+            let apiName = field.api_name || name.replace(/[^\w\s]|[\sç]/gi, '_').toLowerCase();
 
             const [searchField] = await connection.execute('SELECT id FROM fields WHERE module = ? and api_name = ? and id = ?;', [module, apiName, id]);
 

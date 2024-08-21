@@ -13,13 +13,15 @@
                     "name": "Nome Empresa",
                     "type": "VARCHAR(255)",
                     "field_type": "loockup",
-                    "related_module": "Empresas"
+                    "related_module": "Empresas",
+                    "search_field": "nome_empresa"
                 },
                 {
                     "name": "Nome Contato",
                     "type": "VARCHAR(255)",
                     "field_type": "loockup",
-                    "related_module": "Contatos"
+                    "related_module": "Contatos",
+                    "search_field": "nome_contato"
                 },
                 {
                     "name": "Estágio",

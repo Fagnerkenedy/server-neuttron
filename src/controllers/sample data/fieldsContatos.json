@@ -13,7 +13,8 @@
                     "name": "Nome Empresa",
                     "type": "VARCHAR(255)",
                     "field_type": "loockup",
-                    "related_module": "Empresas"
+                    "related_module": "Empresas",
+                    "search_field": "nome_empresa"
                 },
                 {
                     "name": "Site",

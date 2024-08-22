@@ -1,0 +1,24 @@
+2024-08-22T19:52:22.880Z [INFO]: Conectando ao banco de dados Neuttron para buscar orgIds.
+2024-08-22T19:52:23.007Z [INFO]: orgIds recuperados com sucesso.
+2024-08-22T19:52:23.008Z [INFO]: Procurando o arquivo SQL mais recente na pasta: ./src/scripts
+2024-08-22T19:52:23.009Z [INFO]: Arquivo SQL mais recente encontrado: src\scripts\19-08-2024.sql
+2024-08-22T19:52:23.010Z [INFO]: Executando script SQL em 2 bancos de dados.
+2024-08-22T19:52:23.031Z [INFO]: Script executado com sucesso no banco: org79793260
+2024-08-22T19:52:23.042Z [INFO]: Script executado com sucesso no banco: org29000926
+2024-08-22T19:52:23.043Z [INFO]: Script executado em todos os bancos.
+2024-08-22T20:02:09.176Z [INFO]: Conectando ao banco de dados Neuttron para buscar orgIds.
+2024-08-22T20:02:09.270Z [INFO]: orgIds recuperados com sucesso.
+2024-08-22T20:02:09.271Z [INFO]: Procurando o arquivo SQL mais recente na pasta: ./src/scripts
+2024-08-22T20:02:09.272Z [INFO]: Arquivo SQL mais recente encontrado: src\scripts\19-08-2024.sql
+2024-08-22T20:02:09.273Z [INFO]: Executando script SQL em 2 bancos de dados.
+2024-08-22T20:02:09.285Z [INFO]: Script executado com sucesso no banco: org79793260
+2024-08-22T20:02:09.294Z [INFO]: Script executado com sucesso no banco: org29000926
+2024-08-22T20:02:09.295Z [INFO]: Script executado em todos os bancos.
+2024-08-22T20:03:00.199Z [INFO]: Conectando ao banco de dados Neuttron para buscar orgIds.
+2024-08-22T20:03:00.311Z [INFO]: orgIds recuperados com sucesso.
+2024-08-22T20:03:00.312Z [INFO]: Procurando o arquivo SQL mais recente na pasta: ./src/scripts
+2024-08-22T20:03:00.313Z [INFO]: Arquivo SQL mais recente encontrado: src\scripts\19-08-2024.sql
+2024-08-22T20:03:00.314Z [INFO]: Executando script SQL em 2 bancos de dados.
+2024-08-22T20:03:00.330Z [INFO]: Script executado com sucesso no banco: org79793260
+2024-08-22T20:03:00.342Z [INFO]: Script executado com sucesso no banco: org29000926
+2024-08-22T20:03:00.343Z [INFO]: Script executado em todos os bancos.

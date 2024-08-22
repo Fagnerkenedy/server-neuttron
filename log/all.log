@@ -1,0 +1,229 @@
+{"level":"info","message":"Conectando ao banco de dados Neuttron para buscar orgIds.","timestamp":"2024-08-22 17:03:18"}
+{"level":"info","message":"orgIds recuperados com sucesso.","timestamp":"2024-08-22 17:03:18"}
+{"level":"info","message":"Procurando o arquivo SQL mais recente na pasta: ./src/scripts","timestamp":"2024-08-22 17:03:18"}
+{"level":"info","message":"Arquivo SQL mais recente encontrado: src\\scripts\\19-08-2024.sql","timestamp":"2024-08-22 17:03:18"}
+{"level":"info","message":"Executando script SQL em 2 bancos de dados.","timestamp":"2024-08-22 17:03:18"}
+{"level":"info","message":"Script executado com sucesso no banco: org79793260","timestamp":"2024-08-22 17:03:18"}
+{"level":"info","message":"Script executado com sucesso no banco: org29000926","timestamp":"2024-08-22 17:03:19"}
+{"level":"info","message":"Script executado em todos os bancos.","timestamp":"2024-08-22 17:03:19"}
+{"level":"info","message":"Conectando ao banco de dados Neuttron para buscar orgIds.","timestamp":"22-08-2024 17:04:32"}
+{"level":"info","message":"orgIds recuperados com sucesso.","timestamp":"22-08-2024 17:04:33"}
+{"level":"info","message":"Procurando o arquivo SQL mais recente na pasta: ./src/scripts","timestamp":"22-08-2024 17:04:33"}
+{"level":"info","message":"Arquivo SQL mais recente encontrado: src\\scripts\\19-08-2024.sql","timestamp":"22-08-2024 17:04:33"}
+{"level":"info","message":"Executando script SQL em 2 bancos de dados.","timestamp":"22-08-2024 17:04:33"}
+{"level":"info","message":"Script executado com sucesso no banco: org79793260","timestamp":"22-08-2024 17:04:33"}
+{"level":"info","message":"Script executado com sucesso no banco: org29000926","timestamp":"22-08-2024 17:04:33"}
+{"level":"info","message":"Script executado em todos os bancos.","timestamp":"22-08-2024 17:04:33"}
+{"level":"info","message":"Conectando ao banco de dados Neuttron para buscar orgIds.","timestamp":"17:05:10 22-08-2024"}
+{"level":"info","message":"orgIds recuperados com sucesso.","timestamp":"17:05:10 22-08-2024"}
+{"level":"info","message":"Procurando o arquivo SQL mais recente na pasta: ./src/scripts","timestamp":"17:05:10 22-08-2024"}
+{"level":"info","message":"Arquivo SQL mais recente encontrado: src\\scripts\\19-08-2024.sql","timestamp":"17:05:10 22-08-2024"}
+{"level":"info","message":"Executando script SQL em 2 bancos de dados.","timestamp":"17:05:10 22-08-2024"}
+{"level":"info","message":"Script executado com sucesso no banco: org79793260","timestamp":"17:05:10 22-08-2024"}
+{"level":"info","message":"Script executado com sucesso no banco: org29000926","timestamp":"17:05:10 22-08-2024"}
+{"level":"info","message":"Script executado em todos os bancos.","timestamp":"17:05:10 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados Neuttron para buscar orgIds.","timestamp":"17:07:10 22-08-2024"}
+{"level":"info","message":"orgIds recuperados com sucesso.","timestamp":"17:07:10 22-08-2024"}
+{"level":"info","message":"Procurando o arquivo SQL mais recente na pasta: ./src/scripts","timestamp":"17:07:10 22-08-2024"}
+{"level":"info","message":"Arquivo SQL mais recente encontrado: src\\scripts\\22-08-2024.sql","timestamp":"17:07:10 22-08-2024"}
+{"level":"info","message":"Executando script SQL em 2 bancos de dados.","timestamp":"17:07:10 22-08-2024"}
+{"level":"info","message":"Script executado com sucesso no banco: org79793260","timestamp":"17:07:10 22-08-2024"}
+{"level":"info","message":"Script executado com sucesso no banco: org29000926","timestamp":"17:07:10 22-08-2024"}
+{"level":"info","message":"Script executado em todos os bancos.","timestamp":"17:07:10 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados Neuttron para buscar orgIds.","timestamp":"17:07:35 22-08-2024"}
+{"level":"info","message":"orgIds recuperados com sucesso.","timestamp":"17:07:35 22-08-2024"}
+{"level":"info","message":"Procurando o arquivo SQL mais recente na pasta: ./src/scripts","timestamp":"17:07:35 22-08-2024"}
+{"level":"info","message":"Arquivo SQL mais recente encontrado: src\\scripts\\19-08-2024.sql","timestamp":"17:07:35 22-08-2024"}
+{"level":"info","message":"Executando script SQL em 2 bancos de dados.","timestamp":"17:07:35 22-08-2024"}
+{"level":"error","message":"Erro ao executar script no banco: org79793260. Erro: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT * FROM users;\n# Atualizações novas!!!!\n# ALTER TABLE organizations MODI' at line 2","timestamp":"17:07:35 22-08-2024"}
+{"level":"error","message":"Erro ao executar script no banco: org29000926. Erro: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT * FROM users;\n# Atualizações novas!!!!\n# ALTER TABLE organizations MODI' at line 2","timestamp":"17:07:36 22-08-2024"}
+{"level":"info","message":"Script executado em todos os bancos.","timestamp":"17:07:36 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados Neuttron para buscar orgIds.","timestamp":"17:08:25 22-08-2024"}
+{"level":"info","message":"orgIds recuperados com sucesso.","timestamp":"17:08:26 22-08-2024"}
+{"level":"info","message":"Procurando o arquivo SQL mais recente na pasta: ./src/scripts","timestamp":"17:08:26 22-08-2024"}
+{"level":"info","message":"Arquivo SQL mais recente encontrado: src\\scripts\\19-08-2024.sql","timestamp":"17:08:26 22-08-2024"}
+{"level":"info","message":"Executando script SQL em 2 bancos de dados.","timestamp":"17:08:26 22-08-2024"}
+{"level":"error","message":"Erro ao executar script no banco: org79793260. Erro: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT * FROM users;\n# Atualizações novas!!!!\n# ALTER TABLE organizations MODI' at line 1","timestamp":"17:08:26 22-08-2024"}
+{"level":"error","message":"Erro ao executar script no banco: org29000926. Erro: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT * FROM users;\n# Atualizações novas!!!!\n# ALTER TABLE organizations MODI' at line 1","timestamp":"17:08:26 22-08-2024"}
+{"level":"info","message":"Script executado em todos os bancos.","timestamp":"17:08:26 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados Neuttron para buscar orgIds.","timestamp":"17:09:33 22-08-2024"}
+{"level":"info","message":"orgIds recuperados com sucesso.","timestamp":"17:09:33 22-08-2024"}
+{"level":"info","message":"Procurando o arquivo SQL mais recente na pasta: ./src/scripts","timestamp":"17:09:33 22-08-2024"}
+{"level":"info","message":"Arquivo SQL mais recente encontrado: src\\scripts\\19-08-2024.sql","timestamp":"17:09:33 22-08-2024"}
+{"level":"info","message":"Executando script SQL em 2 bancos de dados.","timestamp":"17:09:33 22-08-2024"}
+{"level":"error","message":"Erro ao executar script no banco: org79793260. Erro: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT * FROM users;\n# Atualizações novas!!!!\n# ALTER TABLE organizations MODI' at line 2","timestamp":"17:09:33 22-08-2024"}
+{"level":"error","message":"Erro ao executar script no banco: org29000926. Erro: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT * FROM users;\n# Atualizações novas!!!!\n# ALTER TABLE organizations MODI' at line 2","timestamp":"17:09:33 22-08-2024"}
+{"level":"info","message":"Script executado em todos os bancos.","timestamp":"17:09:33 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados Neuttron para buscar orgIds.","timestamp":"17:10:49 22-08-2024"}
+{"level":"info","message":"orgIds recuperados com sucesso.","timestamp":"17:10:50 22-08-2024"}
+{"level":"info","message":"Procurando o arquivo SQL mais recente na pasta: ./src/scripts","timestamp":"17:10:50 22-08-2024"}
+{"level":"info","message":"Arquivo SQL mais recente encontrado: src\\scripts\\19-08-2024.sql","timestamp":"17:10:50 22-08-2024"}
+{"level":"info","message":"Executando script SQL em 2 bancos de dados.","timestamp":"17:10:50 22-08-2024"}
+{"level":"info","message":"Conteúdo do script: UPDATE users SET name = 'Guarda'\nSELECT * FROM users;\n# Atualizações novas!!!!\n# ALTER TABLE organizations MODIFY COLUMN orgId VARCHAR(19);","timestamp":"17:10:50 22-08-2024"}
+{"level":"error","message":"Erro ao executar script no banco: org79793260. Erro: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT * FROM users;\n# Atualizações novas!!!!\n# ALTER TABLE organizations MODI' at line 2","timestamp":"17:10:50 22-08-2024"}
+{"level":"error","message":"Erro ao executar script no banco: org29000926. Erro: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT * FROM users;\n# Atualizações novas!!!!\n# ALTER TABLE organizations MODI' at line 2","timestamp":"17:10:50 22-08-2024"}
+{"level":"info","message":"Script executado em todos os bancos.","timestamp":"17:10:50 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados Neuttron para buscar orgIds.","timestamp":"17:11:08 22-08-2024"}
+{"level":"info","message":"orgIds recuperados com sucesso.","timestamp":"17:11:08 22-08-2024"}
+{"level":"info","message":"Procurando o arquivo SQL mais recente na pasta: ./src/scripts","timestamp":"17:11:08 22-08-2024"}
+{"level":"info","message":"Arquivo SQL mais recente encontrado: src\\scripts\\19-08-2024.sql","timestamp":"17:11:08 22-08-2024"}
+{"level":"info","message":"Executando script SQL em 2 bancos de dados.","timestamp":"17:11:08 22-08-2024"}
+{"level":"info","message":"Conteúdo do script: UPDATE users SET name = 'Guarda';\nSELECT * FROM users;\n# Atualizações novas!!!!\n# ALTER TABLE organizations MODIFY COLUMN orgId VARCHAR(19);","timestamp":"17:11:08 22-08-2024"}
+{"level":"error","message":"Erro ao executar script no banco: org79793260. Erro: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT * FROM users;\n# Atualizações novas!!!!\n# ALTER TABLE organizations MODI' at line 2","timestamp":"17:11:08 22-08-2024"}
+{"level":"error","message":"Erro ao executar script no banco: org29000926. Erro: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT * FROM users;\n# Atualizações novas!!!!\n# ALTER TABLE organizations MODI' at line 2","timestamp":"17:11:08 22-08-2024"}
+{"level":"info","message":"Script executado em todos os bancos.","timestamp":"17:11:08 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados Neuttron para buscar orgIds.","timestamp":"17:11:51 22-08-2024"}
+{"level":"info","message":"orgIds recuperados com sucesso.","timestamp":"17:11:51 22-08-2024"}
+{"level":"info","message":"Procurando o arquivo SQL mais recente na pasta: ./src/scripts","timestamp":"17:11:51 22-08-2024"}
+{"level":"info","message":"Arquivo SQL mais recente encontrado: src\\scripts\\19-08-2024.sql","timestamp":"17:11:51 22-08-2024"}
+{"level":"info","message":"Executando script SQL em 2 bancos de dados.","timestamp":"17:11:51 22-08-2024"}
+{"level":"info","message":"Conteúdo do script: UPDATE users SET name = 'Guarda';\nSELECT * FROM users;","timestamp":"17:11:51 22-08-2024"}
+{"level":"error","message":"Erro ao executar script no banco: org79793260. Erro: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT * FROM users' at line 2","timestamp":"17:11:51 22-08-2024"}
+{"level":"error","message":"Erro ao executar script no banco: org29000926. Erro: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT * FROM users' at line 2","timestamp":"17:11:51 22-08-2024"}
+{"level":"info","message":"Script executado em todos os bancos.","timestamp":"17:11:51 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados Neuttron para buscar orgIds.","timestamp":"17:12:37 22-08-2024"}
+{"level":"info","message":"orgIds recuperados com sucesso.","timestamp":"17:12:37 22-08-2024"}
+{"level":"info","message":"Procurando o arquivo SQL mais recente na pasta: ./src/scripts","timestamp":"17:12:37 22-08-2024"}
+{"level":"info","message":"Arquivo SQL mais recente encontrado: src\\scripts\\19-08-2024.sql","timestamp":"17:12:37 22-08-2024"}
+{"level":"info","message":"Executando script SQL em 2 bancos de dados.","timestamp":"17:12:37 22-08-2024"}
+{"level":"info","message":"Conteúdo do script: UPDATE users SET name = 'Guarda';\nSELECT * FROM users;","timestamp":"17:12:37 22-08-2024"}
+{"level":"error","message":"Erro ao executar script no banco: org79793260. Erro: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT * FROM users' at line 2","timestamp":"17:12:37 22-08-2024"}
+{"level":"error","message":"Erro ao executar script no banco: org29000926. Erro: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT * FROM users' at line 2","timestamp":"17:12:37 22-08-2024"}
+{"level":"info","message":"Script executado em todos os bancos.","timestamp":"17:12:37 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados Neuttron para buscar orgIds.","timestamp":"17:13:13 22-08-2024"}
+{"level":"info","message":"orgIds recuperados com sucesso.","timestamp":"17:13:13 22-08-2024"}
+{"level":"info","message":"Procurando o arquivo SQL mais recente na pasta: ./src/scripts","timestamp":"17:13:13 22-08-2024"}
+{"level":"info","message":"Arquivo SQL mais recente encontrado: src\\scripts\\19-08-2024.sql","timestamp":"17:13:13 22-08-2024"}
+{"level":"info","message":"Executando script SQL em 2 bancos de dados.","timestamp":"17:13:13 22-08-2024"}
+{"level":"info","message":"Conteúdo do script: UPDATE users SET name = 'Guarda';\nUPDATE users SET name = 'Fagner';","timestamp":"17:13:13 22-08-2024"}
+{"level":"error","message":"Erro ao executar script no banco: org79793260. Erro: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'UPDATE users SET name = 'Fagner'' at line 2","timestamp":"17:13:13 22-08-2024"}
+{"level":"error","message":"Erro ao executar script no banco: org29000926. Erro: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'UPDATE users SET name = 'Fagner'' at line 2","timestamp":"17:13:13 22-08-2024"}
+{"level":"info","message":"Script executado em todos os bancos.","timestamp":"17:13:13 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados Neuttron para buscar orgIds.","timestamp":"17:13:29 22-08-2024"}
+{"level":"info","message":"orgIds recuperados com sucesso.","timestamp":"17:13:29 22-08-2024"}
+{"level":"info","message":"Procurando o arquivo SQL mais recente na pasta: ./src/scripts","timestamp":"17:13:29 22-08-2024"}
+{"level":"info","message":"Arquivo SQL mais recente encontrado: src\\scripts\\19-08-2024.sql","timestamp":"17:13:29 22-08-2024"}
+{"level":"info","message":"Executando script SQL em 2 bancos de dados.","timestamp":"17:13:29 22-08-2024"}
+{"level":"info","message":"Conteúdo do script: UPDATE users SET name = 'Guarda';UPDATE users SET name = 'Fagner';","timestamp":"17:13:29 22-08-2024"}
+{"level":"error","message":"Erro ao executar script no banco: org79793260. Erro: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'UPDATE users SET name = 'Fagner'' at line 1","timestamp":"17:13:29 22-08-2024"}
+{"level":"error","message":"Erro ao executar script no banco: org29000926. Erro: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'UPDATE users SET name = 'Fagner'' at line 1","timestamp":"17:13:29 22-08-2024"}
+{"level":"info","message":"Script executado em todos os bancos.","timestamp":"17:13:29 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados Neuttron para buscar orgIds.","timestamp":"17:13:44 22-08-2024"}
+{"level":"info","message":"orgIds recuperados com sucesso.","timestamp":"17:13:44 22-08-2024"}
+{"level":"info","message":"Procurando o arquivo SQL mais recente na pasta: ./src/scripts","timestamp":"17:13:44 22-08-2024"}
+{"level":"info","message":"Arquivo SQL mais recente encontrado: src\\scripts\\19-08-2024.sql","timestamp":"17:13:44 22-08-2024"}
+{"level":"info","message":"Executando script SQL em 2 bancos de dados.","timestamp":"17:13:44 22-08-2024"}
+{"level":"info","message":"Conteúdo do script: UPDATE users SET name = 'Guarda';","timestamp":"17:13:44 22-08-2024"}
+{"level":"info","message":"Script executado com sucesso no banco: org79793260","timestamp":"17:13:44 22-08-2024"}
+{"level":"info","message":"Script executado com sucesso no banco: org29000926","timestamp":"17:13:44 22-08-2024"}
+{"level":"info","message":"Script executado em todos os bancos.","timestamp":"17:13:44 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados Neuttron para buscar orgIds.","timestamp":"17:15:58 22-08-2024"}
+{"level":"info","message":"orgIds recuperados com sucesso.","timestamp":"17:15:58 22-08-2024"}
+{"level":"info","message":"Procurando o arquivo SQL mais recente na pasta: ./src/scripts","timestamp":"17:15:58 22-08-2024"}
+{"level":"info","message":"Arquivo SQL mais recente encontrado: src\\scripts\\19-08-2024.sql","timestamp":"17:15:58 22-08-2024"}
+{"level":"info","message":"Executando script SQL em 2 bancos de dados.","timestamp":"17:15:58 22-08-2024"}
+{"level":"info","message":"Conteúdo do script: UPDATE users SET name = 'Guarda';","timestamp":"17:15:58 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados: org79793260","timestamp":"17:15:58 22-08-2024"}
+{"level":"info","message":"Script executado com sucesso no banco: org79793260","timestamp":"17:15:58 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados: org29000926","timestamp":"17:15:58 22-08-2024"}
+{"level":"info","message":"Script executado com sucesso no banco: org29000926","timestamp":"17:15:58 22-08-2024"}
+{"level":"info","message":"Script executado em todos os bancos.","timestamp":"17:15:58 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados Neuttron para buscar orgIds.","timestamp":"17:16:13 22-08-2024"}
+{"level":"info","message":"orgIds recuperados com sucesso.","timestamp":"17:16:13 22-08-2024"}
+{"level":"info","message":"Procurando o arquivo SQL mais recente na pasta: ./src/scripts","timestamp":"17:16:13 22-08-2024"}
+{"level":"info","message":"Arquivo SQL mais recente encontrado: src\\scripts\\19-08-2024.sql","timestamp":"17:16:13 22-08-2024"}
+{"level":"info","message":"Executando script SQL em 2 bancos de dados.","timestamp":"17:16:13 22-08-2024"}
+{"level":"info","message":"Conteúdo do script: UPDATE users SET name = 'Guarda';\nUPDATE users SET name = 'Fagner';","timestamp":"17:16:13 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados: org79793260","timestamp":"17:16:13 22-08-2024"}
+{"level":"info","message":"Script executado com sucesso no banco: org79793260","timestamp":"17:16:13 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados: org29000926","timestamp":"17:16:13 22-08-2024"}
+{"level":"info","message":"Script executado com sucesso no banco: org29000926","timestamp":"17:16:13 22-08-2024"}
+{"level":"info","message":"Script executado em todos os bancos.","timestamp":"17:16:13 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados Neuttron para buscar orgIds.","timestamp":"17:17:08 22-08-2024"}
+{"level":"info","message":"orgIds recuperados com sucesso.","timestamp":"17:17:08 22-08-2024"}
+{"level":"info","message":"Procurando o arquivo SQL mais recente na pasta: ./src/scripts","timestamp":"17:17:08 22-08-2024"}
+{"level":"info","message":"Arquivo SQL mais recente encontrado: src\\scripts\\19-08-2024.sql","timestamp":"17:17:08 22-08-2024"}
+{"level":"info","message":"Executando script SQL em 2 bancos de dados.","timestamp":"17:17:08 22-08-2024"}
+{"level":"info","message":"Conteúdo do script: UPDATE users SET name = 'Guarda';\n# UPDATE users SET name = 'Fagner';\n\nSELECT * FROM users;","timestamp":"17:17:08 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados: org79793260","timestamp":"17:17:08 22-08-2024"}
+{"level":"info","message":"Script executado com sucesso no banco: org79793260","timestamp":"17:17:08 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados: org29000926","timestamp":"17:17:08 22-08-2024"}
+{"level":"info","message":"Script executado com sucesso no banco: org29000926","timestamp":"17:17:08 22-08-2024"}
+{"level":"info","message":"Script executado em todos os bancos.","timestamp":"17:17:08 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados Neuttron para buscar orgIds.","timestamp":"17:17:25 22-08-2024"}
+{"level":"info","message":"orgIds recuperados com sucesso.","timestamp":"17:17:25 22-08-2024"}
+{"level":"info","message":"Procurando o arquivo SQL mais recente na pasta: ./src/scripts","timestamp":"17:17:25 22-08-2024"}
+{"level":"info","message":"Arquivo SQL mais recente encontrado: src\\scripts\\19-08-2024.sql","timestamp":"17:17:25 22-08-2024"}
+{"level":"info","message":"Executando script SQL em 2 bancos de dados.","timestamp":"17:17:25 22-08-2024"}
+{"level":"info","message":"Conteúdo do script: UPDATE users SET name = 'Guarda';\nUPDATE users SET name = 'Fagner';\n","timestamp":"17:17:25 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados: org79793260","timestamp":"17:17:25 22-08-2024"}
+{"level":"info","message":"Script executado com sucesso no banco: org79793260","timestamp":"17:17:25 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados: org29000926","timestamp":"17:17:25 22-08-2024"}
+{"level":"info","message":"Script executado com sucesso no banco: org29000926","timestamp":"17:17:25 22-08-2024"}
+{"level":"info","message":"Script executado em todos os bancos.","timestamp":"17:17:25 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados Neuttron para buscar orgIds.","timestamp":"17:19:58 22-08-2024"}
+{"level":"info","message":"orgIds recuperados com sucesso.","timestamp":"17:19:58 22-08-2024"}
+{"level":"info","message":"Procurando o arquivo SQL mais recente na pasta: ./src/scripts","timestamp":"17:19:58 22-08-2024"}
+{"level":"info","message":"Arquivo SQL mais recente encontrado: src\\scripts\\22-08-2024.sql","timestamp":"17:19:58 22-08-2024"}
+{"level":"info","message":"Executando script SQL em 2 bancos de dados.","timestamp":"17:19:58 22-08-2024"}
+{"level":"info","message":"Conteúdo do script: UPDATE users SET name = 'Kenedy';","timestamp":"17:19:58 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados: org79793260","timestamp":"17:19:58 22-08-2024"}
+{"level":"info","message":"Script executado com sucesso no banco: org79793260","timestamp":"17:19:58 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados: org29000926","timestamp":"17:19:58 22-08-2024"}
+{"level":"info","message":"Script executado com sucesso no banco: org29000926","timestamp":"17:19:58 22-08-2024"}
+{"level":"info","message":"Script executado em todos os bancos.","timestamp":"17:19:58 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados Neuttron para buscar orgIds.","timestamp":"17:20:43 22-08-2024"}
+{"level":"info","message":"orgIds recuperados com sucesso.","timestamp":"17:20:43 22-08-2024"}
+{"level":"info","message":"Procurando o arquivo SQL mais recente na pasta: ./src/scripts","timestamp":"17:20:43 22-08-2024"}
+{"level":"info","message":"Arquivo SQL mais recente encontrado: src\\scripts\\22-08-2024.sql","timestamp":"17:20:43 22-08-2024"}
+{"level":"info","message":"Executando script SQL em 2 bancos de dados.","timestamp":"17:20:43 22-08-2024"}
+{"level":"info","message":"Conteúdo do script: UPDATE users SET name = 'Kenedy';","timestamp":"17:20:43 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados: org79793260","timestamp":"17:20:43 22-08-2024"}
+{"level":"info","message":"Script executado com sucesso no banco: org79793260","timestamp":"17:20:43 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados: org29000926","timestamp":"17:20:43 22-08-2024"}
+{"level":"info","message":"Script executado com sucesso no banco: org29000926","timestamp":"17:20:43 22-08-2024"}
+{"level":"info","message":"Script executado em todos os bancos.","timestamp":"17:20:43 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados Neuttron para buscar orgIds.","timestamp":"17:21:13 22-08-2024"}
+{"level":"info","message":"orgIds recuperados com sucesso.","timestamp":"17:21:13 22-08-2024"}
+{"level":"info","message":"Procurando o arquivo SQL mais recente na pasta: ./src/scripts","timestamp":"17:21:13 22-08-2024"}
+{"level":"info","message":"Arquivo SQL mais recente encontrado: src\\scripts\\22-08-2024.sql","timestamp":"17:21:13 22-08-2024"}
+{"level":"info","message":"Executando script SQL em 2 bancos de dados.","timestamp":"17:21:13 22-08-2024"}
+{"level":"info","message":"Conteúdo do script: UPDATE users SET name = 'Kenedy';","timestamp":"17:21:13 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados: org79793260","timestamp":"17:21:13 22-08-2024"}
+{"level":"info","message":"Script executado com sucesso no banco: org79793260","timestamp":"17:21:13 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados: org29000926","timestamp":"17:21:13 22-08-2024"}
+{"level":"info","message":"Script executado com sucesso no banco: org29000926","timestamp":"17:21:13 22-08-2024"}
+{"level":"info","message":"Script executado em todos os bancos.","timestamp":"17:21:13 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados Neuttron para buscar orgIds.","timestamp":"17:21:48 22-08-2024"}
+{"level":"info","message":"orgIds recuperados com sucesso.","timestamp":"17:21:48 22-08-2024"}
+{"level":"info","message":"Procurando o arquivo SQL mais recente na pasta: ./src/scripts","timestamp":"17:21:48 22-08-2024"}
+{"level":"info","message":"Arquivo SQL mais recente encontrado: src\\scripts\\002-22-08-2024.sql","timestamp":"17:21:48 22-08-2024"}
+{"level":"info","message":"Executando script SQL em 2 bancos de dados.","timestamp":"17:21:48 22-08-2024"}
+{"level":"info","message":"Conteúdo do script: UPDATE users SET name = 'Kenedy';","timestamp":"17:21:48 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados: org79793260","timestamp":"17:21:48 22-08-2024"}
+{"level":"info","message":"Script executado com sucesso no banco: org79793260","timestamp":"17:21:48 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados: org29000926","timestamp":"17:21:48 22-08-2024"}
+{"level":"info","message":"Script executado com sucesso no banco: org29000926","timestamp":"17:21:49 22-08-2024"}
+{"level":"info","message":"Script executado em todos os bancos.","timestamp":"17:21:49 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados Neuttron para buscar orgIds.","timestamp":"17:22:10 22-08-2024"}
+{"level":"info","message":"orgIds recuperados com sucesso.","timestamp":"17:22:10 22-08-2024"}
+{"level":"info","message":"Procurando o arquivo SQL mais recente na pasta: ./src/scripts","timestamp":"17:22:10 22-08-2024"}
+{"level":"info","message":"Arquivo SQL mais recente encontrado: src\\scripts\\003-22-08-2024.sql","timestamp":"17:22:10 22-08-2024"}
+{"level":"info","message":"Executando script SQL em 2 bancos de dados.","timestamp":"17:22:10 22-08-2024"}
+{"level":"info","message":"Conteúdo do script: UPDATE users SET name = 'Kenedy';","timestamp":"17:22:10 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados: org79793260","timestamp":"17:22:10 22-08-2024"}
+{"level":"info","message":"Script executado com sucesso no banco: org79793260","timestamp":"17:22:10 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados: org29000926","timestamp":"17:22:10 22-08-2024"}
+{"level":"info","message":"Script executado com sucesso no banco: org29000926","timestamp":"17:22:10 22-08-2024"}
+{"level":"info","message":"Script executado em todos os bancos.","timestamp":"17:22:10 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados Neuttron para buscar orgIds.","timestamp":"17:22:33 22-08-2024"}
+{"level":"info","message":"orgIds recuperados com sucesso.","timestamp":"17:22:34 22-08-2024"}
+{"level":"info","message":"Procurando o arquivo SQL mais recente na pasta: ./src/scripts","timestamp":"17:22:34 22-08-2024"}
+{"level":"info","message":"Arquivo SQL mais recente encontrado: src\\scripts\\003-22-08-2024.sql","timestamp":"17:22:34 22-08-2024"}
+{"level":"info","message":"Executando script SQL em 2 bancos de dados.","timestamp":"17:22:34 22-08-2024"}
+{"level":"info","message":"Conteúdo do script: UPDATE users SET name = 'Kenedy';","timestamp":"17:22:34 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados: org79793260","timestamp":"17:22:34 22-08-2024"}
+{"level":"info","message":"Script executado com sucesso no banco: org79793260","timestamp":"17:22:34 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados: org29000926","timestamp":"17:22:34 22-08-2024"}
+{"level":"info","message":"Script executado com sucesso no banco: org29000926","timestamp":"17:22:34 22-08-2024"}
+{"level":"info","message":"Script executado em todos os bancos.","timestamp":"17:22:34 22-08-2024"}

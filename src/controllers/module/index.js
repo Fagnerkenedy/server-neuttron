@@ -126,7 +126,8 @@ module.exports = {
     delete: async (req, res) => {
         try {
             const orgId = req.params.org
-            const moduleNameApi = req.body.name
+            const moduleName = req.body.name
+            let moduleNameApi = moduleName.replace(/[^\w\s]|[\sç]/gi, '_')
             const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
             //const row = await connection.execute('DELETE FROM modules WHERE module_id = ? AND organization_id = ?; DELETE FROM module_fields WHERE module_id = ? AND organization_id = ?; DELETE FROM module_data WHERE module_id = ? AND organization_id = ?;', [module_id, orgId, module_id, orgId, module_id, orgId]);
             const deleteModuleQuery = 'DELETE FROM modules WHERE api_name = ?;';
@@ -134,7 +135,7 @@ module.exports = {
             const deleteModuleTableQuery = `DROP TABLE ${moduleNameApi};`;
 
             let row = await connection.execute(deleteModuleQuery, [moduleNameApi]);
-            let rowfields = await connection.execute(deleteFieldsQuery, [moduleNameApi]);
+            let rowfields = await connection.execute(deleteFieldsQuery, [moduleName]);
             row = await connection.execute(deleteModuleTableQuery);
 
             await connection.end();

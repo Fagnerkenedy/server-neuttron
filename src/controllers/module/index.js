@@ -127,7 +127,7 @@ module.exports = {
         try {
             const orgId = req.params.org
             const moduleName = req.body.name
-            let moduleNameApi = moduleName.replace(/[^\w\s]|[\sç]/gi, '_')
+            const moduleNameApi = req.body.api_name
             const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
             //const row = await connection.execute('DELETE FROM modules WHERE module_id = ? AND organization_id = ?; DELETE FROM module_fields WHERE module_id = ? AND organization_id = ?; DELETE FROM module_data WHERE module_id = ? AND organization_id = ?;', [module_id, orgId, module_id, orgId, module_id, orgId]);
             const deleteModuleQuery = 'DELETE FROM modules WHERE api_name = ?;';

@@ -116,7 +116,7 @@ module.exports = {
             let newModuleNameApi = newName.replace(/[^\w\s]|[\sç]/gi, '_')
             const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
             const row = await connection.execute('UPDATE modules SET name = ? WHERE name = ?;', [newName, moduleName]);
-            await connection.execute(`ALTER TABLE ${moduleNameApi} RENAME TO ${newModuleNameApi};`);
+            // await connection.execute(`ALTER TABLE ${moduleNameApi} RENAME TO ${newModuleNameApi};`);
             await connection.end();
             res.json(row[0]);
         } catch (error) {

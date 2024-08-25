@@ -55,7 +55,7 @@ module.exports = {
             await connection.commit();
             // await connection.end();
 
-            res.json({ success: true, message: "Table created successfully", result });
+            res.json({ success: true, message: "Table created successfully", result, moduleNameApi });
         } catch (error) {
             if (connection) {
                 await connection.rollback();

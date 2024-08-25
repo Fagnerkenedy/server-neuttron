@@ -1,4 +1,2 @@
-UPDATE users SET name = 'Guarda';
-UPDATE users SET name = 'Fagner';
-
-SELECT * FROM users;  
+ALTER TABLE fields ADD COLUMN required BOOLEAN;
+SELECT * FROM fields;

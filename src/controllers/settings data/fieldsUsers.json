@@ -8,13 +8,15 @@
                     "name": "Nome",
                     "type": "VARCHAR(255)",
                     "apiName": "name",
-                    "field_type": "single_line"
+                    "field_type": "single_line",
+                    "required": true
                 },
                 {
                     "name": "E-mail",
                     "type": "VARCHAR(255)",
                     "field_type": "email",
-                    "apiName": "email"
+                    "apiName": "email",
+                    "required": true
                 },
                 {
                     "name": "Perfil",
@@ -23,7 +25,8 @@
                     "related_module": "profiles",
                     "alter_table": true,
                     "apiName": "perfil",
-                    "search_field": "perfil"
+                    "search_field": "perfil",
+                    "required": true
                 },
                 {
                     "name": "Enviar e-mail de notificação",

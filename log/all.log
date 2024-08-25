@@ -227,3 +227,14 @@
 {"level":"info","message":"Conectando ao banco de dados: org29000926","timestamp":"17:22:34 22-08-2024"}
 {"level":"info","message":"Script executado com sucesso no banco: org29000926","timestamp":"17:22:34 22-08-2024"}
 {"level":"info","message":"Script executado em todos os bancos.","timestamp":"17:22:34 22-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados Neuttron para buscar orgIds.","timestamp":"02:29:36 24-08-2024"}
+{"level":"info","message":"orgIds recuperados com sucesso.","timestamp":"02:29:36 24-08-2024"}
+{"level":"info","message":"Procurando o arquivo SQL mais recente na pasta: ./src/scripts","timestamp":"02:29:36 24-08-2024"}
+{"level":"info","message":"Arquivo SQL mais recente encontrado: src\\scripts\\001-22-08-2024.sql","timestamp":"02:29:36 24-08-2024"}
+{"level":"info","message":"Executando script SQL em 2 bancos de dados.","timestamp":"02:29:36 24-08-2024"}
+{"level":"info","message":"Conteúdo do script: ALTER TABLE fields ADD COLUMN required BOOLEAN;\nSELECT * FROM fields;","timestamp":"02:29:36 24-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados: org79793260","timestamp":"02:29:36 24-08-2024"}
+{"level":"info","message":"Script executado com sucesso no banco: org79793260","timestamp":"02:29:36 24-08-2024"}
+{"level":"info","message":"Conectando ao banco de dados: org29000926","timestamp":"02:29:36 24-08-2024"}
+{"level":"info","message":"Script executado com sucesso no banco: org29000926","timestamp":"02:29:36 24-08-2024"}
+{"level":"info","message":"Script executado em todos os bancos.","timestamp":"02:29:36 24-08-2024"}

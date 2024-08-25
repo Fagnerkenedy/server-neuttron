@@ -7,20 +7,23 @@
                 {
                     "name": "Nome",
                     "type": "VARCHAR(255)",
-                    "field_type": "single_line"
+                    "field_type": "single_line",
+                    "required": true
                 },
                 {
                     "name": "Módulo",
                     "type": "VARCHAR(255)",
                     "field_type": "loockup",
                     "related_module": "modules",
-                    "search_field": "name"
+                    "search_field": "name",
+                    "required": true
                 },
                 {
                     "name": "Executar quando",
                     "type": "VARCHAR(255)",
                     "field_type": "select",
-                    "options": ["Criar", "Criar ou editar", "Editar", "Excluir"]
+                    "options": ["Criar", "Criar ou editar", "Editar", "Excluir"],
+                    "required": true
                 }
             ],
             "right": [

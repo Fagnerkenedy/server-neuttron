@@ -34,6 +34,7 @@ module.exports = {
             search_field VARCHAR(255),
             module VARCHAR(255),
             unused BOOLEAN,
+            required BOOLEAN,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )`;

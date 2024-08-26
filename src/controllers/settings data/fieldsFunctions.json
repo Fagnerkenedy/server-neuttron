@@ -22,7 +22,7 @@
                     "name": "Executar quando",
                     "type": "VARCHAR(255)",
                     "field_type": "select",
-                    "options": ["Criar", "Criar ou editar", "Editar", "Excluir"],
+                    "options": ["Criar", "Criar ou editar", "Editar"],
                     "required": true
                 }
             ],

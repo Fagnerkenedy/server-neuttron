@@ -32,7 +32,7 @@ module.exports = {
                 const customFunction = new Function(
                     'module', 
                     'fields', 
-                    'record_id', 
+                    'id', 
                     'related_record', 
                     'getRecordById', 
                     'updateRecord', 

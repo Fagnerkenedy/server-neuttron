@@ -8,6 +8,7 @@ module.exports = {
         try {
             const connection = await mysql.createConnection({ ...dbConfig, database: orgId });
             const [moduleName] = await connection.execute(`SELECT DISTINCT name FROM modules WHERE api_name = '${module}';`)
+            console.log("moduleNmae: ",moduleName)
             const [functions] = await connection.execute(`SELECT * FROM functions WHERE executar_quando LIKE '%${event}%' AND m_dulo = '${moduleName}';`)
             console.log("!", functions)
             function createGetRecordById(connection) {

@@ -7,7 +7,7 @@ module.exports = {
     executeCustomFunctions: async (event, orgId, module, fields, record_id, related_record) => {
         try {
             const connection = await mysql.createConnection({ ...dbConfig, database: orgId });
-            const [functions] = await connection.execute(`SELECT * FROM functions WHERE executar_quando = '${event}' AND m_dulo = '${module}';`)
+            const [functions] = await connection.execute(`SELECT * FROM functions WHERE executar_quando LIKE '%${event}%' AND m_dulo = '${module}';`)
             console.log("!", functions)
             function createGetRecordById(connection) {
                 return (module, id) => getRecordById(module, id, connection);

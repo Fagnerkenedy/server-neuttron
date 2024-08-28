@@ -56,6 +56,7 @@ const createTables = async (connection, orgId, module) => {
             module VARCHAR(255),
             unused BOOLEAN,
             required BOOLEAN,
+            disabled BOOLEAN,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
@@ -94,7 +95,7 @@ const createFields = async (fields, connection, orgId, module) => {
     let results = []
     for (const field of fields) {
         try {
-            const { name, type, id, position = null, sort_order = null, related_module = null, related_id = null, required = null, search_field = null, field_type = null, options = null, unused = null } = field;
+            const { name, type, id, position = null, sort_order = null, related_module = null, related_id = null, required = null, disabled = null, search_field = null, field_type = null, options = null, unused = null } = field;
             let apiName = field.api_name || name.replace(/[^\w\s]|[\sç]/gi, '_').toLowerCase();
 
             const [searchField] = await connection.execute('SELECT id FROM fields WHERE module = ? and api_name = ? and id = ?;', [module, apiName, id]);
@@ -103,15 +104,15 @@ const createFields = async (fields, connection, orgId, module) => {
             if (searchField.length === 0) {
                 uniqueApiName = await getUniqueApiName(module, apiName, connection);
                 const [result] = await connection.execute(`
-                INSERT INTO fields (name, api_name, type, field_type, related_module, related_id, search_field, module, unused, required) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
-                    [name, uniqueApiName, type, field_type, related_module, related_id, search_field, module, unused, required]);
+                INSERT INTO fields (name, api_name, type, field_type, related_module, related_id, search_field, module, unused, required, disabled) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+                    [name, uniqueApiName, type, field_type, related_module, related_id, search_field, module, unused, required, disabled]);
                 idField = result.insertId;
                 console.log("INSERT: ", result);
             } else {
                 const [result] = await connection.execute(`
-                UPDATE fields SET name = ?, api_name = ?, type = ?, field_type = ?, related_module = ?, related_id = ?, search_field = ?, module = ?, unused = ?, required = ? WHERE id = ?;`,
-                    [name, apiName, type, field_type, related_module, related_id, search_field, module, unused, required, searchField[0].id]);
+                UPDATE fields SET name = ?, api_name = ?, type = ?, field_type = ?, related_module = ?, related_id = ?, search_field = ?, module = ?, unused = ?, required = ?, disabled = ? WHERE id = ?;`,
+                    [name, apiName, type, field_type, related_module, related_id, search_field, module, unused, required, disabled, searchField[0].id]);
                 idField = searchField[0].id;
                 console.log("UPDATE: ", result);
             }

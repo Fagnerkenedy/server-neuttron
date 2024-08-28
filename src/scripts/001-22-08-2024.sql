@@ -1,2 +1,2 @@
 ALTER TABLE fields ADD COLUMN required BOOLEAN;
-SELECT * FROM fields;
+SELECT * FROM modules;

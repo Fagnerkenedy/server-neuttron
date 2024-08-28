@@ -14,17 +14,28 @@ module.exports = {
     },
     updateRecord: async (module, id, map, connection) => {
         try {
-            if (!Array.isArray(map)) {
-                map = [map];
-            }
+            // if (!Array.isArray(map)) {
+            //     map = [map];
+            // }
 
-            for (const obj of map) {
-                const columns = Object.keys(obj).map(key => `${key} = ?`).join(', ');
-                const values = Object.values(obj);
-                console.log(`UPDATE ${module} SET ${columns} WHERE id = ?;`, [...values, id]);
-                const [row] = await connection.execute(`UPDATE ${module} SET ${columns} WHERE id = ?;`, [...values, id]);
-                console.log("Resultado da query:", row);
+            // for (const obj in map) {
+            //     const columns = Object.keys(obj).map(key => `${key} = ?`).join(', ');
+            //     const values = Object.values(obj);
+            //     console.log(`UPDATE ${module} SET ${columns} WHERE id = ?;`, [...values, id]);
+            //     const [row] = await connection.execute(`UPDATE ${module} SET ${columns} WHERE id = ?;`, [...values, id]);
+            //     console.log("Resultado da query:", row);
+            // }
+
+            for (const key in map) {
+                if (map.hasOwnProperty(key)) {
+                    const columns = `${key} = ?`;
+                    const values = [map[key]];
+                    console.log(`UPDATE ${module} SET ${columns} WHERE id = ?;`, [...values, id]);
+                    const [row] = await connection.execute(`UPDATE ${module} SET ${columns} WHERE id = ?;`, [...values, id]);
+                    console.log("Resultado da query:", row);
+                }
             }
+            
 
             return map;
         } catch (error) {

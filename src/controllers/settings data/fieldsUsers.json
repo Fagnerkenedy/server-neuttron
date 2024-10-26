@@ -7,7 +7,7 @@
                 {
                     "name": "Nome",
                     "type": "VARCHAR(255)",
-                    "apiName": "name",
+                    "api_name": "name",
                     "field_type": "single_line",
                     "required": true
                 },
@@ -15,7 +15,7 @@
                     "name": "E-mail",
                     "type": "VARCHAR(255)",
                     "field_type": "email",
-                    "apiName": "email",
+                    "api_name": "email",
                     "required": true
                 },
                 {
@@ -24,7 +24,7 @@
                     "field_type": "loockup",
                     "related_module": "profiles",
                     "alter_table": true,
-                    "apiName": "perfil",
+                    "api_name": "perfil",
                     "search_field": "perfil",
                     "required": true
                 },
@@ -33,7 +33,7 @@
                     "type": "VARCHAR(255)",
                     "field_type": "checkbox",
                     "alter_table": true,
-                    "apiName": "notification"
+                    "api_name": "notification"
                 }
             ],
             "right": [
@@ -41,21 +41,21 @@
                     "name": "Sobrenome",
                     "type": "VARCHAR(255)",
                     "alter_table": true,
-                    "apiName": "last_name",
+                    "api_name": "last_name",
                     "field_type": "single_line"
                 },
                 {
                     "name": "Celular",
                     "type": "VARCHAR(255)",
                     "field_type": "phone",
-                    "apiName": "phone"
+                    "api_name": "phone"
                 },
                 {
                     "name": "Data de nascimento",
                     "type": "VARCHAR(255)",
                     "field_type": "date",
                     "alter_table": true,
-                    "apiName": "Data_de_nascimento"
+                    "api_name": "Data_de_nascimento"
                 },
                 {
                     "name": "Gênero",
@@ -67,7 +67,7 @@
                         "Prefiro não dizer"
                     ],
                     "alter_table": true,
-                    "apiName": "genero"
+                    "api_name": "genero"
                 }
             ]
         }

@@ -276,6 +276,7 @@ module.exports = {
                 const deleteSql = `DELETE FROM ${module} WHERE id = ?`;
                 const deleteValues = [ids[0]];
                 await connection.execute(deleteSql, deleteValues);
+                await executeCustomFunctions('Excluir', orgId, module, '', ids[0])
             } else {
                 const placeholders = ids.map(() => '?').join(', ');
                 deleteSql = `DELETE FROM ${module} WHERE id IN (${placeholders})`;

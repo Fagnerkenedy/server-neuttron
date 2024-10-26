@@ -23,7 +23,7 @@
     {
         "nome": "Atualiza valores Produtos",
         "m_dulo": "Pedidos",
-        "executar_quando": "Criar",
+        "executar_quando": "Editar",
         "descri__o": "Atualiza valores Produtos ao Editar",
         "fun__o": "produto = await getRecordById('Produtos', get('nome_produto.id')) let map = { valor_unit_rio: produto.valor_de_venda, valor_total: produto.valor_de_venda * fields.quantidade, nome_pedido: `${get('cliente.name')} - ${get('nome_produto.name')}`, status: 'Pendente', data_do_pedido: today()} updateRecord('Pedidos', id, map)"
     }

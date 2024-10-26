@@ -37,7 +37,8 @@
                 {
                     "name": "LinkedIn",
                     "type": "VARCHAR(255)",
-                    "field_type": "single_line"
+                    "field_type": "single_line",
+                    "required": false
                 },
                 {
                     "name": "E-mail secundário",
@@ -52,7 +53,8 @@
                 {
                     "name": "CEP",
                     "type": "VARCHAR(255)",
-                    "field_type": "single_line"
+                    "field_type": "single_line",
+                    "required": false
                 }
             ],
             "right": [
@@ -64,7 +66,8 @@
                 {
                     "name": "Site",
                     "type": "VARCHAR(255)",
-                    "field_type": "single_line"
+                    "field_type": "single_line",
+                    "required": false
                 },
                 {
                     "name": "Indústria",
@@ -101,17 +104,48 @@
                 {
                     "name": "Instagram",
                     "type": "VARCHAR(255)",
-                    "field_type": "single_line"
+                    "field_type": "single_line",
+                    "required": false
                 },
                 {
                     "name": "Rua",
                     "type": "VARCHAR(255)",
-                    "field_type": "single_line"
+                    "field_type": "single_line",
+                    "required": false
                 },
                 {
                     "name": "Estado",
                     "type": "VARCHAR(255)",
-                    "field_type": "single_line"
+                    "field_type": "select",
+                    "options": [
+                        "Acre",
+                        "Alagoas",
+                        "Amapá",
+                        "Amazonas",
+                        "Bahia",
+                        "Ceará",
+                        "Distrito Federal",
+                        "Espírito Santo",
+                        "Goiás",
+                        "Maranhão",
+                        "Mato Grosso",
+                        "Mato Grosso do Sul",
+                        "Minas Gerais",
+                        "Pará",
+                        "Paraíba",
+                        "Paraná",
+                        "Pernambuco",
+                        "Piauí",
+                        "Rio de Janeiro",
+                        "Rio Grande do Norte",
+                        "Rio Grande do Sul",
+                        "Rondônia",
+                        "Roraima",
+                        "Santa Catarina",
+                        "São Paulo",
+                        "Sergipe",
+                        "Tocantins"
+                    ]
                 },
                 {
                     "name": "País",

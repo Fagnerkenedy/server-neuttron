@@ -1,7 +1,7 @@
 const mysql = require('mysql2/promise');
 const dbConfig = require('../../database/index')
 const vm = require('vm')
-const { getRecordById, updateRecord, get, today } = require('./functions.js')
+const { getRecordById, updateRecord, createRecord, get, today } = require('./functions.js')
 
 module.exports = {
     executeCustomFunctions: async (event, orgId, module, fields, record_id, related_record) => {
@@ -11,12 +11,15 @@ module.exports = {
             console.log("moduleNmae: ",moduleName)
             const [functions] = await connection.execute(`SELECT * FROM functions WHERE executar_quando LIKE '%${event}%' AND m_dulo = '${moduleName[0].name}';`)
             console.log("!", functions)
-            function createGetRecordById(connection) {
+            function getRecordByIdFunction(connection) {
                 return (module, id) => getRecordById(module, id, connection);
             }
 
-            function createUpdateRecordById(connection) {
+            function updateRecordFunction(connection) {
                 return (module, id, data) => updateRecord(module, id, data, connection);
+            }
+            function createRecordFunction(connection) {
+                return (module, data) => createRecord(module, data, orgId, connection);
             }
 
             function getFields(fields) {
@@ -27,8 +30,9 @@ module.exports = {
             functions.map(async func => {
                 console.log("fieldikdklsjkdroek", fields)
 
-                const customGetRecordById = createGetRecordById(connection);
-                const customUpdateRecordById = createUpdateRecordById(connection);
+                const customGetRecordById = getRecordByIdFunction(connection);
+                const customUpdateRecordById = updateRecordFunction(connection);
+                const customCreateRecord = createRecordFunction(connection);
                 const customGetFields = getFields(fields)
 
                 const customFunction = new Function(
@@ -38,6 +42,7 @@ module.exports = {
                     'related_record', 
                     'getRecordById', 
                     'updateRecord', 
+                    'createRecord',
                     'get', 
                     'today',
                     `return (async () => {
@@ -51,6 +56,7 @@ module.exports = {
                     related_record, 
                     customGetRecordById, 
                     customUpdateRecordById, 
+                    customCreateRecord,
                     customGetFields, 
                     today
                 )

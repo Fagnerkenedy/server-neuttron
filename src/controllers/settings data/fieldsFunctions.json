@@ -24,6 +24,11 @@
                     "field_type": "select",
                     "options": ["Criar", "Criar ou editar", "Editar"],
                     "required": true
+                },
+                {
+                    "name": "Descrição",
+                    "type": "TEXT(16000)",
+                    "field_type": "multi_line"
                 }
             ],
             "right": [

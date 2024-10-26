@@ -1,5 +1,6 @@
 const mysql = require('mysql2/promise');
 const dbConfig = require('../../database/index')
+const crypto = require('crypto');
 
 module.exports = {
     getRecordById: async (module, id, connection) => {
@@ -27,6 +28,8 @@ module.exports = {
             // }
 
             for (const key in map) {
+                console.log("Map: ",map)
+                console.log("Key: ",key)
                 if (map.hasOwnProperty(key)) {
                     const columns = `${key} = ?`;
                     const values = [map[key]];
@@ -43,6 +46,39 @@ module.exports = {
             throw error; // Rejeita a promessa com o erro
         }
     },
+
+    createRecord: async (module, map, orgId, connection) => {
+        try {
+
+            const gerarHash = (dados) => {
+                const dadosComTimestamp = dados + Date.now().toString();
+                const hash = crypto.createHash('sha256').update(dadosComTimestamp).digest('hex')
+                return hash.substring(0, 19)
+            }
+            const record_id = gerarHash(JSON.stringify({ orgId, module, map }));
+            const columns = Object.keys(map).join(', ');
+            const placeholders = Object.keys(map).map(() => '?').join(', ');
+            const values = Object.values(map);
+            console.log(`INSERT INTO ${module} (id, ${columns}) VALUES (?, ${placeholders});`);
+            const [row] = await connection.execute(`INSERT INTO ${module} (id, ${columns}) VALUES (?, ${placeholders});`,[record_id, ...values] );
+            console.log("Resultado da query:", row);
+
+            // for (const key in map) {
+            //     if (map.hasOwnProperty(key)) {
+            //         const columns = `${key} = ?`;
+            //         const values = [map[key]];
+            //         console.log(`INSERT INTO ${module} (${columns}) VALUES (${values});`);
+            //         const [row] = await connection.execute(`INSERT INTO ${module} (${columns}) VALUES (${values});`);
+            //         console.log("Resultado da query:", row);
+            //     }
+            // }
+            return map;
+        } catch (error) {
+            console.log("Erro ao criar o registro:", error);
+            throw error;
+        }
+    },
+
     get: (obj, path, defaultValue = "") => {
         if (!obj || typeof path !== 'string') {
             return defaultValue;

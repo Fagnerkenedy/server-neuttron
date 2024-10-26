@@ -8,6 +8,7 @@ const fieldsFunctions = require('./fieldsFunctions.json')
 const {insertData} = require('./insertData')
 const dataProfiles = require('./dataProfiles.json')
 const dataPermissions = require('./dataPermissions.json');
+const dataFunctions = require('./dataFunctions.json')
 const { createProfilesPermissions, createPermissions } = require('./createPermissions');
 const { createSectionFields } = require('../../utility/functions');
 
@@ -71,14 +72,11 @@ module.exports = {
                 createProfilesPermissions(req)
             }
             await connection.execute(`CREATE TABLE IF NOT EXISTS functions (
-                id VARCHAR(255) PRIMARY KEY,
-                name VARCHAR(255),
-                module VARCHAR(255),
-                trigger_event ENUM('onCreate', 'onUpdate', 'onCreateOrOnUpdate', 'onDelete') NOT NULL,
-                body TEXT
+                id VARCHAR(255) PRIMARY KEY
             );`)
             // const functionss = await createFieldsProfiles(fieldsFunctions, connection, `org${orgId}`, 'functions')
             const functionss = await createSectionFields(fieldsFunctions, connection, `org${orgId}`, 'functions')
+            const insertDataFunctions = await insertData(dataFunctions, connection, `org${orgId}`, 'functions')
 
             console.log("functuions", functionss)
             await connection.end();

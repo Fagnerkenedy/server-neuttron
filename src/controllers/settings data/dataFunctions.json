@@ -1,0 +1,30 @@
+[
+    {
+        "nome": "Atualiza valores Produtos",
+        "m_dulo": "Pedidos",
+        "executar_quando": "Criar",
+        "descri__o": "Atualiza valores Produtos ao Criar",
+        "fun__o": "produto = await getRecordById('Produtos', get('nome_produto.id')) let map = { valor_unit_rio: produto.valor_de_venda, valor_total: produto.valor_de_venda * fields.quantidade, nome_pedido: `${get('cliente.name')} - ${get('nome_produto.name')}`,status: 'Pendente', data_do_pedido: today() } updateRecord('Pedidos', id, map)"
+    },
+    {
+        "nome": "Deletar",
+        "m_dulo": "Pedidos",
+        "executar_quando": "Excluir",
+        "descri__o": "Função que executa ao Deletar um registro",
+        "fun__o": "map = { produto_ativo: true } updateRecord('Produtos', '06e5eefaa4ba3db974f', map)"
+    },
+    {
+        "nome": "Cria Cópia de Pedido",
+        "m_dulo": "Pedidos",
+        "executar_quando": "Criar",
+        "descri__o": "Cria Cópia de Pedido",
+        "fun__o": "produto = await getRecordById('Produtos', get('nome_produto.id')) let map = { valor_unit_rio: produto.valor_de_venda, valor_total: produto.valor_de_venda * fields.quantidade, nome_pedido: `${get('cliente.name')} - ${get('nome_produto.name')}`, status: 'Pendente', data_do_pedido: today() } createRecord('Pedidos', map)"
+    },
+    {
+        "nome": "Atualiza valores Produtos",
+        "m_dulo": "Pedidos",
+        "executar_quando": "Criar",
+        "descri__o": "Atualiza valores Produtos ao Editar",
+        "fun__o": "produto = await getRecordById('Produtos', get('nome_produto.id')) let map = { valor_unit_rio: produto.valor_de_venda, valor_total: produto.valor_de_venda * fields.quantidade, nome_pedido: `${get('cliente.name')} - ${get('nome_produto.name')}`, status: 'Pendente', data_do_pedido: today()} updateRecord('Pedidos', id, map)"
+    }
+]

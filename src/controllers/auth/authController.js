@@ -347,8 +347,21 @@ module.exports = {
 
     },
 
+    deleteAccount: async (req, res) => {
+        const { email, orgId } = req.body
+        try {
+            const connection = await mysql.createConnection({ ...dbConfig });
+            await connection.execute(`DROP DATABASE ${orgId};`);
+            await connection.end();
 
-
+            const connectionNeuttron = await mysql.createConnection({ ...dbConfig, database: process.env.DB_NAME });
+            await connectionNeuttron.execute(`DELETE FROM users WHERE email = '${email}';`);
+            await connectionNeuttron.end();
+            return  res.status(200).json({ success: true, message: 'Conta excluída com sucesso!' })
+        } catch (error) {
+            res.status(400).json({ error })
+        }
+    }
 
     // checkSiteName: async (req, res) => {
     //     const { sitename } = req.body

@@ -4,7 +4,7 @@
         "m_dulo": "Pedidos",
         "executar_quando": "Criar",
         "descri__o": "Atualiza valores Produtos ao Criar",
-        "fun__o": "produto = await getRecordById('Produtos', get('nome_produto.id')) \nlet map = { \nvalor_unit_rio: produto.valor_de_venda, \nvalor_total: produto.valor_de_venda * fields.quantidade, \nnome_pedido: `${get('cliente.name')} - ${get('nome_produto.name')}`, \nstatus: 'Pendente', \ndata_do_pedido: today() \n} \nupdateRecord('Pedidos', id, map)"
+        "fun__o": "produto = await getRecordById('Produtos', get('nome_produto.id')) \nlet map = { \n valor_unit_rio: produto.valor_de_venda, \n valor_total: produto.valor_de_venda * fields.quantidade, \n nome_pedido: `${get('cliente.name')} - ${get('nome_produto.name')}`, \n status: 'Pendente', \n data_do_pedido: today() \n} \nupdateRecord('Pedidos', id, map)"
     },
     {
         "nome": "Deletar",
@@ -18,13 +18,13 @@
         "m_dulo": "Pedidos",
         "executar_quando": "Criar",
         "descri__o": "Cria Cópia de Pedido",
-        "fun__o": "produto = await getRecordById('Produtos', get('nome_produto.id')) \nlet map = { \nvalor_unit_rio: produto.valor_de_venda, \nvalor_total: produto.valor_de_venda * fields.quantidade, \nnome_pedido: `${get('cliente.name')} - ${get('nome_produto.name')}`, \nstatus: 'Pendente', \ndata_do_pedido: today() \n} \ncreateRecord('Pedidos', map)"
+        "fun__o": "produto = await getRecordById('Produtos', get('nome_produto.id')) \nlet map = { \n valor_unit_rio: produto.valor_de_venda, \n valor_total: produto.valor_de_venda * fields.quantidade, \n nome_pedido: `${get('cliente.name')} - ${get('nome_produto.name')}`, \n status: 'Pendente', \n data_do_pedido: today() \n} \ncreateRecord('Pedidos', map)"
     },
     {
         "nome": "Atualiza valores Produtos",
         "m_dulo": "Pedidos",
         "executar_quando": "Editar",
         "descri__o": "Atualiza valores Produtos ao Editar",
-        "fun__o": "produto = await getRecordById('Produtos', get('nome_produto.id')) \nlet map = { \nvalor_unit_rio: produto.valor_de_venda, \nvalor_total: produto.valor_de_venda * fields.quantidade, \nnome_pedido: `${get('cliente.name')} - ${get('nome_produto.name')}`, \nstatus: 'Pendente', \ndata_do_pedido: today()\n} \nupdateRecord('Pedidos', id, map)"
+        "fun__o": "produto = await getRecordById('Produtos', get('nome_produto.id')) \nlet map = { \n valor_unit_rio: produto.valor_de_venda, \n valor_total: produto.valor_de_venda * fields.quantidade, \n nome_pedido: `${get('cliente.name')} - ${get('nome_produto.name')}`, \n status: 'Pendente', \n data_do_pedido: today() \n} \nupdateRecord('Pedidos', id, map)"
     }
 ]

@@ -25,4 +25,6 @@ router.post('/confirmation', authForUserApis, authController.confirmation)
 // router.post('/checksitename', authController.checkSiteName)
 // router.get('/myaccount/:uuid', authController.getUser)
 
+router.post('/deleteaccount', authForUserApis, authController.deleteAccount)
+
 module.exports = router

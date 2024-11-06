@@ -52,8 +52,12 @@ const createTables = async (connection, orgId, module) => {
             field_type VARCHAR(255),
             related_module VARCHAR(255),
             related_id VARCHAR(255),
+            field_base VARCHAR(255),
             search_field VARCHAR(255),
+            kanban_order VARCHAR(255),
+            table_order VARCHAR(255),
             module VARCHAR(255),
+            is_visible_in_kanban BOOLEAN,
             unused BOOLEAN,
             required BOOLEAN,
             disabled BOOLEAN,
@@ -68,6 +72,7 @@ const createTables = async (connection, orgId, module) => {
             name VARCHAR(255),
             field_api_name VARCHAR(255),
             module VARCHAR(255),
+            option_order VARCHAR(255),
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
@@ -118,9 +123,15 @@ const createFields = async (fields, connection, orgId, module) => {
             }
 
             if (options != null) {
-                for (const option of options) {
-                    await connection.execute('INSERT INTO options (name, field_api_name, module) VALUES (?, ?, ?);', [option, apiName, module]);
-                }
+                Object.keys(options).forEach(async (index) => {
+                    await connection.execute(`INSERT INTO options (name, field_api_name, module, option_order) VALUES (?, ?, ?, ?);`, [options[index], apiName, module, index]);
+                })
+                // for (const option of options) {
+                //     const id = option.id
+                //     const index = options.findIndex(option => option.id === id)
+                //     console.log("iindex: ", index)
+                //     await connection.execute(`INSERT INTO options (name, field_api_name, module, option_order) VALUES (?, ?, ?, ?);`, [option, apiName, module, index]);
+                // }
             }
 
             if (related_module != null) {

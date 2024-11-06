@@ -25,12 +25,13 @@ module.exports = {
                 name VARCHAR(255),
                 api_name VARCHAR(255),
                 perfil VARCHAR(2000),
+                layout_type VARCHAR(255),
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )`;
             await connection.execute(query2);
             await connection.execute(
-                'INSERT INTO modules (name, api_name) VALUES (?, ?);',
+                "INSERT INTO modules (name, api_name, layout_type) VALUES (?, ?, 'tabela');",
                 [moduleName, moduleNameApi]
             );
             const [result] = await connection.execute(query);
@@ -93,6 +94,19 @@ module.exports = {
             res.status(500).json({ error: error.message });
         }
     },
+    readLayoutContent: async (req, res) => {
+        try {
+            const orgId = req.params.org
+            const moduleName = req.params.module
+            const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
+            const query = `SELECT layout_type FROM modules WHERE api_name = '${moduleName}';`
+            const [result] = await connection.execute(query);
+            await connection.end();
+            res.status(200).json({ success: true, message: "Module Layout", result });
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
     readRelatedModule: async (req, res) => {
         try {
             const orgId = req.params.org
@@ -119,6 +133,20 @@ module.exports = {
             // await connection.execute(`ALTER TABLE ${moduleNameApi} RENAME TO ${newModuleNameApi};`);
             await connection.end();
             res.json(row[0]);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+    updateLayoutContent: async (req, res) => {
+        try {
+            const orgId = req.params.org
+            const moduleName = req.params.module
+            const layout_type = req.body.layout_type
+            const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
+            const row = await connection.execute('UPDATE modules SET layout_type = ? WHERE api_name = ?;', [layout_type, moduleName]);
+            // await connection.execute(`ALTER TABLE ${moduleNameApi} RENAME TO ${newModuleNameApi};`);
+            await connection.end();
+            res.status(200).json(row[0]);
         } catch (error) {
             res.status(500).json({ error: error.message });
         }

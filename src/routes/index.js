@@ -11,8 +11,10 @@ const { authorize } = require('../middleware/auth');
 // Modulos
 router.post("/:org/module", authMiddleware.auth,                                     moduleController.create);
 router.get("/:org/modules", authMiddleware.auth,                                     moduleController.read);
+router.get("/:org/:module/readLayoutContent", authMiddleware.auth,                   moduleController.readLayoutContent);
 router.get("/:org/:module/relatedModule", authMiddleware.auth,                       authorize('read'), moduleController.readRelatedModule);
 router.put("/:org/module", authMiddleware.auth,                                      moduleController.update);
+router.put("/:org/:module/updateLayoutContent", authMiddleware.auth,                 moduleController.updateLayoutContent);
 router.delete("/:org/module", authMiddleware.auth,                                   moduleController.delete);
 
 // Campos

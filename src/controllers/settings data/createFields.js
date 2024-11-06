@@ -163,8 +163,12 @@ const createTables = async (connection, orgId, module) => {
             field_type VARCHAR(255),
             related_module VARCHAR(255),
             related_id VARCHAR(255),
+            field_base VARCHAR(255),
             search_field VARCHAR(255),
+            kanban_order VARCHAR(255),
+            table_order VARCHAR(255),
             module VARCHAR(255),
+            is_visible_in_kanban BOOLEAN,
             unused BOOLEAN,
             required BOOLEAN,
             disabled BOOLEAN,
@@ -179,6 +183,7 @@ const createTables = async (connection, orgId, module) => {
             name VARCHAR(255),
             field_api_name VARCHAR(255),
             module VARCHAR(255),
+            option_order VARCHAR(255),
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
@@ -206,7 +211,7 @@ const createFields2 = async (fields, connection, orgId, module, idPerfil, userId
     let results = []
     for (const field of fields) {
         try {
-            const { name, type, id = null, position = null, sort_order = null, related_module = null, required = true, disabled = null, search_field = null, field_type = null, options = null } = field;
+            const { name, type, id = null, position = null, sort_order = null, related_module = null, required = true, disabled = null, field_base = null, search_field = null, kanban_order = null, table_order = null, field_type = null, options = null } = field;
             let related_id = field.related_id || null;
             if (field.hasOwnProperty("related_module") && field.related_module == 'profiles') {
                 related_id = idPerfil
@@ -219,23 +224,28 @@ const createFields2 = async (fields, connection, orgId, module, idPerfil, userId
             if (searchField.length === 0) {
                 uniqueApiName = await getUniqueApiName(module, apiName, connection);
                 const [result] = await connection.execute(`
-                INSERT INTO fields (name, api_name, type, field_type, related_module, related_id, search_field, module, required, disabled)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
-                    [name, uniqueApiName, type, field_type, related_module, related_id, search_field, module, required, disabled]);
+                INSERT INTO fields (name, api_name, type, field_type, related_module, related_id, field_base, search_field, kanban_order, table_order, module, required, disabled)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+                    [name, uniqueApiName, type, field_type, related_module, related_id, field_base, search_field, kanban_order, table_order, module, required, disabled]);
                 idField = result.insertId;
                 console.log("INSERT: ", result);
             } else {
                 const [result] = await connection.execute(`
-                UPDATE fields SET name = ?, api_name = ?, type = ?, field_type = ?, related_module = ?, related_id = ?, search_field = ?, module = ?, required = ?, disabled = ? WHERE id = ?;`,
-                    [name, apiName, type, field_type, related_module, related_id, search_field, module, required, disabled, searchField[0].id]);
+                UPDATE fields SET name = ?, api_name = ?, type = ?, field_type = ?, related_module = ?, related_id = ?, field_base = ?, search_field = ?, kanban_order = ?, table_order = ?, module = ?, required = ?, disabled = ? WHERE id = ?;`,
+                    [name, apiName, type, field_type, related_module, related_id, field_base, search_field, kanban_order, table_order, module, required, disabled, searchField[0].id]);
                 idField = searchField[0].id;
                 console.log("UPDATE: ", result);
             }
 
             if (options != null) {
-                for (const option of options) {
-                    await connection.execute('INSERT INTO options (name, field_api_name, module) VALUES (?, ?, ?);', [option, apiName, module]);
-                }
+                Object.keys(options).forEach(async (index) => {
+                    await connection.execute(`INSERT INTO options (name, field_api_name, module, option_order) VALUES (?, ?, ?, ?);`, [options[index], apiName, module, index]);
+                })
+                // for (const option of options) {
+                //     const id = option.id
+                //     const index = options.findIndex(option => option.id === id)
+                //     console.log("iindex: ", index)
+                // }
             }
 
             if (related_module != null) {

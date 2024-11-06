@@ -29,6 +29,7 @@ app.use("/charts", require('./routes/charts'))
 app.use("/settings", require('./routes/settings'))
 app.use("/permissions", require('./routes/permissions'))
 app.use("/sections", require('./routes/sections'))
+app.use("/kanbans", require('./routes/kanban'))
 
 app.listen(process.env.EXPRESS_PORT, () => {
     console.log(`App running in port: ${process.env.EXPRESS_PORT}`)

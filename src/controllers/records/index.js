@@ -38,6 +38,7 @@ module.exports = {
                 if (fieldValues.length === 0) {
                     continue;
                 }
+                console.log("record_id",record_id)
                 const placeholders = fieldValues.map(() => '?').join(', ');
                 const query = `INSERT INTO ${module} (id, ${fieldNames}) VALUES (?, ${placeholders})`;
                 const [insertRow] = await connection.execute(query, [record_id, ...fieldValues]);

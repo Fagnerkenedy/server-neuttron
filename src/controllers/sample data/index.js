@@ -64,12 +64,12 @@ module.exports = {
             name VARCHAR(255),
             api_name VARCHAR(255),
             perfil VARCHAR(2000),
+            layout_type VARCHAR(255),
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )`;
             await connection.execute(queryModules);
-            await connection.execute('INSERT INTO modules (name, api_name) VALUES ("Leads", "Leads"), ("Empresas", "Empresas"), ("Contatos", "Contatos"), ("Negocios", "Negocios");');
-
+            await connection.execute("INSERT INTO modules (name, api_name, layout_type) VALUES ('Leads', 'Leads', 'tabela'), ('Empresas', 'Empresas', 'tabela'), ('Contatos', 'Contatos', 'tabela'), ('Negocios', 'Negocios', 'tabela');");
             const [resultLeads] = await connection.execute(queryLeads);
             const [resultEmpresas] = await connection.execute(queryEmpresas);
             const [resultContatos] = await connection.execute(queryContatos);

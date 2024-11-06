@@ -4,6 +4,7 @@ const {createFields} = require('../settings data/createFields')
 const {createFieldsProfiles} = require('../settings data/createFieldsProfiles')
 const fieldsUsers = require('./fieldsUsers.json')
 const fieldsProfiles = require('./fieldsProfiles.json')
+const fieldsKanban = require('./fieldsKanban.json')
 const fieldsFunctions = require('./fieldsFunctions.json')
 const {insertData} = require('./insertData')
 const dataProfiles = require('./dataProfiles.json')
@@ -29,6 +30,13 @@ module.exports = {
                 type VARCHAR(255)
             )`;
             await connection.execute(queryCharts);
+            const queryKanban = `CREATE TABLE IF NOT EXISTS kanban (
+                id VARCHAR(19) PRIMARY KEY,
+                name VARCHAR(255),
+                field VARCHAR(255),
+                module VARCHAR(255)
+            )`;
+            await connection.execute(queryKanban);
             await connection.execute(`CREATE TABLE IF NOT EXISTS profiles (
                 id VARCHAR(19) PRIMARY KEY,
                 orgId VARCHAR(255),
@@ -42,7 +50,8 @@ module.exports = {
             // await createFieldsProfiles(fieldsProfiles, connection, `org${orgId}`, 'profiles')
             const insertDataProfiles = await insertData(dataProfiles, connection, `org${orgId}`, 'profiles')
             // await createFields(fieldsUsers, connection, `org${orgId}`, 'users', insertDataProfiles[0].record_id, userId)
-
+            
+            await createSectionFields(fieldsKanban, connection, `org${orgId}`, 'kanban')
             await createSectionFields(fieldsProfiles, connection, `org${orgId}`, 'profiles')
             await createSectionFields(fieldsUsers, connection, `org${orgId}`, 'users', insertDataProfiles[0].record_id, userId)
 

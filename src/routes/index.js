@@ -27,6 +27,7 @@ router.put("/:org/:module/field", authMiddleware.auth,                          
 router.put("/:org/:module/unused_field", authMiddleware.auth,                        authorize('update'), fieldController.updateUnusedFields);
 router.put("/:org/:module/relatedField", authMiddleware.auth,                        authorize('update'), fieldController.updateRelatedField);
 router.delete("/:org/:module/field", authMiddleware.auth,                            authorize('delete'), fieldController.delete);
+router.delete("/:org/:module/option", authMiddleware.auth,                           authorize('delete'), fieldController.deleteOptions);
 
 // Registros
 router.post("/:org/:module/record", authMiddleware.auth,                             authorize('create'), recordController.create);

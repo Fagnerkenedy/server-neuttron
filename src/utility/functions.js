@@ -68,7 +68,7 @@ const createTables = async (connection, orgId, module) => {
 
     await connection.execute(`
         CREATE TABLE IF NOT EXISTS options (
-            id INT PRIMARY KEY AUTO_INCREMENT,
+            id VARCHAR(255) PRIMARY KEY,
             name VARCHAR(255),
             field_api_name VARCHAR(255),
             module VARCHAR(255),
@@ -122,17 +122,47 @@ const createFields = async (fields, connection, orgId, module) => {
                 console.log("UPDATE: ", result);
             }
 
-            if (options != null) {
-                Object.keys(options).forEach(async (index) => {
-                    await connection.execute(`INSERT INTO options (name, field_api_name, module, option_order) VALUES (?, ?, ?, ?);`, [options[index], apiName, module, index]);
-                })
-                // for (const option of options) {
-                //     const id = option.id
-                //     const index = options.findIndex(option => option.id === id)
-                //     console.log("iindex: ", index)
-                //     await connection.execute(`INSERT INTO options (name, field_api_name, module, option_order) VALUES (?, ?, ?, ?);`, [option, apiName, module, index]);
-                // }
+            
+
+            for (let index = 0; index < options.length; index++) {
+                const option = options[index];
+                const id = option.id;
+                const name = option.label;
+            
+                if (id == null) {
+                    // Gerar ID para opções novas
+                    const option_id = gerarHash(JSON.stringify(option, module, orgId));
+                    console.log("index: ", index);
+            
+                    await connection.execute(
+                        `INSERT INTO options (id, name, field_api_name, module, option_order) VALUES (?, ?, ?, ?, ?);`,
+                        [option_id, name, uniqueApiName, module, index]
+                    );
+                } else {
+                    // Atualizar opções existentes
+                    await connection.execute(
+                        `UPDATE options SET name = ?, option_order = ? WHERE id = ?;`,
+                        [name, index, id]
+                    );
+                }
             }
+            
+
+            // if (options != null) {
+            //     Object.keys(options).forEach(async (index) => {
+            //         const option_id = gerarHash(JSON.stringify( options[index], module, orgId ));
+            //         console.log("option_id", option_id)
+            //         console.log("optihjrio", options)
+            //         await connection.execute(`INSERT INTO options (id, name, field_api_name, module, option_order) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE name = VALUES(name), option_order = VALUES(option_order);`, [option_id, options[index], apiName, module, index]);
+
+            //     })
+            //     // for (const option of options) {
+            //     //     const id = option.id
+            //     //     const index = options.findIndex(option => option.id === id)
+            //     //     console.log("iindex: ", index)
+            //     //     await connection.execute(`INSERT INTO options (name, field_api_name, module, option_order) VALUES (?, ?, ?, ?);`, [option, apiName, module, index]);
+            //     // }
+            // }
 
             if (related_module != null) {
                 const [searchRelatedModule] = await connection.execute('SELECT id FROM modulos_relacionados WHERE related_module = ? and related_id = ? and module_name = ? and api_name = ? and search_field = ?;', [related_module, related_id, module, apiName, search_field]);

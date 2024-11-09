@@ -179,7 +179,7 @@ const createTables = async (connection, orgId, module) => {
 
     await connection.execute(`
         CREATE TABLE IF NOT EXISTS options (
-            id INT PRIMARY KEY AUTO_INCREMENT,
+            id VARCHAR(255) PRIMARY KEY,
             name VARCHAR(255),
             field_api_name VARCHAR(255),
             module VARCHAR(255),

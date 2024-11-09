@@ -53,7 +53,7 @@ module.exports = {
                 await connection.execute(query);
 
                 const queryOptions = `CREATE TABLE IF NOT EXISTS options (
-                    id INT PRIMARY KEY AUTO_INCREMENT,
+                    id VARCHAR(255) PRIMARY KEY,
                     name VARCHAR(255),
                     field_api_name VARCHAR(255),
                     module VARCHAR(255),
@@ -315,6 +315,21 @@ module.exports = {
             const row = await connection.execute('DELETE FROM fields WHERE module = ? AND api_name = ?;', [module, field_api_name]);
             await connection.end();
             res.json(row[0]);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+    deleteOptions: async (req, res) => {
+        try {
+            const orgId = req.params.org
+            const module = req.params.module
+            const ids = req.body
+            const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
+            ids.forEach(async optionId => {
+                await connection.execute('DELETE FROM options WHERE module = ? AND id = ?;', [module, optionId]);
+            });
+            await connection.end();
+            res.status(200).json({ success: true});
         } catch (error) {
             res.status(500).json({ error: error.message });
         }

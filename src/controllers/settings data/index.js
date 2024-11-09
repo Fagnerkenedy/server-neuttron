@@ -10,6 +10,8 @@ const {insertData} = require('./insertData')
 const dataProfiles = require('./dataProfiles.json')
 const dataPermissions = require('./dataPermissions.json');
 const dataFunctions = require('./dataFunctions.json')
+const dataCharts = require('./dataCharts.json')
+const dataKanban = require('./dataKanban.json')
 const { createProfilesPermissions, createPermissions } = require('./createPermissions');
 const { createSectionFields } = require('../../utility/functions');
 
@@ -22,7 +24,7 @@ module.exports = {
 
             await connection.beginTransaction();
             const queryCharts = `CREATE TABLE IF NOT EXISTS charts (
-                id INT PRIMARY KEY AUTO_INCREMENT,
+                id VARCHAR(255) PRIMARY KEY,
                 name VARCHAR(255),
                 query VARCHAR(2000),
                 xField VARCHAR(255),
@@ -86,6 +88,8 @@ module.exports = {
             // const functionss = await createFieldsProfiles(fieldsFunctions, connection, `org${orgId}`, 'functions')
             const functionss = await createSectionFields(fieldsFunctions, connection, `org${orgId}`, 'functions')
             const insertDataFunctions = await insertData(dataFunctions, connection, `org${orgId}`, 'functions')
+            const insertDataCharts = await insertData(dataCharts, connection, `org${orgId}`, 'charts')
+            const insertDataKanban = await insertData(dataKanban, connection, `org${orgId}`, 'kanban')
 
             console.log("functuions", functionss)
             await connection.end();

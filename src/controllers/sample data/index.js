@@ -69,7 +69,7 @@ module.exports = {
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )`;
             await connection.execute(queryModules);
-            await connection.execute("INSERT INTO modules (name, api_name, layout_type) VALUES ('Leads', 'Leads', 'tabela'), ('Empresas', 'Empresas', 'tabela'), ('Contatos', 'Contatos', 'tabela'), ('Negocios', 'Negocios', 'tabela');");
+            await connection.execute("INSERT INTO modules (name, api_name, layout_type) VALUES ('Leads', 'Leads', 'tabela'), ('Empresas', 'Empresas', 'tabela'), ('Contatos', 'Contatos', 'tabela'), ('Negocios', 'Negocios', 'kanban');");
             const [resultLeads] = await connection.execute(queryLeads);
             const [resultEmpresas] = await connection.execute(queryEmpresas);
             const [resultContatos] = await connection.execute(queryContatos);

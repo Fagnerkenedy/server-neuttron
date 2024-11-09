@@ -12,7 +12,17 @@
                     "required": true
                 },
                 {
-                    "name": "Colunas",
+                    "name": "Módulo",
+                    "type": "VARCHAR(255)",
+                    "field_type": "loockup",
+                    "related_module": "modules",
+                    "alter_table": true,
+                    "api_name": "module",
+                    "search_field": "name",
+                    "required": true
+                },
+                {
+                    "name": "Campo",
                     "type": "VARCHAR(255)",
                     "field_type": "loockup_field",
                     "related_module": "fields",
@@ -23,18 +33,7 @@
                     "required": true
                 }
             ],
-            "right": [
-                {
-                    "name": "Módulo",
-                    "type": "VARCHAR(255)",
-                    "field_type": "loockup",
-                    "related_module": "modules",
-                    "alter_table": true,
-                    "api_name": "module",
-                    "search_field": "name",
-                    "required": true
-                }
-            ]
+            "right": []
         }
     }
 ]

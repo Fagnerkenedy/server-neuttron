@@ -1,6 +1,6 @@
 const crypto = require('crypto');
 const mysql = require('mysql2/promise');
-const {createFields2} = require('../controllers/settings data/createFields')
+const { createFields2 } = require('../controllers/settings data/createFields')
 const dbConfig = require('../../src/database/index')
 
 const gerarHash = (dados) => {
@@ -122,31 +122,30 @@ const createFields = async (fields, connection, orgId, module) => {
                 console.log("UPDATE: ", result);
             }
 
-            
+            if (options) {
+                for (let index = 0; index < options.length; index++) {
+                    const option = options[index];
+                    const id = option.id;
+                    const name = option.label || option;
 
-            for (let index = 0; index < options.length; index++) {
-                const option = options[index];
-                const id = option.id;
-                const name = option.label;
-            
-                if (id == null) {
-                    // Gerar ID para opções novas
-                    const option_id = gerarHash(JSON.stringify(option, module, orgId));
-                    console.log("index: ", index);
-            
-                    await connection.execute(
-                        `INSERT INTO options (id, name, field_api_name, module, option_order) VALUES (?, ?, ?, ?, ?);`,
-                        [option_id, name, uniqueApiName, module, index]
-                    );
-                } else {
-                    // Atualizar opções existentes
-                    await connection.execute(
-                        `UPDATE options SET name = ?, option_order = ? WHERE id = ?;`,
-                        [name, index, id]
-                    );
+                    if (id == null) {
+                        // Gerar ID para opções novas
+                        const option_id = gerarHash(JSON.stringify(option, module, orgId));
+                        console.log("index: ", index);
+
+                        await connection.execute(
+                            `INSERT INTO options (id, name, field_api_name, module, option_order) VALUES (?, ?, ?, ?, ?);`,
+                            [option_id, name, uniqueApiName, module, index]
+                        );
+                    } else {
+                        // Atualizar opções existentes
+                        await connection.execute(
+                            `UPDATE options SET name = ?, option_order = ? WHERE id = ?;`,
+                            [name, index, id]
+                        );
+                    }
                 }
             }
-            
 
             // if (options != null) {
             //     Object.keys(options).forEach(async (index) => {
@@ -196,7 +195,7 @@ const createFields = async (fields, connection, orgId, module) => {
             results.push({ idField, id })
 
         } catch (error) {
-            console.error( error.message );
+            console.error(error.message);
         }
     }
 
@@ -306,7 +305,7 @@ const createSectionFields = async (sections, connection, orgId, moduleName, idPe
 
         return insertResults
     } catch (error) {
-        console.error( error.message );
+        console.error(error.message);
     }
 }
 

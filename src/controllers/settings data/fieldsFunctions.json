@@ -6,12 +6,14 @@
             "left": [
                 {
                     "name": "Nome",
+                    "api_name": "name",
                     "type": "VARCHAR(255)",
                     "field_type": "single_line",
                     "required": true
                 },
                 {
                     "name": "Módulo",
+                    "api_name": "modulo",
                     "type": "VARCHAR(255)",
                     "field_type": "loockup",
                     "related_module": "modules",
@@ -20,6 +22,7 @@
                 },
                 {
                     "name": "Executar quando",
+                    "api_name": "executar_quando",
                     "type": "VARCHAR(255)",
                     "field_type": "select",
                     "options": ["Criar", "Criar ou editar", "Editar", "Excluir"],
@@ -27,6 +30,7 @@
                 },
                 {
                     "name": "Descrição",
+                    "api_name": "descricao",
                     "type": "TEXT(16000)",
                     "field_type": "multi_line"
                 }
@@ -34,6 +38,7 @@
             "right": [
                 {
                     "name": "Função",
+                    "api_name": "funcao",
                     "type": "TEXT",
                     "field_type": "function"
                 }

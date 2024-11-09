@@ -1,6 +1,7 @@
 const mysql = require('mysql2/promise')
 const path = require('path')
 const dbConfig = require('../../database/index')
+const crypto = require('crypto');
 
 module.exports = {
     create: async (req, res) => {
@@ -16,7 +17,7 @@ module.exports = {
             connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
             await connection.beginTransaction();
             const queryCharts = `CREATE TABLE IF NOT EXISTS charts (
-                id INT PRIMARY KEY AUTO_INCREMENT,
+                id VARCHAR(255) PRIMARY KEY,
                 name VARCHAR(255),
                 query VARCHAR(2000),
                 xField VARCHAR(255),
@@ -24,9 +25,17 @@ module.exports = {
                 type VARCHAR(255)
             )`;
             await connection.execute(queryCharts);
+
+            const gerarHash = (dados) => {
+                const dadosComTimestamp = dados + Date.now().toString();
+                const hash = crypto.createHash('sha256').update(dadosComTimestamp).digest('hex')
+                return hash.substring(0, 19)
+            }
+
+            const chart_id = gerarHash(JSON.stringify(orgId, name, query, xField, yField, type));
             const [result] = await connection.execute(
-                'INSERT INTO charts (name, query, xField, yField, type) VALUES (?, ?, ?, ?, ?);',
-                [name, query, xField, yField, type]
+                'INSERT INTO charts (id, name, query, xField, yField, type) VALUES (?, ?, ?, ?, ?, ?);',
+                [chart_id, name, query, xField, yField, type]
             );
 
             await connection.commit();

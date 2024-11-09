@@ -1,30 +1,30 @@
 [
     {
-        "nome": "Atualiza valores Produtos",
-        "m_dulo": "Pedidos",
+        "name": "Atualiza valores Produtos",
+        "modulo": "Pedidos",
         "executar_quando": "Criar",
-        "descri__o": "Atualiza valores Produtos ao Criar",
-        "fun__o": "produto = await getRecordById('Produtos', get('nome_produto.id')) \nlet map = { \n valor_unit_rio: produto.valor_de_venda, \n valor_total: produto.valor_de_venda * fields.quantidade, \n nome_pedido: `${get('cliente.name')} - ${get('nome_produto.name')}`, \n status: 'Pendente', \n data_do_pedido: today() \n} \nupdateRecord('Pedidos', id, map)"
+        "descricao": "Atualiza valores Produtos ao Criar",
+        "funcao": "produto = await getRecordById('Produtos', get('nome_produto.id')) \nlet map = { \n valor_unit_rio: produto.valor_de_venda, \n valor_total: produto.valor_de_venda * fields.quantidade, \n nome_pedido: `${get('cliente.name')} - ${get('nome_produto.name')}`, \n status: 'Pendente', \n data_do_pedido: today() \n} \nupdateRecord('Pedidos', id, map)"
     },
     {
-        "nome": "Deletar",
-        "m_dulo": "Pedidos",
+        "name": "Deletar",
+        "modulo": "Pedidos",
         "executar_quando": "Excluir",
-        "descri__o": "Função que executa ao Deletar um registro",
-        "fun__o": "map = { produto_ativo: true } \nupdateRecord('Produtos', '06e5eefaa4ba3db974f', map)"
+        "descricao": "Função que executa ao Deletar um registro",
+        "funcao": "map = { produto_ativo: true } \nupdateRecord('Produtos', '06e5eefaa4ba3db974f', map)"
     },
     {
-        "nome": "Cria Cópia de Pedido",
-        "m_dulo": "Pedidos",
+        "name": "Cria Cópia de Pedido",
+        "modulo": "Pedidos",
         "executar_quando": "Criar",
-        "descri__o": "Cria Cópia de Pedido",
-        "fun__o": "produto = await getRecordById('Produtos', get('nome_produto.id')) \nlet map = { \n valor_unit_rio: produto.valor_de_venda, \n valor_total: produto.valor_de_venda * fields.quantidade, \n nome_pedido: `${get('cliente.name')} - ${get('nome_produto.name')}`, \n status: 'Pendente', \n data_do_pedido: today() \n} \ncreateRecord('Pedidos', map)"
+        "descricao": "Cria Cópia de Pedido",
+        "funcao": "produto = await getRecordById('Produtos', get('nome_produto.id')) \nlet map = { \n valor_unit_rio: produto.valor_de_venda, \n valor_total: produto.valor_de_venda * fields.quantidade, \n nome_pedido: `${get('cliente.name')} - ${get('nome_produto.name')}`, \n status: 'Pendente', \n data_do_pedido: today() \n} \ncreateRecord('Pedidos', map)"
     },
     {
-        "nome": "Atualiza valores Produtos",
-        "m_dulo": "Pedidos",
+        "name": "Atualiza valores Produtos",
+        "modulo": "Pedidos",
         "executar_quando": "Editar",
-        "descri__o": "Atualiza valores Produtos ao Editar",
-        "fun__o": "produto = await getRecordById('Produtos', get('nome_produto.id')) \nlet map = { \n valor_unit_rio: produto.valor_de_venda, \n valor_total: produto.valor_de_venda * fields.quantidade, \n nome_pedido: `${get('cliente.name')} - ${get('nome_produto.name')}`, \n status: 'Pendente', \n data_do_pedido: today() \n} \nupdateRecord('Pedidos', id, map)"
+        "descricao": "Atualiza valores Produtos ao Editar",
+        "funcao": "produto = await getRecordById('Produtos', get('nome_produto.id')) \nlet map = { \n valor_unit_rio: produto.valor_de_venda, \n valor_total: produto.valor_de_venda * fields.quantidade, \n nome_pedido: `${get('cliente.name')} - ${get('nome_produto.name')}`, \n status: 'Pendente', \n data_do_pedido: today() \n} \nupdateRecord('Pedidos', id, map)"
     }
 ]

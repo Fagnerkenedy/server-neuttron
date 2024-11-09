@@ -1,5 +1,6 @@
 const mysql = require('mysql2/promise');
-const dbConfig = require('../../database/index')
+const dbConfig = require('../../database/index');
+const { gerarHash } = require('../../utility/functions');
 
 module.exports = {
     create: async (req, res) => {
@@ -14,7 +15,7 @@ module.exports = {
             const insertPromises = fields.map(async (field) => {
                 const { name, type } = field;
                 let { related_module } = field
-                let { related_id } = field   
+                let { related_id } = field
                 let { field_type } = field
                 let { options } = field
                 if (!field.hasOwnProperty("related_module")) {
@@ -62,17 +63,43 @@ module.exports = {
                     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )`;
                 await connection.execute(queryOptions);
-                if (options != null) {
-                    Object.keys(options).forEach(async (index) => {
-                        await connection.execute(`INSERT INTO options (name, field_api_name, module, option_order) VALUES (?, ?, ?, ?);`, [options[index], apiName, module, index]);
-                    })
-                    // for (const option of options) {
-                    //     const id = option.id
-                    //     const index = options.findIndex(option => option.id === id)
-                    //     console.log("iindex: ", index)
-                    //     await connection.execute(`INSERT INTO options (name, field_api_name, module, option_order) VALUES (?, ?, ?, ?);`, [option, apiName, module, index]);
-                    // }
+
+                if (options) {
+                    for (let index = 0; index < options.length; index++) {
+                        const option = options[index];
+                        const id = option.id;
+                        const name = option.label || option
+
+                        if (id == null) {
+                            // Gerar ID para opções novas
+                            const option_id = gerarHash(JSON.stringify(option, module, orgId));
+                            console.log("index: ", index);
+
+                            await connection.execute(
+                                `INSERT INTO options (id, name, field_api_name, module, option_order) VALUES (?, ?, ?, ?, ?);`,
+                                [option_id, name, uniqueApiName, module, index]
+                            );
+                        } else {
+                            // Atualizar opções existentes
+                            await connection.execute(
+                                `UPDATE options SET name = ?, option_order = ? WHERE id = ?;`,
+                                [name, index, id]
+                            );
+                        }
+                    }
                 }
+
+                // if (options != null) {
+                //     Object.keys(options).forEach(async (index) => {
+                //         await connection.execute(`INSERT INTO options (name, field_api_name, module, option_order) VALUES (?, ?, ?, ?);`, [options[index], apiName, module, index]);
+                //     })
+                //     // for (const option of options) {
+                //     //     const id = option.id
+                //     //     const index = options.findIndex(option => option.id === id)
+                //     //     console.log("iindex: ", index)
+                //     //     await connection.execute(`INSERT INTO options (name, field_api_name, module, option_order) VALUES (?, ?, ?, ?);`, [option, apiName, module, index]);
+                //     // }
+                // }
 
                 const [insertResult1] = await connection.execute(`INSERT INTO fields (name, api_name, type, field_type, related_module, related_id, module) VALUES (?, ?, ?, ?, ?, ?, ?);`, [name, apiName, type, field_type, related_module, related_id, module]);
 
@@ -141,7 +168,7 @@ module.exports = {
             const module = req.params.module
             const api_name = req.params.api_name
             const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
-            const row = await connection.execute('SELECT * FROM options WHERE module = ? and field_api_name = ?;', [module, api_name]);
+            const row = await connection.execute('SELECT * FROM options WHERE module = ? and field_api_name = ? ORDER BY option_order;', [module, api_name]);
             await connection.end();
             res.json(row[0]);
         } catch (error) {
@@ -329,7 +356,7 @@ module.exports = {
                 await connection.execute('DELETE FROM options WHERE module = ? AND id = ?;', [module, optionId]);
             });
             await connection.end();
-            res.status(200).json({ success: true});
+            res.status(200).json({ success: true });
         } catch (error) {
             res.status(500).json({ error: error.message });
         }

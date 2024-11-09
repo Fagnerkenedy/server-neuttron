@@ -1,3 +1,5 @@
+const { gerarHash } = require("../../utility/functions");
+
 module.exports = {
     createFieldsProfiles: async (fields, connection, orgId, module) => {
         const insertPromises = fields.map(async (field) => {
@@ -56,17 +58,42 @@ module.exports = {
             )`;
             await connection.execute(queryOptions);
 
-            if (options != null) {
-                Object.keys(options).forEach(async (index) => {
-                    await connection.execute(`INSERT INTO options (name, field_api_name, module, option_order) VALUES (?, ?, ?, ?);`, [options[index], apiName, module, index]);
-                })
-                // for (const option of options) {
-                //     const id = option.id
-                //     const index = options.findIndex(option => option.id === id)
-                //     console.log("iindex: ", index)
-                //     await connection.execute(`INSERT INTO options (name, field_api_name, module, option_order) VALUES (?, ?, ?, ?);`, [option, apiName, module, index]);
-                // }
+            if (options) {
+                for (let index = 0; index < options.length; index++) {
+                    const option = options[index];
+                    const id = option.id;
+                    const name = option.label || option
+
+                    if (id == null) {
+                        // Gerar ID para opções novas
+                        const option_id = gerarHash(JSON.stringify(option, module, orgId));
+                        console.log("index: ", index);
+
+                        await connection.execute(
+                            `INSERT INTO options (id, name, field_api_name, module, option_order) VALUES (?, ?, ?, ?, ?);`,
+                            [option_id, name, uniqueApiName, module, index]
+                        );
+                    } else {
+                        // Atualizar opções existentes
+                        await connection.execute(
+                            `UPDATE options SET name = ?, option_order = ? WHERE id = ?;`,
+                            [name, index, id]
+                        );
+                    }
+                }
             }
+
+            // if (options != null) {
+            //     Object.keys(options).forEach(async (index) => {
+            //         await connection.execute(`INSERT INTO options (name, field_api_name, module, option_order) VALUES (?, ?, ?, ?);`, [options[index], apiName, module, index]);
+            //     })
+            //     // for (const option of options) {
+            //     //     const id = option.id
+            //     //     const index = options.findIndex(option => option.id === id)
+            //     //     console.log("iindex: ", index)
+            //     //     await connection.execute(`INSERT INTO options (name, field_api_name, module, option_order) VALUES (?, ?, ?, ?);`, [option, apiName, module, index]);
+            //     // }
+            // }
 
             const [insertResult1] = await connection.execute(`INSERT INTO fields (name, api_name, type, field_type, related_module, related_id, module) VALUES (?, ?, ?, ?, ?, ?, ?);`, [name, apiName, type, field_type, related_module, related_id, module]);
 
@@ -82,7 +109,7 @@ module.exports = {
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )`;
             await connection.execute(queryModulosRelacionados);
-            
+
             if (related_module != null) {
                 await connection.execute(`INSERT INTO modulos_relacionados (related_module, related_id, module_name, api_name) VALUES (?, ?, ?, ?);`, [related_module, related_id, module, apiName]);
             }

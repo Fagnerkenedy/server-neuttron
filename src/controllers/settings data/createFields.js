@@ -237,32 +237,53 @@ const createFields2 = async (fields, connection, orgId, module, idPerfil, userId
                 console.log("UPDATE: ", result);
             }
 
-            if (options != null) {
-                Object.keys(options).forEach(async (index) => {
-                    await connection.execute(`INSERT INTO options (name, field_api_name, module, option_order) VALUES (?, ?, ?, ?);`, [options[index], apiName, module, index]);
-                })
-                // for (const option of options) {
-                //     const id = option.id
-                //     const index = options.findIndex(option => option.id === id)
-                //     console.log("iindex: ", index)
-                // }
+            if (options) {
+                for (let index = 0; index < options.length; index++) {
+                    const option = options[index];
+                    const id = option.id;
+                    const name = option.label || option
+
+                    if (id == null) {
+                        const option_id = gerarHash(JSON.stringify(option, module, orgId));
+                        await connection.execute(
+                            `INSERT INTO options (id, name, field_api_name, module, option_order) VALUES (?, ?, ?, ?, ?);`,
+                            [option_id, name, uniqueApiName, module, index]
+                        );
+                    } else {
+                        await connection.execute(
+                            `UPDATE options SET name = ?, option_order = ? WHERE id = ?;`,
+                            [name, index, id]
+                        );
+                    }
+                }
             }
+
+            // if (options != null) {
+            //     Object.keys(options).forEach(async (index) => {
+            //         await connection.execute(`INSERT INTO options (name, field_api_name, module, option_order) VALUES (?, ?, ?, ?);`, [options[index], apiName, module, index]);
+            //     })
+            //     // for (const option of options) {
+            //     //     const id = option.id
+            //     //     const index = options.findIndex(option => option.id === id)
+            //     //     console.log("iindex: ", index)
+            //     // }
+            // }
 
             if (related_module != null) {
                 const [searchRelatedModule] = await connection.execute(
-                    'SELECT id FROM modulos_relacionados WHERE related_module = ? and related_id = ? and module_name = ? and api_name = ? and search_field = ?;', 
+                    'SELECT id FROM modulos_relacionados WHERE related_module = ? and related_id = ? and module_name = ? and api_name = ? and search_field = ?;',
                     [related_module, related_id, module, apiName, search_field]
                 );
 
                 if (searchRelatedModule.length === 0) {
                     if (field.hasOwnProperty("related_module") && field.related_module == 'profiles') {
                         await connection.execute(
-                            'INSERT INTO modulos_relacionados (related_module, related_id, module_name, module_id, api_name, search_field) VALUES (?, ?, ?, ?, ?, ?);', 
+                            'INSERT INTO modulos_relacionados (related_module, related_id, module_name, module_id, api_name, search_field) VALUES (?, ?, ?, ?, ?, ?);',
                             [related_module, related_id, module, userId, apiName, search_field]
                         );
                     } else {
                         await connection.execute(
-                            'INSERT INTO modulos_relacionados (related_module, related_id, module_name, api_name, search_field) VALUES (?, ?, ?, ?, ?);', 
+                            'INSERT INTO modulos_relacionados (related_module, related_id, module_name, api_name, search_field) VALUES (?, ?, ?, ?, ?);',
                             [related_module, related_id, module, apiName, search_field]
                         );
                     }
@@ -276,7 +297,7 @@ const createFields2 = async (fields, connection, orgId, module, idPerfil, userId
                         module_name = VALUES(module_name),
                         api_name = VALUES(api_name)
                         search_field = VALUES(search_field);`,
-                        [searchRelatedModule[0].id, related_module, related_id, module, apiName, search_field ]
+                        [searchRelatedModule[0].id, related_module, related_id, module, apiName, search_field]
                     );
                 }
             }
@@ -286,7 +307,7 @@ const createFields2 = async (fields, connection, orgId, module, idPerfil, userId
                 FROM information_schema.columns
                 WHERE table_schema = ?
                 AND table_name = ?
-                AND column_name = ?;`, 
+                AND column_name = ?;`,
                 [orgId, module, uniqueApiName]
             );
 

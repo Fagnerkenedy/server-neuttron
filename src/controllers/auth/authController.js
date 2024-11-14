@@ -73,7 +73,7 @@ module.exports = {
             await settingsData(orgId, user_id)
             
             const org = await connection2.execute(`INSERT INTO organizations SET orgId = ?, name = ?, email = ?, phone = ?;`, [orgId, empresa, email, phone]);
-            const user = await connection2.execute(`INSERT INTO users SET id = ?, orgId = ?, name = ?, email = ?, phone = ?, password = ?, dark_mode = ?, perfil = 'Administrador', open_tour = true, notification = true;`, [user_id, orgId, name, email, phone, hashedPassword, false]);
+            const user = await connection2.execute(`INSERT INTO users SET id = ?, orgId = ?, name = ?, email = ?, phone = ?, password = ?, dark_mode = ?, perfil = 'Administrador', open_tour = true;`, [user_id, orgId, name, email, phone, hashedPassword, false]);
 
             await connection2.end();
             user.password = undefined

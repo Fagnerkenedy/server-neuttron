@@ -2,6 +2,7 @@ const mysql = require('mysql2/promise');
 const dbConfig = require('../../database/index')
 const crypto = require('crypto');
 const { executeCustomFunctions } = require('../customFunctions/customFunctions');
+const { sendEmail } = require('../../utility/functions');
 
 module.exports = {
     create: async (req, res) => {
@@ -33,6 +34,12 @@ module.exports = {
                 let related_record = null
                 if (obj.hasOwnProperty("related_record")) related_record = obj.related_record
                 delete obj.related_record
+                if (module == "users") {
+                    sendEmail(obj.email, record_id, orgId)
+                    const connectionNeuttron = await mysql.createConnection({ ...dbConfig, database: process.env.DB_NAME });
+                    await connectionNeuttron.execute(`INSERT INTO users SET id = ?, name = ?, email = ?, phone = ?, orgId = ?;`, [record_id, obj.name, obj.email, obj.phone, orgId.slice(3)]);
+                    await connectionNeuttron.end();
+                }
                 const fieldNames = Object.keys(obj).join(', ');
                 const fieldValues = Object.values(obj);
                 if (fieldValues.length === 0) {
@@ -60,7 +67,7 @@ module.exports = {
 
 
             await connection.end();
-            res.json(row[0]);
+            res.status(200).json( row[0] );
         } catch (error) {
             res.status(500).json({ error: error.message });
         }

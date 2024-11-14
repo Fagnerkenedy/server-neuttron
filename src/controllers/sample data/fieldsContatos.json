@@ -7,20 +7,21 @@
                 {
                     "name": "Nome Contato",
                     "type": "VARCHAR(255)",
-                    "field_type": "single_line"
+                    "field_type": "single_line",
+                    "required": true
                 },
                 {
                     "name": "Nome Empresa",
                     "type": "VARCHAR(255)",
                     "field_type": "loockup",
                     "related_module": "Empresas",
-                    "search_field": "nome_empresa"
+                    "search_field": "nome_empresa",
+                    "required": true
                 },
                 {
                     "name": "Site",
                     "type": "VARCHAR(255)",
-                    "field_type": "single_line",
-                    "required": false
+                    "field_type": "single_line"
                 },
                 {
                     "name": "Cargo",
@@ -47,14 +48,12 @@
                 {
                     "name": "LinkedIn",
                     "type": "VARCHAR(255)",
-                    "field_type": "single_line",
-                    "required": false
+                    "field_type": "single_line"
                 },
                 {
                     "name": "Instagram",
                     "type": "VARCHAR(255)",
-                    "field_type": "single_line",
-                    "required": false
+                    "field_type": "single_line"
                 },
                 {
                     "name": "Cidade",
@@ -64,21 +63,20 @@
                 {
                     "name": "CEP",
                     "type": "VARCHAR(255)",
-                    "field_type": "single_line",
-                    "required": false
+                    "field_type": "single_line"
                 }
             ],
             "right": [
                 {
                     "name": "E-mail",
                     "type": "VARCHAR(255)",
-                    "field_type": "email"
+                    "field_type": "email",
+                    "required": true
                 },
                 {
                     "name": "Telefone",
                     "type": "VARCHAR(255)",
-                    "field_type": "phone",
-                    "required": false
+                    "field_type": "phone"
                 },
                 {
                     "name": "Celular",
@@ -88,26 +86,22 @@
                 {
                     "name": "Departamento",
                     "type": "VARCHAR(255)",
-                    "field_type": "single_line",
-                    "required": false
+                    "field_type": "single_line"
                 },
                 {
                     "name": "Data de Nascimento",
                     "type": "VARCHAR(255)",
-                    "field_type": "date",
-                    "required": false
+                    "field_type": "date"
                 },
                 {
                     "name": "E-mail secundário",
                     "type": "VARCHAR(255)",
-                    "field_type": "email",
-                    "required": false
+                    "field_type": "email"
                 },
                 {
                     "name": "Rua",
                     "type": "VARCHAR(255)",
-                    "field_type": "single_line",
-                    "required": false
+                    "field_type": "single_line"
                 },
                 {
                     "name": "Estado",
@@ -147,6 +141,48 @@
                     "name": "País",
                     "type": "VARCHAR(255)",
                     "field_type": "single_line"
+                }
+            ]
+        }
+    },
+    {
+        "id": "8415254",
+        "name": "Logs",
+        "fields": {
+            "left": [
+                {
+                    "name": "Criado Por",
+                    "type": "VARCHAR(255)",
+                    "field_type": "loockup",
+                    "api_name": "created_by",
+                    "related_module": "users",
+                    "search_field": "name",
+                    "disabled": true
+                },
+                {
+                    "name": "Hora da Criação",
+                    "type": "VARCHAR(255)",
+                    "field_type": "date_time",
+                    "api_name": "created_time",
+                    "disabled": true
+                }
+            ],
+            "right": [
+                {
+                    "name": "Modificado Por",
+                    "type": "VARCHAR(255)",
+                    "field_type": "loockup",
+                    "api_name": "modified_by",
+                    "related_module": "users",
+                    "search_field": "name",
+                    "disabled": true
+                },
+                {
+                    "name": "Hora da Modificação",
+                    "type": "VARCHAR(255)",
+                    "field_type": "date_time",
+                    "api_name": "modified_time",
+                    "disabled": true
                 }
             ]
         }

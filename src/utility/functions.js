@@ -2,6 +2,7 @@ const crypto = require('crypto');
 const mysql = require('mysql2/promise');
 const { createFields2 } = require('../controllers/settings data/createFields')
 const dbConfig = require('../../src/database/index')
+const nodemailer = require('nodemailer')
 
 const gerarHash = (dados) => {
     dados = JSON.stringify(dados);
@@ -307,6 +308,32 @@ const createSectionFields = async (sections, connection, orgId, moduleName, idPe
     } catch (error) {
         console.error(error.message);
     }
+};
+const sendEmail = async (email, record_id, orgId) => {
+    const transporter = nodemailer.createTransport({
+        host: process.env.NODEMAILER_SMTP,
+        port: process.env.NODEMAILER_PORT,
+        secure: true,
+        auth: {
+            user: process.env.NODEMAILER_USER,
+            pass: process.env.NODEMAILER_PASS
+        },
+        tls: {
+            ciphers: 'SSLv3'
+        }
+    })
+
+    transporter.sendMail({
+        from: process.env.NODEMAILER_USER,
+        to: email,
+        replyTo: process.env.NODEMAILER_USER,
+        subject: "Neuttron - Convite",
+        text: "Você recebeu um convite para se cadastrar no nosso sistema, por favor crie sua senha clicando no link: " + process.env.FRONT_URL + "/"+ orgId + "/cadastro/nova_senha/" + record_id,
+    }).then(info => {
+        return({ success: true, message: info })
+    }).catch(error => {
+        return({ success: false, message: error })
+    })
 }
 
-module.exports = { gerarHash, createFields, createSectionFields };
+module.exports = { gerarHash, createFields, createSectionFields, sendEmail };

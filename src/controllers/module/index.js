@@ -1,6 +1,9 @@
 const mysql = require('mysql2/promise');
 const dbConfig = require('../../database/index');
 const { createProfilesPermissions, createPermissions } = require('../settings data/createPermissions');
+const { createSectionFields } = require('../../utility/functions');
+const basicFields = require('./basicFields.json');
+const { sectionLogs } = require('./basicFields');
 
 module.exports = {
     create: async (req, res) => {
@@ -52,8 +55,37 @@ module.exports = {
                 }
                 await createProfilesPermissions(req)
             }
+            
+            
+            // await connection.commit();
+            await createSectionFields(sectionLogs(), connection, orgId, moduleNameApi)
+            // await connection.end();
 
-            await connection.commit();
+            res.json({ success: true, message: "Table created successfully", result, moduleNameApi });
+        } catch (error) {
+            if (connection) {
+                await connection.rollback();
+            }
+            res.status(500).json({ error: error.message });
+        } finally {
+            if (connection) {
+                await connection.end();
+            }
+        }
+    },
+    createSectionFields: async (req, res) => {
+        let connection
+        try {
+            const orgId = req.params.org
+            const moduleName = req.body.name
+            if (!orgId || !moduleName) {
+                return res.status(400).json({ error: "Missing orgId or moduleName in request" });
+            }
+            connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
+            let moduleNameApi = moduleName.replace(/[^\w\s]|[\sç]/gi, '_')
+
+            await createSectionFields(basicFields, connection, orgId, moduleNameApi)
+            
             // await connection.end();
 
             res.json({ success: true, message: "Table created successfully", result, moduleNameApi });

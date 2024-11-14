@@ -10,6 +10,7 @@ const { authorize } = require('../middleware/auth');
 
 // Modulos
 router.post("/:org/module", authMiddleware.auth,                                     moduleController.create);
+router.post("/:org/sectionModule", authMiddleware.auth,                              moduleController.createSectionFields);
 router.get("/:org/modules", authMiddleware.auth,                                     moduleController.read);
 router.get("/:org/:module/readLayoutContent", authMiddleware.auth,                   moduleController.readLayoutContent);
 router.get("/:org/:module/relatedModule", authMiddleware.auth,                       authorize('read'), moduleController.readRelatedModule);

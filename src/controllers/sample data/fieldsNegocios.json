@@ -7,26 +7,30 @@
                 {
                     "name": "Nome Negócio",
                     "type": "VARCHAR(255)",
-                    "field_type": "single_line"
+                    "field_type": "single_line",
+                    "required": true
                 },
                 {
                     "name": "Nome Empresa",
                     "type": "VARCHAR(255)",
                     "field_type": "loockup",
                     "related_module": "Empresas",
-                    "search_field": "nome_empresa"
+                    "search_field": "nome_empresa",
+                    "required": true
                 },
                 {
                     "name": "Nome Contato",
                     "type": "VARCHAR(255)",
                     "field_type": "loockup",
                     "related_module": "Contatos",
-                    "search_field": "nome_contato"
+                    "search_field": "nome_contato",
+                    "required": true
                 },
                 {
                     "name": "Estágio",
                     "type": "VARCHAR(255)",
                     "field_type": "select",
+                    "required": true,
                     "options": [
                         "Mapeando Necessidades",
                         "Adiado/suspenso",
@@ -49,33 +53,30 @@
                         "Preço",
                         "Prazo de Entrega",
                         "Limitações do Produto/Projeto"
-                    ],
-                    "required": false
+                    ]
                 },
                 {
                     "name": "Receita Esperada",
                     "type": "VARCHAR(255)",
-                    "field_type": "currency",
-                    "required": false
+                    "field_type": "currency"
                 },
                 {
                     "name": "Principais dores da empresa",
                     "type": "TEXT(16000)",
-                    "field_type": "multi_line",
-                    "required": false
+                    "field_type": "multi_line"
                 }
             ],
             "right": [
                 {
                     "name": "Montante",
                     "type": "VARCHAR(255)",
-                    "field_type": "currency"
+                    "field_type": "currency",
+                    "required": true
                 },
                 {
                     "name": "Data de Fechamento",
                     "type": "VARCHAR(255)",
-                    "field_type": "date",
-                    "required": false
+                    "field_type": "date"
                 },
                 {
                     "name": "Tipo",
@@ -89,8 +90,7 @@
                 {
                     "name": "Probabilidade",
                     "type": "VARCHAR(255)",
-                    "field_type": "number",
-                    "required": false
+                    "field_type": "number"
                 },
                 {
                     "name": "Fonte",
@@ -146,14 +146,54 @@
                 {
                     "name": "Ligar novamente em",
                     "type": "VARCHAR(255)",
-                    "field_type": "date_time",
-                    "required": false
+                    "field_type": "date_time"
                 },
                 {
                     "name": "Informações adicionais",
                     "type": "TEXT(16000)",
-                    "field_type": "multi_line",
-                    "required": false
+                    "field_type": "multi_line"
+                }
+            ]
+        }
+    },
+    {
+        "id": "2345456",
+        "name": "Logs",
+        "fields": {
+            "left": [
+                {
+                    "name": "Criado Por",
+                    "type": "VARCHAR(255)",
+                    "field_type": "loockup",
+                    "api_name": "created_by",
+                    "related_module": "users",
+                    "search_field": "name",
+                    "disabled": true
+                },
+                {
+                    "name": "Hora da Criação",
+                    "type": "VARCHAR(255)",
+                    "field_type": "date_time",
+                    "api_name": "created_time",
+                    "disabled": true
+                }
+            ],
+            "right": [
+                {
+                    "name": "Modificado Por",
+                    "type": "VARCHAR(255)",
+                    "field_type": "loockup",
+                    "api_name": "modified_by",
+                    "related_module": "users",
+                    "search_field": "name",
+                    "disabled": true
+                },
+                {
+                    "name": "Hora da Modificação",
+                    "type": "VARCHAR(255)",
+                    "field_type": "date_time",
+                    "api_name": "modified_time",
+                    "disabled": true
                 }
             ]
         }

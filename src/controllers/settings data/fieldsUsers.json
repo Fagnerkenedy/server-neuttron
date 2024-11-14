@@ -29,11 +29,16 @@
                     "required": true
                 },
                 {
-                    "name": "Enviar e-mail de notificação",
+                    "name": "Gênero",
                     "type": "VARCHAR(255)",
-                    "field_type": "checkbox",
+                    "field_type": "select",
+                    "options": [
+                        "Masculino",
+                        "Feminino",
+                        "Prefiro não dizer"
+                    ],
                     "alter_table": true,
-                    "api_name": "notification"
+                    "api_name": "genero"
                 }
             ],
             "right": [
@@ -56,18 +61,6 @@
                     "field_type": "date",
                     "alter_table": true,
                     "api_name": "Data_de_nascimento"
-                },
-                {
-                    "name": "Gênero",
-                    "type": "VARCHAR(255)",
-                    "field_type": "select",
-                    "options": [
-                        "Masculino",
-                        "Feminino",
-                        "Prefiro não dizer"
-                    ],
-                    "alter_table": true,
-                    "api_name": "genero"
                 }
             ]
         }

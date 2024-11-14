@@ -293,13 +293,14 @@ module.exports = {
             const orgId = req.params.org
             const moduleName = req.params.module
             const name = req.body.name
-            const api_name = req.body.api_name
+            // const api_name = req.body.api_name
             const newName = req.body.new_name
             const field = req.body
             let { id } = field
             let { related_module } = field
             let { related_id } = field
             let { module_id } = field
+            let { api_name } = field
             let data = req.body;
             if (!Array.isArray(data)) {
                 data = [data];
@@ -316,16 +317,18 @@ module.exports = {
             if (!field.hasOwnProperty("related_id")) {
                 module_id = null
             }
+            if (!field.hasOwnProperty("api_name")) {
+                api_name = null
+            }
             const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
 
-            const [row] = await connection.execute(`UPDATE modulos_relacionados SET related_id = ? WHERE module_id = ? AND related_module = ?;`, [related_id, module_id, related_module]);
+            const [row] = await connection.execute(`UPDATE modulos_relacionados SET related_id = ? WHERE module_id = ? AND related_module = ? AND api_name = ?;`, [related_id, module_id, related_module, api_name]);
             insertRow = null
             if (row.affectedRows === 0) {
-                const [insertResult] = await connection.execute(`INSERT INTO modulos_relacionados (related_id, module_id, related_module, module_name) VALUES (?, ?, ?, ?);`, [related_id, module_id, related_module, moduleName]);
+                const [insertResult] = await connection.execute(`INSERT INTO modulos_relacionados (related_id, module_id, related_module, module_name, api_name) VALUES (?, ?, ?, ?, ?);`, [related_id, module_id, related_module, moduleName, api_name]);
                 insertRow = insertResult
             }
-
-
+            
             await connection.end();
             res.json({ updateResult: row[0], insertResult: insertRow });
         } catch (error) {

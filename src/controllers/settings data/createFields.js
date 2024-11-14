@@ -211,7 +211,7 @@ const createFields2 = async (fields, connection, orgId, module, idPerfil, userId
     let results = []
     for (const field of fields) {
         try {
-            const { name, type, id = null, position = null, sort_order = null, related_module = null, required = true, disabled = null, field_base = null, search_field = null, kanban_order = null, table_order = null, field_type = null, options = null } = field;
+            const { name, type, id = null, position = null, sort_order = null, related_module = null, required = false, disabled = null, field_base = null, search_field = null, kanban_order = null, table_order = null, field_type = null, options = null } = field;
             let related_id = field.related_id || null;
             if (field.hasOwnProperty("related_module") && field.related_module == 'profiles') {
                 related_id = idPerfil

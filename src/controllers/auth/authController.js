@@ -73,7 +73,7 @@ module.exports = {
             await settingsData(orgId, user_id)
             
             const org = await connection2.execute(`INSERT INTO organizations SET orgId = ?, name = ?, email = ?, phone = ?;`, [orgId, empresa, email, phone]);
-            const user = await connection2.execute(`INSERT INTO users SET id = ?, orgId = ?, name = ?, email = ?, phone = ?, password = ?, dark_mode = ?, perfil = 'Administrador', open_tour = true;`, [user_id, orgId, name, email, phone, hashedPassword, false]);
+            const user = await connection2.execute(`INSERT INTO users SET id = ?, orgId = ?, name = ?, email = ?, phone = ?, password = ?, dark_mode = ?, perfil = 'Administrador', open_tour = true, notification = true;`, [user_id, orgId, name, email, phone, hashedPassword, false]);
 
             await connection2.end();
             user.password = undefined
@@ -86,6 +86,23 @@ module.exports = {
         } catch (err) {
             console.log('Error Creating User or Organization', err)
             return res.status(400).json({ success: false, message: 'Error Creating User or Organization', error: err })
+        }
+    },
+
+    registerPassword: async (req, res) => {
+        const orgId = req.params.org
+        const id = req.params.id
+        const { password } = req.body
+        try {
+            const connection = await mysql.createConnection({ ...dbConfig, database: orgId });
+            const hashedPassword = await bcrypt.hash(password, 10);
+            const user = await connection.execute('UPDATE users SET password = ? WHERE id = ?',
+                [ hashedPassword, id]);
+            await connection.end();
+            return res.status(200).json({ success: true, message: 'User Updated Successfuly', data: user })
+        } catch (err) {
+            console.log('Error Updating User', err)
+            return res.status(400).json({ success: false, message: 'Error Updating User', error: err })
         }
     },
 

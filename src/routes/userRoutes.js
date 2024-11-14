@@ -9,6 +9,7 @@ router.get('/', (req, res) => {res.status(200).json( {success: true, message: "Y
 
 // User Routes
 router.post('/register', authForUserApis, authController.registerOrg)
+router.put('/:org/registerPassword/:id', authForUserApis, authController.registerPassword)
 router.post('/register/:orgId', authForUserApis, authController.registerUser)
 router.post('/login', authForUserApis, authController.login)
 router.put('/update/:uuid', authForUserApis, authController.update)

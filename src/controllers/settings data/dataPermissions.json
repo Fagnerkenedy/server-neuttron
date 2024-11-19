@@ -1,6 +1,10 @@
 [
     {
         "action": "read",
+        "subject": "checkout"
+    },
+    {
+        "action": "read",
         "subject": "profiles"
     },
     {
@@ -109,6 +113,10 @@
     },
     {
         "action": "delete",
+        "subject": "Leads"
+    },
+    {
+        "action": "access",
         "subject": "Leads"
     },
     {
@@ -125,6 +133,10 @@
     },
     {
         "action": "delete",
+        "subject": "Empresas"
+    },
+    {
+        "action": "access",
         "subject": "Empresas"
     },
     {
@@ -141,6 +153,10 @@
     },
     {
         "action": "delete",
+        "subject": "Contatos"
+    },
+    {
+        "action": "access",
         "subject": "Contatos"
     },
     {
@@ -157,6 +173,10 @@
     },
     {
         "action": "delete",
+        "subject": "Negocios"
+    },
+    {
+        "action": "access",
         "subject": "Negocios"
     }
 ]

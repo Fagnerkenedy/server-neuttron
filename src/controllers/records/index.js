@@ -125,7 +125,7 @@ module.exports = {
             const related_id = req.params.related_id
             const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
             
-            const [row] = await connection.execute(`SELECT module_id, module_name FROM modulos_relacionados WHERE related_id = ? AND module_name = ?;`, [related_id, module]);
+            const [row] = await connection.execute(`SELECT DISTINCT module_id, module_name FROM modulos_relacionados WHERE related_id = ? AND module_name = ?;`, [related_id, module]);
 
             const recordsPromises = row.map(async (result) => {
                 const [row2] = await connection.execute(`SELECT * FROM ${result.module_name} WHERE id = ?;`, [result.module_id]);

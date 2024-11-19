@@ -39,7 +39,7 @@ module.exports = {
             );
             const [result] = await connection.execute(query);
 
-            const insertDataPermissions = await createPermissions(req={ params: { org: orgId}, body: [{action: 'read', subject: moduleNameApi},{action: 'create', subject: moduleNameApi},{action: 'update', subject: moduleNameApi},{action: 'delete', subject: moduleNameApi}] })
+            const insertDataPermissions = await createPermissions(req={ params: { org: orgId}, body: [{action: 'read', subject: moduleNameApi},{action: 'create', subject: moduleNameApi},{action: 'update', subject: moduleNameApi},{action: 'delete', subject: moduleNameApi},{action: 'access', subject: moduleNameApi}] })
 
             const [idProfile] = await connection.execute(
                 `SELECT id FROM profiles WHERE perfil = 'Administrador';`

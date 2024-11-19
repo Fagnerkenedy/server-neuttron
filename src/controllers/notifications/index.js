@@ -21,7 +21,7 @@ module.exports = {
 
             console.log("received notifications: ", req.body.id)
 
-            mercadopago.payment.get({ id: req.body.id, })
+            mercadopago.payment.get(req.body.id)
             .then(console.log)
             .catch(console.log);
 

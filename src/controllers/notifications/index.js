@@ -2,6 +2,7 @@ const mysql = require('mysql2/promise')
 const path = require('path')
 const dbConfig = require('../../database/index')
 const crypto = require('crypto');
+const mercadopago = require('mercadopago');
 
 module.exports = {
     payment: async (req, res) => {
@@ -14,7 +15,12 @@ module.exports = {
             const yField = req.body.yField
             const type = req.body.type
 
-            console.log("received notifications: ", req)
+            console.log("received notifications: ", req.body)
+
+            mercadopago.payment.get({ id: req.body.id, })
+            .then(console.log)
+            .catch(console.log);
+
             // connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
             // await connection.beginTransaction();
             // const queryCharts = `CREATE TABLE IF NOT EXISTS charts (

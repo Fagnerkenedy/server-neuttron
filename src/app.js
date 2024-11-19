@@ -5,9 +5,6 @@ const path = require('path');
 const envPath = path.join(__dirname, '../.env');
 require('dotenv').config({ path: envPath });
 
-
-app.use("/notifications", require('./routes/notifications'))
-
 //MIDDLEWARES
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -33,6 +30,7 @@ app.use("/settings", require('./routes/settings'))
 app.use("/permissions", require('./routes/permissions'))
 app.use("/sections", require('./routes/sections'))
 app.use("/kanbans", require('./routes/kanban'))
+app.use("/notifications", require('./routes/notifications'))
 
 app.listen(process.env.EXPRESS_PORT, () => {
     console.log(`App running in port: ${process.env.EXPRESS_PORT}`)

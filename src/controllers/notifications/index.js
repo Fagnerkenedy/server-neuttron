@@ -4,6 +4,10 @@ const dbConfig = require('../../database/index')
 const crypto = require('crypto');
 const mercadopago = require('mercadopago');
 
+mercadopago.configure({
+	access_token: process.env.ACCESS_TOKEN_MERCADO_PAGO,
+});
+
 module.exports = {
     payment: async (req, res) => {
         let connection
@@ -15,7 +19,7 @@ module.exports = {
             const yField = req.body.yField
             const type = req.body.type
 
-            console.log("received notifications: ", req.body)
+            console.log("received notifications: ", req.body.id)
 
             mercadopago.payment.get({ id: req.body.id, })
             .then(console.log)

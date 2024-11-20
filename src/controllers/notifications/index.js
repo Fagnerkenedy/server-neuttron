@@ -23,7 +23,7 @@ module.exports = {
             console.log("process.env.ACCESS_TOKEN_MERCADO_PAGO: ", process.env.ACCESS_TOKEN_MERCADO_PAGO)
 
             mercadopago.payment.get(req.body.data.id)
-            .then(console.log)
+            .then(JSON.stringify(console.log))
             .catch(console.log);
 
             // connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });

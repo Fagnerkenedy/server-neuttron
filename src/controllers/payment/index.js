@@ -22,6 +22,7 @@ module.exports = {
                 "pending": "https://crm.neuttron.com.br/api/notifications"
             },
             auto_return: "approved",
+            notification_url: "https://crm.neuttron.com.br/api/notifications"
         };
 
         mercadopago.preferences.create(preference)

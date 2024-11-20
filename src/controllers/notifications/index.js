@@ -26,7 +26,15 @@ module.exports = {
 
             mercadopago.payment.get(req.body.resource)
             .then((response) => {
-                console.log("response Payment: ",response)
+                console.log("response Payment: ",response.response.payer)
+                // if (response.hasOwnProperty("response") && response.response.status == "approved") {
+                //     const payer = response.response.payer
+                //     if (payer.hasOwnProperty("email")) {
+                //         const email = payer.email
+                //     } else {
+                //         const cpf = payer.identification.
+                //     }
+                // }
             })
             .catch((error) => {
                 console.log("response Payment: ",error)

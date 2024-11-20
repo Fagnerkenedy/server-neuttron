@@ -38,7 +38,7 @@ module.exports = {
                 "start_date": "2020-06-02T13:07:14.260Z",
                 "end_date": "2022-07-20T15:59:52.581Z",
                 "transaction_amount": 10,
-                "currency_id": "ARS"
+                "currency_id": "BRL"
             },
             "back_url": "https://crm.neuttron.com.br/login",
             "status": "authorized"

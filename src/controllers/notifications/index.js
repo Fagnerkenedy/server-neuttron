@@ -20,6 +20,7 @@ module.exports = {
             const type = req.body.type
 
             console.log("received notifications: ", req.body.id)
+            console.log("process.env.ACCESS_TOKEN_MERCADO_PAGO: ", process.env.ACCESS_TOKEN_MERCADO_PAGO)
 
             mercadopago.payment.get(req.body.id)
             .then(console.log)

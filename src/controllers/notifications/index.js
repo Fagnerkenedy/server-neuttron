@@ -23,7 +23,7 @@ module.exports = {
             console.log("received notifications: ", req.body.data.id)
             console.log("process.env.ACCESS_TOKEN_MERCADO_PAGO: ", process.env.ACCESS_TOKEN_MERCADO_PAGO)
 
-            mercadopago.payment.get(req.body.data.id)
+            mercadopago.preapproval.get(req.body.data.id)
             .then(console.log)
             .catch(console.log);
 

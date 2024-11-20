@@ -22,7 +22,8 @@ module.exports = {
                 "pending": "https://crm.neuttron.com.br/api/notifications"
             },
             auto_return: "approved",
-            notification_url: "https://crm.neuttron.com.br/api/notifications"
+            notification_url: "https://crm.neuttron.com.br/api/notifications",
+            external_reference: "Plano_Profissional_Teste_1_Usuário"
         };
 
         mercadopago.preferences.create(preference)

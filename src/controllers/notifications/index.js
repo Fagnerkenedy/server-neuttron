@@ -21,7 +21,7 @@ module.exports = {
 
             // console.log("received notifications header: ", req.header)
             // console.log("received notifications params: ", req.params)
-            console.log("received notifications: ", JSON.stringify(req))
+            console.log("received notifications: ", req)
             console.log("process.env.ACCESS_TOKEN_MERCADO_PAGO: ", process.env.ACCESS_TOKEN_MERCADO_PAGO)
 
             mercadopago.payment.get(req.body.resource)

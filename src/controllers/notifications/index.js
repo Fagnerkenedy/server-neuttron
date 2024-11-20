@@ -24,7 +24,7 @@ module.exports = {
             console.log("received notifications: ", req)
             console.log("process.env.ACCESS_TOKEN_MERCADO_PAGO: ", process.env.ACCESS_TOKEN_MERCADO_PAGO)
 
-            mercadopago.preapproval.get(req.body.resource)
+            mercadopago.payment.get(req.body.resource)
             .then(console.log)
             .catch(console.log);
 

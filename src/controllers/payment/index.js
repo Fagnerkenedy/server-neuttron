@@ -17,9 +17,9 @@ module.exports = {
                 }
             ],
             back_urls: {
-                "success": "http://localhost:8080/feedback",
-                "failure": "http://localhost:8080/feedback",
-                "pending": "http://localhost:8080/feedback"
+                "success": "https://crm.neuttron.com.br/api/notifications",
+                "failure": "https://crm.neuttron.com.br/api/notifications",
+                "pending": "https://crm.neuttron.com.br/api/notifications"
             },
             auto_return: "approved",
         };

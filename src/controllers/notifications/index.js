@@ -21,10 +21,10 @@ module.exports = {
 
             // console.log("received notifications header: ", req.header)
             // console.log("received notifications params: ", req.params)
-            console.log("received notifications: ", req.body)
+            console.log("received notifications: ", req)
             console.log("process.env.ACCESS_TOKEN_MERCADO_PAGO: ", process.env.ACCESS_TOKEN_MERCADO_PAGO)
 
-            mercadopago.preapproval.get(req.body.data.id)
+            mercadopago.preapproval.get(req.body.resource)
             .then(console.log)
             .catch(console.log);
 

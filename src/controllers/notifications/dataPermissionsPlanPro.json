@@ -1,0 +1,26 @@
+[
+    {
+        "action": "access",
+        "subject": "profiles"
+    },
+    {
+        "action": "access",
+        "subject": "users"
+    },
+    {
+        "action": "access",
+        "subject": "functions"
+    },
+    {
+        "action": "access",
+        "subject": "modules"
+    },
+    {
+        "action": "access",
+        "subject": "charts"
+    },
+    {
+        "action": "access",
+        "subject": "kanban"
+    }
+]

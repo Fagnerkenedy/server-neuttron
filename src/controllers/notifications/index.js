@@ -3,6 +3,8 @@ const path = require('path')
 const dbConfig = require('../../database/index')
 const crypto = require('crypto');
 const mercadopago = require('mercadopago');
+const { createPermissions, deleteProfilesPermissions } = require('../settings data/createPermissions');
+const dataPermissionsPlanPro = require('./dataPermissionsPlanPro.json')
 
 mercadopago.configure({
 	access_token: process.env.ACCESS_TOKEN_MERCADO_PAGO,
@@ -12,7 +14,6 @@ module.exports = {
     payment: async (req, res) => {
         let connection
         try {
-            const orgId = req.params.org
             const name = req.body.name
             const query = req.body.query
             const xField = req.body.xField
@@ -24,22 +25,32 @@ module.exports = {
             console.log("received notifications: ", req)
             console.log("process.env.ACCESS_TOKEN_MERCADO_PAGO: ", process.env.ACCESS_TOKEN_MERCADO_PAGO)
 
+            const connectionNeuttron = await mysql.createConnection({ ...dbConfig, database: process.env.DB_NAME });
+            let payer = ""
             mercadopago.payment.get(req.body.resource)
             .then((response) => {
                 console.log("response Payment: ",response.response.payer)
-                // if (response.hasOwnProperty("response") && response.response.status == "approved") {
-                //     const payer = response.response.payer
-                //     if (payer.hasOwnProperty("email")) {
-                //         const email = payer.email
-                //     } else {
-                //         const cpf = payer.identification.
-                //     }
-                // }
+                if (response.hasOwnProperty("response") && response.response.status == "approved") {
+                    payer = response.response.payer
+                }
             })
             .catch((error) => {
                 console.log("response Payment: ",error)
             });
 
+            if (payer.hasOwnProperty("email")) {
+                const email = payer.email
+
+            }
+            if (payer.identification.type == "CPF"){
+                const cpf = payer.identification.number.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4_');
+                console.log("cpf retorno: ", cpf)
+                const [orgId] = await connectionNeuttron.execute(`SELECT orgId FROM users WHERE CPF = ?;`, cpf)
+                if(orgId.length > 0 ) {
+                    const insertDataPermissions = await createPermissions(req={ params: { org: `org${orgId}`}, body: dataPermissionsPlanPro })
+                    const deletePermissions = await deleteProfilesPermissions(req={ params: { org: `org${orgId}`} })
+                }
+            }
             // connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
             // await connection.beginTransaction();
             // const queryCharts = `CREATE TABLE IF NOT EXISTS charts (

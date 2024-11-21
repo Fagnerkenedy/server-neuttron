@@ -89,5 +89,36 @@ module.exports = {
                 await connection.end();
             }
         }
+    },
+    deleteProfilesPermissions: async (req, res) => {
+        let connection
+        try {
+            const orgId = req.params.org
+            // const id_profile = req.params.id_profile
+            // const id_permission = req.params.id_permission
+            connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
+            await connection.beginTransaction();
+
+            const [idPermissionCheckout] = await connection.execute(
+                "SELECT id FROM permissions WHERE action = 'read' AND subject = 'checkout';"
+            );
+
+            const [fetchProfilePermission] = await connection.execute(
+                'DELETE FROM profiles_permissions WHERE id_permission = ?;',
+                [idPermissionCheckout]
+            );
+
+            await connection.commit();
+            return fetchProfilePermission
+
+        } catch (error) {
+            if (connection) {
+                await connection.rollback();
+            }
+        } finally {
+            if (connection) {
+                await connection.end();
+            }
+        }
     }
 }

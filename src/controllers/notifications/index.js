@@ -43,7 +43,7 @@ module.exports = {
                     const cpf = payer.identification.number.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4_');
                     console.log("CPF retorno: ", cpf);
 
-                    const sql = `SELECT orgId FROM users WHERE CPF = ${cpf};`
+                    const sql = `SELECT orgId FROM users WHERE CPF = '${cpf}';`
                     console.log("sql: ",sql)
                     const orgId = await connectionNeuttron.execute(sql);
                     console.log("orgID; ",orgId)

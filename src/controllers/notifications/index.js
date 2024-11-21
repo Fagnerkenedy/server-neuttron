@@ -43,7 +43,7 @@ module.exports = {
                     const cpf = payer.identification.number.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4_');
                     console.log("CPF retorno: ", cpf);
 
-                    const [orgId] = await connectionNeuttron.execute(`SELECT orgId FROM users WHERE CPF = ?;`, [cpf]);
+                    const orgId = await connectionNeuttron.execute(`SELECT orgId FROM users WHERE CPF = ?;`, [cpf]);
                     console.log("orgID; ",orgId)
                     if (orgId.length > 0) {
                         const insertDataPermissions = await createPermissions(req = { params: { org: `org${orgId}` }, body: dataPermissionsPlanPro });

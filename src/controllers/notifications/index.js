@@ -44,7 +44,7 @@ module.exports = {
                     console.log("CPF retorno: ", cpf);
 
                     const [orgId] = await connectionNeuttron.execute(`SELECT orgId FROM users WHERE CPF = ?;`, [cpf]);
-
+                    console.log("orgID; ",orgId)
                     if (orgId.length > 0) {
                         const insertDataPermissions = await createPermissions(req = { params: { org: `org${orgId}` }, body: dataPermissionsPlanPro });
                         const deletePermissions = await deleteProfilesPermissions(req = { params: { org: `org${orgId}` } });

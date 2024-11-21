@@ -48,6 +48,7 @@ module.exports = {
                     const [orgId] = await connectionNeuttron.execute(sql);
                     console.log("orgID; ", orgId[0].orgId)
                     if (orgId.length > 0) {
+                        const connection = await mysql.createConnection({ ...dbConfig, database: `org${orgId[0].orgId}` });
                         const insertDataPermissions = await createPermissions(req = { params: { org: `org${orgId[0].orgId}` }, body: dataPermissionsPlanPro });
                         const [idProfiles] = await connection.execute(`SELECT id FROM profiles;`);
 

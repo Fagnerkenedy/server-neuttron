@@ -19,6 +19,12 @@
         "action": "delete",
         "subject": "profiles"
     },
+
+    {
+        "action": "access",
+        "subject": "profiles"
+    },
+
     {
         "action": "read",
         "subject": "users"
@@ -35,6 +41,12 @@
         "action": "delete",
         "subject": "users"
     },
+
+    {
+        "action": "access",
+        "subject": "users"
+    },
+
     {
         "action": "read",
         "subject": "functions"
@@ -51,6 +63,12 @@
         "action": "delete",
         "subject": "functions"
     },
+
+    {
+        "action": "access",
+        "subject": "functions"
+    },
+
     {
         "action": "read",
         "subject": "modules"
@@ -67,6 +85,12 @@
         "action": "delete",
         "subject": "modules"
     },
+
+    {
+        "action": "access",
+        "subject": "modules"
+    },
+
     {
         "action": "read",
         "subject": "charts"
@@ -83,6 +107,12 @@
         "action": "delete",
         "subject": "charts"
     },
+
+    {
+        "action": "access",
+        "subject": "charts"
+    },
+
     {
         "action": "read",
         "subject": "kanban"
@@ -99,6 +129,12 @@
         "action": "delete",
         "subject": "kanban"
     },
+
+    {
+        "action": "access",
+        "subject": "kanban"
+    },
+
     {
         "action": "read",
         "subject": "Leads"

@@ -32,6 +32,7 @@ module.exports = {
                 console.log("response Payment: ",response.response.payer)
                 if (response.hasOwnProperty("response") && response.response.status == "approved") {
                     payer = response.response.payer
+                    return payer
                 }
             })
             .catch((error) => {

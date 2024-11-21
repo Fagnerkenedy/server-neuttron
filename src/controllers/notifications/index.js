@@ -57,7 +57,7 @@ module.exports = {
             
                         for(const id_permission of insertDataPermissions) {
                             const req = {
-                                params: { org: `org${org}`},
+                                params: { org: `org${orgId[0].orgId}`},
                                 body: {
                                     id_profile: 'fff54b27cb4741033bf',
                                     id_permission: id_permission

@@ -49,11 +49,6 @@ module.exports = {
                     console.log("orgID; ",orgId[0].orgId)
                     if (orgId.length > 0) {
                         const insertDataPermissions = await createPermissions(req = { params: { org: `org${orgId[0].orgId}` }, body: dataPermissionsPlanPro });
-                        await connection.execute(`CREATE TABLE IF NOT EXISTS profiles_permissions (
-                            id INT PRIMARY KEY AUTO_INCREMENT,
-                            id_profile VARCHAR(255),
-                            id_permission VARCHAR(255)
-                        );`)
             
                         for(const id_permission of insertDataPermissions) {
                             const req = {

@@ -105,7 +105,7 @@ module.exports = {
 
             const [fetchProfilePermission] = await connection.execute(
                 'DELETE FROM profiles_permissions WHERE id_permission = ?;',
-                [idPermissionCheckout]
+                [idPermissionCheckout[0].id]
             );
 
             await connection.commit();

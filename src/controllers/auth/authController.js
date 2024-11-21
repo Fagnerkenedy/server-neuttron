@@ -88,7 +88,7 @@ module.exports = {
             await connection2.end();
             user.password = undefined
             
-            await connectionNeuttron.execute(`INSERT INTO subscriptions SET id = ?, orgId = ?, name = ?, external_reference = ?, users = ?, active_users = ?;`, [subscription_id, orgId, "Free", "free", 1, 1]);
+            // await connectionNeuttron.execute(`INSERT INTO subscriptions SET id = ?, orgId = ?, name = ?, external_reference = ?, users = ?, active_users = ?;`, [subscription_id, orgId, "Free", "free", 1, 1]);
             await connectionNeuttron.execute(`INSERT INTO users SET id = ?, name = ?, email = ?, CPF = ?, phone = ?, organization = ?, orgId = ?;`, [uuid, name, email, CPF, phone, empresa, orgId]);
             await connectionNeuttron.end();
             
@@ -329,7 +329,7 @@ module.exports = {
         const orgId = req.params.org
         try {
             const connectionNeuttron = await mysql.createConnection({ ...dbConfig, database: process.env.DB_NAME });
-            const [subscriptions] = await connectionNeuttron.execute('SELECT users, active_users FROM subscriptions WHERE orgId = ?',[ orgId ]);
+            const [subscriptions] = await connectionNeuttron.execute('SELECT users, active_users FROM subscriptions WHERE orgId = ?;',[ orgId.slice(3) ]);
             await connectionNeuttron.end();
             
             return res.status(200).json({ success: true, message: 'Subscriptions', subscriptions })

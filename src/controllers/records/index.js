@@ -37,7 +37,13 @@ module.exports = {
                 if (module == "users") {
                     sendEmail(obj.email, record_id, orgId)
                     const connectionNeuttron = await mysql.createConnection({ ...dbConfig, database: process.env.DB_NAME });
-                    await connectionNeuttron.execute(`INSERT INTO users SET id = ?, name = ?, email = ?, phone = ?, orgId = ?;`, [record_id, obj.name, obj.email, obj.phone, orgId.slice(3)]);
+                    const [subscriptions] = await connectionNeuttron.execute(`SELECT users, active_users FROM subscriptions WHERE orgId = ?;`, [orgId.slice(3)]);
+                    if (subscriptions.length > 0 && subscriptions[0].users > subscriptions[0].active_users) {
+                        const active_users = Number(subscriptions[0].active_users) + 1
+                        
+                        await connectionNeuttron.execute(`INSERT INTO users SET id = ?, name = ?, email = ?, phone = ?, orgId = ?;`, [record_id, obj.name, obj.email, obj.phone, orgId.slice(3)]);
+                        await connectionNeuttron.execute(`UPDATE subscriptions SET active_users = ? WHERE orgId = ?;`, [active_users, orgId.slice(3)]);
+                    }
                     await connectionNeuttron.end();
                 }
                 const fieldNames = Object.keys(obj).join(', ');
@@ -281,6 +287,19 @@ module.exports = {
             const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
 
             if (ids.length === 1) {
+                if (module == "users") {
+                    const connectionNeuttron = await mysql.createConnection({ ...dbConfig, database: process.env.DB_NAME });
+                    const deleteSql = `DELETE FROM users WHERE id = ?`;
+                    const deleteValues = [ids[0]];
+                    await connectionNeuttron.execute(deleteSql, deleteValues);
+                    const [subscriptions] = await connectionNeuttron.execute(`SELECT active_users FROM subscriptions WHERE orgId = ?;`, [orgId.slice(3)]);
+                    if (subscriptions.length > 0) {
+                        const active_users = Number(subscriptions[0].active_users) - 1
+
+                        await connectionNeuttron.execute(`UPDATE subscriptions SET active_users = ? WHERE orgId = ?;`, [active_users, orgId.slice(3)]);
+                    }
+                    await connectionNeuttron.end();
+                }
                 const deleteSql = `DELETE FROM ${module} WHERE id = ?`;
                 const deleteValues = [ids[0]];
                 await connection.execute(deleteSql, deleteValues);

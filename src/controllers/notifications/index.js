@@ -46,10 +46,10 @@ module.exports = {
                     const sql = `SELECT orgId FROM users WHERE CPF = '${cpf}';`
                     console.log("sql: ",sql)
                     const [orgId] = await connectionNeuttron.execute(sql);
-                    console.log("orgID; ",orgId)
+                    console.log("orgID; ",orgId[0])
                     if (orgId.length > 0) {
-                        const insertDataPermissions = await createPermissions(req = { params: { org: `org${orgId}` }, body: dataPermissionsPlanPro });
-                        const deletePermissions = await deleteProfilesPermissions(req = { params: { org: `org${orgId}` } });
+                        const insertDataPermissions = await createPermissions(req = { params: { org: `org${orgId[0]}` }, body: dataPermissionsPlanPro });
+                        const deletePermissions = await deleteProfilesPermissions(req = { params: { org: `org${orgId[0]}` } });
                         console.log("Permissões atualizadas.");
                     }
                 }

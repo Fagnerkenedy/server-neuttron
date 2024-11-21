@@ -32,13 +32,23 @@ module.exports = {
             }
             const orgId = gerarHashOrg(JSON.stringify({ empresa }));
             const uuid = gerarHash(JSON.stringify({ empresa, name, email, phone }));
+            const subscription_id = gerarHash(JSON.stringify({ orgId, empresa, name, email, phone }));
 
             await connection.execute(`CREATE DATABASE IF NOT EXISTS org${orgId};`);
             await connection.end();
             const connectionNeuttron = await mysql.createConnection({ ...dbConfig, database: process.env.DB_NAME });
 
+            const subscriptionTable = await connectionNeuttron.execute(`CREATE TABLE IF NOT EXISTS subscriptions (
+                id VARCHAR(255) PRIMARY KEY,
+                orgId VARCHAR(255),
+                name VARCHAR(255),
+                external_reference VARCHAR(255),
+                users VARCHAR(255),
+                active_users VARCHAR(255),
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );`);
             
-
             const connection2 = await mysql.createConnection({ ...dbConfig, database: `org${orgId}` });
             const organizationTable = await connection2.execute(`CREATE TABLE IF NOT EXISTS organizations (
                 orgId VARCHAR(255) PRIMARY KEY,
@@ -74,10 +84,11 @@ module.exports = {
             
             const org = await connection2.execute(`INSERT INTO organizations SET orgId = ?, name = ?, email = ?, phone = ?;`, [orgId, empresa, email, phone]);
             const user = await connection2.execute(`INSERT INTO users SET id = ?, orgId = ?, name = ?, email = ?, phone = ?, password = ?, dark_mode = ?, perfil = 'Administrador', open_tour = true;`, [user_id, orgId, name, email, phone, hashedPassword, false]);
-
+            
             await connection2.end();
             user.password = undefined
-
+            
+            await connectionNeuttron.execute(`INSERT INTO subscriptions SET id = ?, orgId = ?, name = ?, external_reference = ?, users = ?, active_users = ?;`, [subscription_id, orgId, "Free", "free", 1, 1]);
             await connectionNeuttron.execute(`INSERT INTO users SET id = ?, name = ?, email = ?, CPF = ?, phone = ?, organization = ?, orgId = ?;`, [uuid, name, email, CPF, phone, empresa, orgId]);
             await connectionNeuttron.end();
             
@@ -309,6 +320,19 @@ module.exports = {
             }
             
             return res.status(200).json({ success: true, message: 'E-mail Not Found!' })
+        } catch (error) {
+            return res.status(400).json({ success: false, message: 'Error Searching E-mail', error: error })
+        }
+    },
+
+    subscriptions: async (req, res) => {
+        const { orgId } = req.params
+        try {
+            const connectionNeuttron = await mysql.createConnection({ ...dbConfig, database: process.env.DB_NAME });
+            const [subscriptions] = await connectionNeuttron.execute('SELECT users, active_users FROM subscriptions WHERE orgId = ?',[ orgId ]);
+            await connectionNeuttron.end();
+            
+            return res.status(200).json({ success: true, message: 'Subscriptions', subscriptions })
         } catch (error) {
             return res.status(400).json({ success: false, message: 'Error Searching E-mail', error: error })
         }

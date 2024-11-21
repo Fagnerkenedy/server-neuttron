@@ -20,6 +20,7 @@ router.get('/:org/modulesTour/:userId', authForUserApis, authController.getModul
 router.put('/:org/modulesTour/:userId', authForUserApis, authController.updateModulesTour)
 
 router.post('/checkemail', authForUserApis, authController.checkEmail)
+router.get('/checkUsedUsers', authForUserApis, authController.subscriptions)
 router.post('/mailconfirmation', authForUserApis, authController.sendMailConfirmation)
 router.post('/confirmation', authForUserApis, authController.confirmation)
 

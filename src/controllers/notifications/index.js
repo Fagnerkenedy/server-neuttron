@@ -66,6 +66,18 @@ module.exports = {
                         }
                         const deletePermissions = await deleteProfilesPermissions(req = { params: { org: `org${orgId[0].orgId}` } });
 
+                        const gerarHash = (dados) => {
+                            const dadosComTimestamp = dados + Date.now().toString();
+                            const hash = crypto.createHash('sha256').update(dadosComTimestamp).digest('hex')
+                            return hash.substring(0, 19)
+                        }
+                        const subscription_id = gerarHash(JSON.stringify({ orgId: orgId[0].orgId }));
+                        
+                        let users = 1
+                        if (response.response.external_reference == "Plano_Profissional_Teste_1_Usuário") users = 2
+
+                        const [subscriptions] = await connectionNeuttron.execute(`INSERT INTO subscriptions SET id = ?, orgId = ?, name = ?, external_reference = ?, users = ?;`, [subscription_id, orgId[0].orgId, response.response.reason, response.response.external_reference, users]);
+
                         console.log("deletePermissions: ", deletePermissions);
                         console.log("Permissões atualizadas.");
                     }

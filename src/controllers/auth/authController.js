@@ -326,7 +326,7 @@ module.exports = {
     },
 
     subscriptions: async (req, res) => {
-        const { orgId } = req.params
+        const orgId = req.params.org
         try {
             const connectionNeuttron = await mysql.createConnection({ ...dbConfig, database: process.env.DB_NAME });
             const [subscriptions] = await connectionNeuttron.execute('SELECT users, active_users FROM subscriptions WHERE orgId = ?',[ orgId ]);
@@ -334,7 +334,7 @@ module.exports = {
             
             return res.status(200).json({ success: true, message: 'Subscriptions', subscriptions })
         } catch (error) {
-            return res.status(400).json({ success: false, message: 'Error Searching E-mail', error: error })
+            return res.status(400).json({ success: false, message: 'Error Searching Subscriptions', error: error })
         }
     },
 

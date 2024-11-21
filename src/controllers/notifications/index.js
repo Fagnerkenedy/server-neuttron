@@ -3,7 +3,7 @@ const path = require('path')
 const dbConfig = require('../../database/index')
 const crypto = require('crypto');
 const mercadopago = require('mercadopago');
-const { createPermissions, deleteProfilesPermissions } = require('../settings data/createPermissions');
+const { createPermissions, createProfilesPermissions, deleteProfilesPermissions } = require('../settings data/createPermissions');
 const dataPermissionsPlanPro = require('./dataPermissionsPlanPro.json')
 
 mercadopago.configure({
@@ -49,7 +49,25 @@ module.exports = {
                     console.log("orgID; ",orgId[0].orgId)
                     if (orgId.length > 0) {
                         const insertDataPermissions = await createPermissions(req = { params: { org: `org${orgId[0].orgId}` }, body: dataPermissionsPlanPro });
+                        await connection.execute(`CREATE TABLE IF NOT EXISTS profiles_permissions (
+                            id INT PRIMARY KEY AUTO_INCREMENT,
+                            id_profile VARCHAR(255),
+                            id_permission VARCHAR(255)
+                        );`)
+            
+                        for(const id_permission of insertDataPermissions) {
+                            const req = {
+                                params: { org: `org${org}`},
+                                body: {
+                                    id_profile: insertDataProfiles[0].record_id,
+                                    id_permission: id_permission
+                                }
+                            }
+                            createProfilesPermissions(req)
+                        }
                         const deletePermissions = await deleteProfilesPermissions(req = { params: { org: `org${orgId[0].orgId}` } });
+
+                        console.log("deletePermissions: ",deletePermissions);
                         console.log("Permissões atualizadas.");
                     }
                 }

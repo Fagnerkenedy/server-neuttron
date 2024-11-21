@@ -59,7 +59,7 @@ module.exports = {
                             const req = {
                                 params: { org: `org${org}`},
                                 body: {
-                                    id_profile: insertDataProfiles[0].record_id,
+                                    id_profile: 'fff54b27cb4741033bf',
                                     id_permission: id_permission
                                 }
                             }

@@ -44,25 +44,28 @@ module.exports = {
                     console.log("CPF retorno: ", cpf);
 
                     const sql = `SELECT orgId FROM users WHERE CPF = '${cpf}';`
-                    console.log("sql: ",sql)
+                    console.log("sql: ", sql)
                     const [orgId] = await connectionNeuttron.execute(sql);
-                    console.log("orgID; ",orgId[0].orgId)
+                    console.log("orgID; ", orgId[0].orgId)
                     if (orgId.length > 0) {
                         const insertDataPermissions = await createPermissions(req = { params: { org: `org${orgId[0].orgId}` }, body: dataPermissionsPlanPro });
-            
-                        for(const id_permission of insertDataPermissions) {
-                            const req = {
-                                params: { org: `org${orgId[0].orgId}`},
-                                body: {
-                                    id_profile: 'fff54b27cb4741033bf',
-                                    id_permission: id_permission
-                                }
+                        const [idProfiles] = await connection.execute(`SELECT id FROM profiles;`);
+
+                        for (const profile of idProfiles) {
+                            for (const id_permission of insertDataPermissions) {
+                                const req = {
+                                    params: { org: `org${orgId[0].orgId}` },
+                                    body: {
+                                        id_profile: profile.id,
+                                        id_permission: id_permission
+                                    }
+                                };
+                                await createProfilesPermissions(req);
                             }
-                            createProfilesPermissions(req)
                         }
                         const deletePermissions = await deleteProfilesPermissions(req = { params: { org: `org${orgId[0].orgId}` } });
 
-                        console.log("deletePermissions: ",deletePermissions);
+                        console.log("deletePermissions: ", deletePermissions);
                         console.log("Permissões atualizadas.");
                     }
                 }

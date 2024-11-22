@@ -66,11 +66,18 @@ module.exports = {
                         const subscription_id = gerarHash(JSON.stringify({ orgId: orgId[0].orgId }));
                         
                         const plans = {
-                            "Plano_Profissional_Teste_1_Usuário": 2,
-                            "Plano_Profissional_2_Usuário": 2,
-                            "Plano_Profissional_3_Usuário": 3,
-                            "Plano_Profissional_4_Usuário": 4,
-                            "Plano_Profissional_5_Usuário": 5
+                            // "Plano_Profissional_Teste_1_Usuário": 2,
+                            "Plano_Profissional_Anual_1_Usuario": 1,
+                            "PROFISSIONAL_MENSAL": 1,
+                            "PROFISSIONAL_MENSAL_2_USUARIOS": 2,
+                            "PROFISSIONAL_MENSAL_3_USUARIOS": 3,
+                            "PROFISSIONAL_MENSAL_4_USUARIOS": 4,
+                            "PROFISSIONAL_MENSAL_5_USUARIOS": 5,
+                            "PROFISSIONAL_MENSAL_6_USUARIOS": 6,
+                            "PROFISSIONAL_MENSAL_7_USUARIOS": 7,
+                            "PROFISSIONAL_MENSAL_8_USUARIOS": 8,
+                            "PROFISSIONAL_MENSAL_9_USUARIOS": 9,
+                            "PROFISSIONAL_MENSAL_10_USUARIOS": 10,
                         };
                         
                         const users = plans[response.response.external_reference] || 1                        

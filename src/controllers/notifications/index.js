@@ -75,7 +75,12 @@ module.exports = {
                         
                         const users = plans[response.response.external_reference] || 1                        
 
-                        const [subscriptions] = await connectionNeuttron.execute(`INSERT INTO subscriptions SET id = ?, orgId = ?, name = ?, external_reference = ?, users = ?, active_users = ?;`, [subscription_id, orgId[0].orgId, response.response.description, response.response.external_reference, users, 1]);
+                        const [subscriptions] = await connectionNeuttron.execute(`SELECT * FROM subscriptions WHERE orgId = ?;`, [ orgId[0].orgId ]);
+                        if (subscriptions.length > 0) {
+                            const [subscriptions] = await connectionNeuttron.execute(`UPDATE subscriptions SET id = ?, name = ?, external_reference = ?, users = ?, active_users = ? WHERE orgId = ?;`, [subscription_id, response.response.description, response.response.external_reference, users, 1, orgId[0].orgId]);
+                        } else {
+                            const [subscriptions] = await connectionNeuttron.execute(`INSERT INTO subscriptions SET id = ?, orgId = ?, name = ?, external_reference = ?, users = ?, active_users = ?;`, [subscription_id, orgId[0].orgId, response.response.description, response.response.external_reference, users, 1]);
+                        }
 
                         console.log("deletePermissions: ", deletePermissions);
                         console.log("Permissões atualizadas.");

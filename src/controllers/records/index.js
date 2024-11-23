@@ -181,6 +181,7 @@ module.exports = {
             if (!Array.isArray(data)) {
                 data = [data];
             }
+            console.log("data dentro do update: ",data)
             const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
 
             const update = [];

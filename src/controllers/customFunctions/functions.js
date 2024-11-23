@@ -1,6 +1,7 @@
 const mysql = require('mysql2/promise');
 const dbConfig = require('../../database/index')
 const crypto = require('crypto');
+const nodemailer = require('nodemailer')
 
 module.exports = {
     getRecordById: async (module, id, connection) => {
@@ -96,6 +97,28 @@ module.exports = {
 
     today: () => {
         return new Date()
+    },
+
+    sendEmail: async (emailHeader) => {
+        const transporter = nodemailer.createTransport({
+            host: process.env.NODEMAILER_SMTP,
+            port: process.env.NODEMAILER_PORT,
+            secure: true,
+            auth: {
+                user: process.env.NODEMAILER_USER,
+                pass: process.env.NODEMAILER_PASS
+            },
+            tls: {
+                ciphers: 'SSLv3'
+            }
+        })
+    
+        transporter.sendMail(emailHeader)
+        .then(info => {
+            return({ success: true, message: info })
+        }).catch(error => {
+            return({ success: false, message: error })
+        })
     }
 
     // updateRecordById: async (module, id, map, connection) => {

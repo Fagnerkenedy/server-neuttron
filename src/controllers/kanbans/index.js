@@ -25,20 +25,20 @@ module.exports = {
 
             const fieldNames = fields.map(field => `${moduleName}.${field.api_name}`).join(', ');
 
-            const sqlOptions = `SELECT ${moduleName}.id, ${fieldNames != '' ? `${fieldNames},` : ''} options.name FROM options LEFT JOIN ${moduleName} ON options.name = ${moduleName}.${kanbanResults[0].field} WHERE options.field_api_name = '${kanbanResults[0].field}' ORDER BY option_order;`
+            const sqlOptions = `SELECT ${moduleName}.id, ${fieldNames != '' ? `${fieldNames},` : ''} options.name FROM options LEFT JOIN ${moduleName} ON options.name = ${moduleName}.${kanbanResults[0].field} WHERE options.field_api_name = '${kanbanResults[0].field}' AND options.module = '${moduleName}' ORDER BY option_order;`
 
             const [options] = await connection.execute(sqlOptions);
-            console.log("options", options)
 
+            console.log("options: ",options)
             let separatedOptions = groupBy.group(options, ['name']);
-            console.log('asdasd', separatedOptions)
-
+            console.log("separatedOptions: ",separatedOptions)
             const resultObject = {};
 
             Object.keys(separatedOptions).forEach((optionName) => {
                 resultObject[optionName] = {
                     name: optionName,
                     items: separatedOptions[optionName].filter(field => field.id !== null).map(option => {
+                        // delete option.name
                         return {
                             id: option['id'],
                             content: option,
@@ -46,8 +46,6 @@ module.exports = {
                     })
                 };
             });
-
-            console.log("resultObject: ",JSON.stringify(resultObject));
 
             await connection.commit();
             res.status(200).json({ success: true, message: "Kanbans", field_api_name: kanbanResults[0].field, resultObject });

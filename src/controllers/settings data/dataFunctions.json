@@ -1,34 +1,34 @@
 [
     {
-        "name": "Atualiza valores Produtos",
+        "name": "Exemplo - Atualiza valores Produtos",
         "modulo": "Pedidos",
         "executar_quando": "Criar",
         "descricao": "Atualiza valores Produtos ao Criar",
         "funcao": "produto = await getRecordById('Produtos', get('nome_produto.id')) \nlet map = { \n valor_unit_rio: produto.valor_de_venda, \n valor_total: produto.valor_de_venda * fields.quantidade, \n nome_pedido: `${get('cliente.name')} - ${get('nome_produto.name')}`, \n status: 'Pendente', \n data_do_pedido: today() \n} \nupdateRecord('Pedidos', id, map)"
     },
     {
-        "name": "Deletar",
+        "name": "Exemplo - Deletar",
         "modulo": "Pedidos",
         "executar_quando": "Excluir",
         "descricao": "Função que executa ao Deletar um registro",
         "funcao": "map = { produto_ativo: true } \nupdateRecord('Produtos', '06e5eefaa4ba3db974f', map)"
     },
     {
-        "name": "Cria Cópia de Pedido",
+        "name": "Exemplo - Cria Cópia de Pedido",
         "modulo": "Pedidos",
         "executar_quando": "Criar",
         "descricao": "Cria Cópia de Pedido",
         "funcao": "produto = await getRecordById('Produtos', get('nome_produto.id')) \nlet map = { \n valor_unit_rio: produto.valor_de_venda, \n valor_total: produto.valor_de_venda * fields.quantidade, \n nome_pedido: `${get('cliente.name')} - ${get('nome_produto.name')}`, \n status: 'Pendente', \n data_do_pedido: today() \n} \ncreateRecord('Pedidos', map)"
     },
     {
-        "name": "Atualiza valores Produtos",
+        "name": "Exemplo - Atualiza valores Produtos",
         "modulo": "Pedidos",
         "executar_quando": "Editar",
         "descricao": "Atualiza valores Produtos ao Editar",
         "funcao": "produto = await getRecordById('Produtos', get('nome_produto.id')) \nlet map = { \n valor_unit_rio: produto.valor_de_venda, \n valor_total: produto.valor_de_venda * fields.quantidade, \n nome_pedido: `${get('cliente.name')} - ${get('nome_produto.name')}`, \n status: 'Pendente', \n data_do_pedido: today() \n} \nupdateRecord('Pedidos', id, map)"
     },
     {
-        "name": "Envia email",
+        "name": "Exemplo - Envia email",
         "modulo": "Negocios",
         "executar_quando": "Criar ou editar",
         "descricao": "Envia um email quando criar ou editar um novo Negócio para o Estágio 'Fechado Ganho'.",

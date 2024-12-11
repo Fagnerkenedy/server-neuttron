@@ -204,7 +204,7 @@ const createTables = async (connection, orgId, module) => {
     `);
 };
 
-const createFields2 = async (fields, connection, orgId, module, idPerfil, userId) => {
+const createFields2 = async (fields, connection, orgId, module, idPerfil, userId, fieldType, moduleNameSubform) => {
     await createTables(connection, orgId, module);
 
     let idField;
@@ -307,12 +307,11 @@ const createFields2 = async (fields, connection, orgId, module, idPerfil, userId
                 FROM information_schema.columns
                 WHERE table_schema = ?
                 AND table_name = ?
-                AND column_name = ?;`,
-                [orgId, module, uniqueApiName]
-            );
+                AND column_name = ?;
+            `, [orgId, fieldType == "subform" ? moduleNameSubform : module, uniqueApiName]);
 
             if (table.length === 0) {
-                await connection.execute(`ALTER TABLE ${module} ADD ${uniqueApiName} ${type};`);
+                await connection.execute(`ALTER TABLE ${fieldType == "subform" ? moduleNameSubform : module} ADD ${uniqueApiName} ${type};`);
             }
             results.push({ idField, id })
 

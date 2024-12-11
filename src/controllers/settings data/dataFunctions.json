@@ -32,6 +32,6 @@
         "modulo": "Negocios",
         "executar_quando": "Criar ou editar",
         "descricao": "Envia um email quando criar ou editar um novo Negócio para o Estágio 'Fechado Ganho'.",
-        "funcao": "if(fields.est_gio == 'Fechado Ganho') {\n    const emailHeader = {\n        from: 'neuttroncrm@gmail.com',\n        to: 'neuttroncrm@gmail.com',\n        replyTo: 'neuttroncrm@gmail.com',\n        subject: `Neuttron CRM - O Negócio '${fields.nome_neg_cio}' foi para o Estágio 'Fechado Ganho'`,\n        text: `O Negócio '${fields.nome_neg_cio}' foi para o Estágio 'Fechado Ganho'. \n Visualize o registro clicando no link: https://crm.neuttron.com.br/${orgId}/${module}/${id}`,\n    }\n    sendEmail(emailHeader)\n}\n"
+        "funcao": "if(fields.est_gio == 'Fechado Ganho') {\n    const emailHeader = {\n        from: 'neuttroncrm@gmail.com',\n        to: 'neuttroncrm@gmail.com',\n        replyTo: 'neuttroncrm@gmail.com',\n        subject: `Neuttron CRM - O Negócio '${fields.nome_neg_cio}' foi para o Estágio 'Fechado Ganho'`,\n        text: `O Negócio '${fields.nome_neg_cio}' foi para o Estágio 'Fechado Ganho'. \n            Visualize o registro clicando no link: https://crm.neuttron.com.br/${orgId}/${module}/${id}`,\n    }\n    sendEmail(emailHeader)\n}\n"
     }
 ]

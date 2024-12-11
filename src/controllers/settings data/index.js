@@ -20,7 +20,6 @@ module.exports = {
         let connection
         try {
             connection = await mysql.createConnection({ ...dbConfig, database: `org${orgId}` });
-            console.log("dbConfig dbConfig: ",dbConfig)
 
             await connection.beginTransaction();
             const queryCharts = `CREATE TABLE IF NOT EXISTS charts (

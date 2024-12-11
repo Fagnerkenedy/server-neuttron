@@ -1,14 +1,14 @@
 [
     {
         "name": "Funil de Vendas",
-        "query": "SELECT SUM(Negocios.montante) as montante, options.name as name, options.option_order FROM Negocios JOIN options ON options.name = Negocios.est_gio GROUP BY options.name, options.option_order ORDER BY options.option_order;",
+        "query": "SELECT SUM(Negocios.montante) as montante, options.name as name, options.option_order FROM Negocios JOIN options ON options.name = Negocios.est_gio WHERE options.module = 'Negocios' GROUP BY options.name, options.option_order ORDER BY options.option_order;",
         "xField": "name",
         "yField": "montante",
         "type": "funil"
     },
     {
         "name": "Valores por Estágio",
-        "query": "SELECT SUM(Negocios.montante) as montante, options.name as name, options.option_order FROM Negocios JOIN options ON options.name = Negocios.est_gio GROUP BY options.name, options.option_order ORDER BY options.option_order;",
+        "query": "SELECT SUM(Negocios.montante) as montante, options.name as name, options.option_order FROM Negocios JOIN options ON options.name = Negocios.est_gio WHERE options.module = 'Negocios' GROUP BY options.name, options.option_order ORDER BY options.option_order;",
         "xField": "name",
         "yField": "montante",
         "type": "barra"

@@ -94,7 +94,7 @@ const createTables = async (connection, orgId, module) => {
     `);
 };
 
-const createFields = async (fields, connection, orgId, module) => {
+const createFields = async (fields, connection, orgId, module, fieldType, moduleNameSubform) => {
     await createTables(connection, orgId, module);
 
     let idField;
@@ -188,10 +188,10 @@ const createFields = async (fields, connection, orgId, module) => {
                 WHERE table_schema = ?
                 AND table_name = ?
                 AND column_name = ?;
-            `, [orgId, module, uniqueApiName]);
+            `, [orgId, fieldType == "subform" ? moduleNameSubform : module, uniqueApiName]);
 
             if (table.length === 0) {
-                await connection.execute(`ALTER TABLE ${module} ADD ${uniqueApiName} ${type};`);
+                await connection.execute(`ALTER TABLE ${fieldType == "subform" ? moduleNameSubform : module} ADD ${uniqueApiName} ${type};`);
             }
             results.push({ idField, id })
 
@@ -209,6 +209,7 @@ const createSectionFields = async (sections, connection, orgId, moduleName, idPe
             const sectionId = section.id
             const sectionName = section.name
             const sort_order = section.sort_order
+            const fieldType = section.field_type
             let fields = section.fields
 
             if (!Array.isArray(fields)) {
@@ -225,6 +226,7 @@ const createSectionFields = async (sections, connection, orgId, moduleName, idPe
                 id VARCHAR(19) NOT NULL PRIMARY KEY,
                 name VARCHAR(255),
                 module VARCHAR(255),
+                field_type VARCHAR(255),
                 sort_order VARCHAR(255),
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -233,8 +235,8 @@ const createSectionFields = async (sections, connection, orgId, moduleName, idPe
 
             const index = sections.findIndex(section => section.id === sectionId)
             const [result] = await connection.execute(
-                'INSERT INTO sections (id, name, module, sort_order) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE name = VALUES(name), sort_order = VALUES(sort_order);',
-                [sectionId, sectionName, moduleName, index]
+                'INSERT INTO sections (id, name, module, sort_order, field_type) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE name = VALUES(name), sort_order = VALUES(sort_order);',
+                [sectionId, sectionName, moduleName, index, fieldType]
             )
 
             const querySectionFields = `CREATE TABLE IF NOT EXISTS section_fields (
@@ -248,12 +250,25 @@ const createSectionFields = async (sections, connection, orgId, moduleName, idPe
             )`;
             await connection.execute(querySectionFields);
 
+            let moduleNameSubform
+            if (fieldType == "subform") {
+                moduleNameSubform = sectionName.replace(/[^\w\s]|[\sç]/gi, '_')
+                const [searchSubform] = await connection.execute('SELECT name FROM modules WHERE name = ? AND api_name = ?;', [sectionName, moduleNameSubform]);
+                if (searchSubform.length == 0) {
+                    const req = {
+                        params: { org: orgId },
+                        body: { name: sectionName }
+                    }
+                    await create(req)
+                }
+            }
+
             let createdFieldsLeft = ''
             let createdFieldsRight = ''
             let upsertFieldLeft = []
             let upsertFieldRight = []
             if (fields[0].left.length !== 0) {
-                createdFieldsLeft = await createFields2(fields[0].left, connection, orgId, moduleName, idPerfil, userId)
+                createdFieldsLeft = await createFields2(fields[0].left, connection, orgId, moduleName, idPerfil, userId, fieldType, moduleNameSubform)
                 if (createdFieldsLeft.length !== 0) {
                     for (const result of createdFieldsLeft) {
                         if (result.idField) {
@@ -328,11 +343,11 @@ const sendEmail = async (email, record_id, orgId) => {
         to: email,
         replyTo: process.env.NODEMAILER_USER,
         subject: "Neuttron - Convite",
-        text: "Você recebeu um convite para se cadastrar no nosso sistema, por favor crie sua senha clicando no link: " + process.env.FRONT_URL + "/"+ orgId + "/cadastro/nova_senha/" + record_id,
+        text: "Você recebeu um convite para se cadastrar no nosso sistema, por favor crie sua senha clicando no link: " + process.env.FRONT_URL + "/" + orgId + "/cadastro/nova_senha/" + record_id,
     }).then(info => {
-        return({ success: true, message: info })
+        return ({ success: true, message: info })
     }).catch(error => {
-        return({ success: false, message: error })
+        return ({ success: false, message: error })
     })
 }
 

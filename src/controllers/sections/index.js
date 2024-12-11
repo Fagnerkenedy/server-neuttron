@@ -3,6 +3,7 @@ const path = require('path')
 const dbConfig = require('../../database/index')
 const { createFields } = require('../../utility/functions')
 const { gerarHash } = require('../../utility/functions')
+const { create } = require('../module')
 
 module.exports = {
     create: async (req, res) => {
@@ -16,6 +17,7 @@ module.exports = {
                 const sectionId = section.id
                 const sectionName = section.name
                 const sort_order = section.sort_order
+                const fieldType = section.field_type
                 let fields = section.fields
 
                 if (!Array.isArray(fields)) {
@@ -32,6 +34,7 @@ module.exports = {
                     id VARCHAR(19) NOT NULL PRIMARY KEY,
                     name VARCHAR(255),
                     module VARCHAR(255),
+                    field_type VARCHAR(255),
                     sort_order VARCHAR(255),
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -40,8 +43,8 @@ module.exports = {
 
                 const index = sections.findIndex(section => section.id === sectionId)
                 const [result] = await connection.execute(
-                    'INSERT INTO sections (id, name, module, sort_order) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE name = VALUES(name), sort_order = VALUES(sort_order);',
-                    [sectionId, sectionName, moduleName, index]
+                    'INSERT INTO sections (id, name, module, sort_order, field_type) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE name = VALUES(name), sort_order = VALUES(sort_order);',
+                    [sectionId, sectionName, moduleName, index, fieldType]
                 )
 
                 const querySectionFields = `CREATE TABLE IF NOT EXISTS section_fields (
@@ -55,12 +58,25 @@ module.exports = {
                 )`;
                 await connection.execute(querySectionFields);
 
+                let moduleNameSubform
+                if(fieldType == "subform") {
+                    moduleNameSubform = sectionName.replace(/[^\w\s]|[\sç]/gi, '_')
+                    const [searchSubform] = await connection.execute('SELECT name FROM modules WHERE name = ? AND api_name = ?;', [sectionName, moduleNameSubform]);
+                    if (searchSubform.length == 0) {                        
+                        const req = {
+                            params: { org: orgId },
+                            body: { name: sectionName }
+                        }
+                        await create(req)
+                    }
+                }
+
                 let createdFieldsLeft = ''
                 let createdFieldsRight = ''
                 let upsertFieldLeft = []
                 let upsertFieldRight = []
                 if (fields[0].left.length !== 0) {
-                    createdFieldsLeft = await createFields(fields[0].left, connection, orgId, moduleName)
+                    createdFieldsLeft = await createFields(fields[0].left, connection, orgId, moduleName, fieldType, moduleNameSubform)
                     if (createdFieldsLeft.length !== 0) {
                         for (const result of createdFieldsLeft) {
                             if (result.idField) {
@@ -83,7 +99,7 @@ module.exports = {
                     }
                 }
                 if (fields[0].right.length !== 0) {
-                    createdFieldsRight = await createFields(fields[0].right, connection, orgId, moduleName)
+                    createdFieldsRight = await createFields(fields[0].right, connection, orgId, moduleName, fieldType, sectionName)
                     if (createdFieldsRight.length !== 0) {
                         for (const result of createdFieldsRight) {
                             if (result.idField) {

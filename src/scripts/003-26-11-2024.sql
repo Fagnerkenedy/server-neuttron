@@ -1,0 +1,2 @@
+
+ALTER TABLE sections ADD COLUMN field_type VARCHAR(255);

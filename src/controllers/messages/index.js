@@ -9,12 +9,14 @@ module.exports = {
     webhookPost: async (req, res) => {
         console.log("Incoming webhook message:", JSON.stringify(req.body, null, 2));
 
-        const message = req.body.entry?.[0]?.changes[0]?.value?.messages?.[0];
+        // const message = req.body.entry?.[0]?.changes[0]?.value?.messages?.[0];
+        const message = req.body.value?.messages?.[0];
 
         console.log("message: ", message)
 
         if (message?.type === "text") {
-            const business_phone_number_id = req.body.entry?.[0].changes?.[0].value?.metadata?.phone_number_id;
+            const business_phone_number_id = req.body.value?.metadata?.phone_number_id;
+            // const business_phone_number_id = req.body.entry?.[0].changes?.[0].value?.metadata?.phone_number_id;
 
             // send a reply message as per the docs here https://developers.facebook.com/docs/whatsapp/cloud-api/reference/messages
             await axios({

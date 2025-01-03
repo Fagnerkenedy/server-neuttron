@@ -15,8 +15,8 @@ module.exports = {
         console.log("message: ", message)
 
         if (message?.type === "text") {
-            const business_phone_number_id = req.body.value?.metadata?.phone_number_id;
-            // const business_phone_number_id = req.body.entry?.[0].changes?.[0].value?.metadata?.phone_number_id;
+            // const business_phone_number_id = req.body.value?.metadata?.phone_number_id;
+            const business_phone_number_id = req.body.entry?.[0].changes?.[0].value?.metadata?.phone_number_id;
 
             // send a reply message as per the docs here https://developers.facebook.com/docs/whatsapp/cloud-api/reference/messages
             await axios({

@@ -21,7 +21,7 @@ module.exports = {
             // send a reply message as per the docs here https://developers.facebook.com/docs/whatsapp/cloud-api/reference/messages
             await axios({
                 method: "POST",
-                url: `https://graph.facebook.com/v18.0/${business_phone_number_id}/messages`,
+                url: `https://graph.facebook.com/v21.0/${business_phone_number_id}/messages`,
                 headers: {
                     Authorization: `Bearer ${GRAPH_API_TOKEN}`,
                 },
@@ -38,7 +38,7 @@ module.exports = {
             // mark incoming message as read
             await axios({
                 method: "POST",
-                url: `https://graph.facebook.com/v18.0/${business_phone_number_id}/messages`,
+                url: `https://graph.facebook.com/v21.0/${business_phone_number_id}/messages`,
                 headers: {
                     Authorization: `Bearer ${GRAPH_API_TOKEN}`,
                 },

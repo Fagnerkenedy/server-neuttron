@@ -1,6 +1,6 @@
 const axios = require('axios')
 
-const { ACCESS_TOKEN } = process.env;
+const { GRAPH_API_TOKEN } = process.env;
 
 module.exports = {
     sendMessage: async (req, res) => {
@@ -26,7 +26,7 @@ module.exports = {
                 {
                     headers: {
                         'Content-Type': 'application/json',
-                        Authorization: `Bearer ${ACCESS_TOKEN}`,
+                        Authorization: `Bearer ${GRAPH_API_TOKEN}`,
                     },
                 }
             );

@@ -53,6 +53,7 @@ module.exports = {
         }
 
         if (message) {
+            console.log("entrou aqui para enviar a mensagem pelo io")
             io.emit('newMessage', value)
         }
         

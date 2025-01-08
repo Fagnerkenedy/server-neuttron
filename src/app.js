@@ -3,17 +3,21 @@ const app = express()
 const bodyParser = require('body-parser')
 const path = require('path');
 const envPath = path.join(__dirname, '../.env');
+const http = require('http');
+const { Server } = require('socket.io');
+const server = http.createServer(app);
+const io = new Server(server, { cors: { origin: '*', methods: ['GET', 'POST'] } });
 require('dotenv').config({ path: envPath });
 
 //MIDDLEWARES
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE");
-    res.header("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
     next();
 });
 
-app.options('*', function(req, res) {
+app.options('*', function (req, res) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
@@ -32,8 +36,17 @@ app.use("/sections", require('./routes/sections'))
 app.use("/kanbans", require('./routes/kanban'))
 app.use("/notifications", require('./routes/notifications'))
 app.use("/messages", require('./routes/messages'))
-app.use("/chat", require('./routes/chat'))
+app.use("/chat", require('./routes/chat')(io))
 
-app.listen(process.env.EXPRESS_PORT, () => {
+
+io.on("connection", (socket) => {
+    console.log("Socket conectado: ",socket.id);
+
+    socket.on("disconnect", () => {
+        console.log("Client disconnected");
+    });
+});
+
+server.listen(process.env.EXPRESS_PORT, () => {
     console.log(`App running in port: ${process.env.EXPRESS_PORT}`)
 })

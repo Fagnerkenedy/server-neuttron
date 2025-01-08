@@ -10,6 +10,7 @@ module.exports = {
         console.log("Incoming webhook message:", JSON.stringify(req.body, null, 2));
 
         const { io } = req;
+        const value = req.body.entry?.[0]?.changes[0]?.value
         const message = req.body.entry?.[0]?.changes[0]?.value?.messages?.[0];
         // const message = req.body.value?.messages?.[0];
 
@@ -52,7 +53,7 @@ module.exports = {
         }
 
         if (message) {
-            io.emit('newMessage', message)
+            io.emit('newMessage', value)
         }
         
         res.sendStatus(200);

@@ -10,8 +10,8 @@ module.exports = {
         console.log("Incoming webhook message:", JSON.stringify(req.body, null, 2));
 
         const { io } = req;
-        // const message = req.body.entry?.[0]?.changes[0]?.value?.messages?.[0];
-        const message = req.body.value?.messages?.[0];
+        const message = req.body.entry?.[0]?.changes[0]?.value?.messages?.[0];
+        // const message = req.body.value?.messages?.[0];
 
         console.log("message: ", message)
 

@@ -6,8 +6,13 @@ const envPath = path.join(__dirname, '../.env');
 const http = require('http');
 const { Server } = require('socket.io');
 const server = http.createServer(app);
-const io = new Server(server, { cors: { origin: '*', methods: ['GET', 'POST'] } });
+const io = new Server(server, { cors: { origin: '*', methods: ['GET', 'POST'], pingTimeout: 60000 } });
 require('dotenv').config({ path: envPath });
+
+app.use((req, res, next) => {
+    req.io = io;
+    next();
+});
 
 //MIDDLEWARES
 app.use(function (req, res, next) {
@@ -36,14 +41,14 @@ app.use("/sections", require('./routes/sections'))
 app.use("/kanbans", require('./routes/kanban'))
 app.use("/notifications", require('./routes/notifications'))
 app.use("/messages", require('./routes/messages'))
-app.use("/chat", require('./routes/chat')(io))
+app.use("/chat", require('./routes/chat'))
 
 
 io.on("connection", (socket) => {
     console.log("Socket conectado: ",socket.id);
 
     socket.on("disconnect", () => {
-        console.log("Client disconnected");
+        console.log("Client disconnected:", socket.id);
     });
 });
 

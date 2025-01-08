@@ -3,7 +3,7 @@ const axios = require('axios')
 const { GRAPH_API_TOKEN } = process.env;
 
 module.exports = {
-    sendMessage: async (req, res, io) => {
+    sendMessage: async (req, res) => {
         const { numberId, to, message } = req.body;
         const WHATSAPP_API_URL = `https://graph.facebook.com/v21.0/${numberId}/messages`
 

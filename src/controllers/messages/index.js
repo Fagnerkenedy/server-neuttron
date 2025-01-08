@@ -6,11 +6,12 @@ const axios = require('axios')
 const { WEBHOOK_VERIFY_TOKEN, GRAPH_API_TOKEN } = process.env;
 
 module.exports = {
-    webhookPost: async (req, res, io) => {
+    webhookPost: async (req, res) => {
         console.log("Incoming webhook message:", JSON.stringify(req.body, null, 2));
 
-        const message = req.body.entry?.[0]?.changes[0]?.value?.messages?.[0];
-        // const message = req.body.value?.messages?.[0];
+        const { io } = req;
+        // const message = req.body.entry?.[0]?.changes[0]?.value?.messages?.[0];
+        const message = req.body.value?.messages?.[0];
 
         console.log("message: ", message)
 
@@ -50,14 +51,10 @@ module.exports = {
             });
         }
 
-        io.on('connection', socket => {
-            console.log('Cliente conectado:', socket.id);
-            socket.emit('newMessage', message)
-            socket.on('disconnect', () => {
-                console.log('Cliente desconectado:', socket.id);
-            });
-        });
-
+        if (message) {
+            io.emit('newMessage', message)
+        }
+        
         res.sendStatus(200);
     },
 

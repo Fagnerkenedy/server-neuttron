@@ -25,7 +25,7 @@ if (process.env.NODE_ENV === 'production') {
     server = http.createServer(app);
     console.log('Servidor HTTP configurado para ambiente de desenvolvimento.');
 }
-const io = new Server(server, { cors: { origin: '*', methods: ['GET', 'POST'], pingTimeout: 60000 } });
+const io = new Server(server, { cors: { origin: '*', methods: ['GET', 'POST'] } });
 
 app.use((req, res, next) => {
     req.io = io;

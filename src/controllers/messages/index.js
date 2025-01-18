@@ -160,7 +160,7 @@ module.exports = {
                 await connection.execute('INSERT INTO messages SET id = ?, conversationId = ?, senderId = ?, body = ?;', [responseMessageId, conversationId, systemsUserId, responseMessage])
             }
 
-            if (message?.type === "text") {
+            if (bot.length > 0) {
                 // const business_phone_number_id = req.body.value?.metadata?.phone_number_id;
                 const business_phone_number_id = req.body.entry?.[0].changes?.[0].value?.metadata?.phone_number_id;
                 try {

@@ -151,7 +151,7 @@ module.exports = {
 
             if (responseSystemUserId.length == 0) {
                 systemsUserId = gerarHash(JSON.stringify({ displayPhoneNumber }))
-                await connection.execute('INSERT INTO contacts (id, name, wa_id) values(?, ?, ?);', [systemsUserId, 'admin', displayPhoneNumber])
+                await connection.execute('INSERT INTO contacts (id, name, wa_id) values(?, ?, ?);', [systemsUserId, 'Bot', displayPhoneNumber])
             } else {
                 systemsUserId = responseSystemUserId[0]?.id
             }

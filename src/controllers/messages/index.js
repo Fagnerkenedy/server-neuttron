@@ -45,7 +45,7 @@ module.exports = {
             if (contact.length == 0) {
                 botStep = 1
                 contactId = gerarHash(JSON.stringify({ contactName, wa_id, phoneNumberId }))
-                const [contact] = await connection.execute('INSERT INTO contacts SET id = ?, name = ?, wa_id = ? bot_step = ?;', [contactId, contactName, wa_id, botStep])
+                const [contact] = await connection.execute('INSERT INTO contacts SET id = ?, name = ?, wa_id = ?, bot_step = ?;', [contactId, contactName, wa_id, botStep])
                 conversationId = gerarHash(JSON.stringify({ contactId, wa_id, phoneNumberId }))
                 const [conversation] = await connection.execute('INSERT INTO conversations SET id = ?, name = ?, wa_id_contact = ?, unread = ?', [conversationId, contactName, wa_id, 1])
                 const messageId = gerarHash(JSON.stringify({ conversationId, contactId, wa_id, phoneNumberId }))

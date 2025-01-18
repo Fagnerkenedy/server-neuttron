@@ -155,7 +155,7 @@ module.exports = {
             } else {
                 systemsUserId = responseSystemUserId[0]?.id
             }
-            if(systemsUserId) {
+            if(systemsUserId && bot.length > 0) {
                 const responseMessageId = gerarHash(JSON.stringify({ systemsUserId, phoneNumberId }))
                 await connection.execute('INSERT INTO messages SET id = ?, conversationId = ?, senderId = ?, body = ?;', [responseMessageId, conversationId, systemsUserId, responseMessage])
             }

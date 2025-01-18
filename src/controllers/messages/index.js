@@ -147,9 +147,18 @@ module.exports = {
             await connection.execute('UPDATE contacts SET bot_step = ? WHERE id = ?;', [botStep, contactId])
 
             const [responseSystemUserId] = await connection.execute('SELECT id FROM contacts WHERE wa_id = ?', [displayPhoneNumber])
-            const systemsUserId = responseSystemUserId[0].id
-            const responseMessageId = gerarHash(JSON.stringify({ systemsUserId, phoneNumberId }))
-            const [insertMessage] = await connection.execute('INSERT INTO messages SET id = ?, conversationId = ?, senderId = ?, body = ?;', [responseMessageId, conversationId, systemsUserId, responseMessage])
+            let systemsUserId = ''
+
+            if (responseSystemUserId.length == 0) {
+                systemsUserId = gerarHash(JSON.stringify({ displayPhoneNumber }))
+                await connection.execute('INSERT INTO contacts (id, name, wa_id) values(?, ?, ?);', [idContact, 'admin', displayPhoneNumber])
+            } else {
+                systemsUserId = responseSystemUserId[0]?.id
+            }
+            if(systemsUserId) {
+                const responseMessageId = gerarHash(JSON.stringify({ systemsUserId, phoneNumberId }))
+                await connection.execute('INSERT INTO messages SET id = ?, conversationId = ?, senderId = ?, body = ?;', [responseMessageId, conversationId, systemsUserId, responseMessage])
+            }
 
             if (message?.type === "text") {
                 // const business_phone_number_id = req.body.value?.metadata?.phone_number_id;

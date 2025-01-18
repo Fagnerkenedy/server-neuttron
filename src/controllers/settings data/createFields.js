@@ -211,7 +211,7 @@ const createFields2 = async (fields, connection, orgId, module, idPerfil, userId
     let results = []
     for (const field of fields) {
         try {
-            const { name, type, id = null, position = null, sort_order = null, related_module = null, required = false, disabled = null, field_base = null, search_field = null, kanban_order = null, table_order = null, field_type = null, options = null } = field;
+            const { name, type, id = null, position = null, sort_order = null, related_module = null, required = false, disabled = null, visible_rows = null, field_base = null, search_field = null, kanban_order = null, table_order = null, field_type = null, options = null } = field;
             let related_id = field.related_id || null;
             if (field.hasOwnProperty("related_module") && field.related_module == 'profiles') {
                 related_id = idPerfil
@@ -224,15 +224,15 @@ const createFields2 = async (fields, connection, orgId, module, idPerfil, userId
             if (searchField.length === 0) {
                 uniqueApiName = await getUniqueApiName(module, apiName, connection);
                 const [result] = await connection.execute(`
-                INSERT INTO fields (name, api_name, type, field_type, related_module, related_id, field_base, search_field, kanban_order, table_order, module, required, disabled)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
-                    [name, uniqueApiName, type, field_type, related_module, related_id, field_base, search_field, kanban_order, table_order, module, required, disabled]);
+                INSERT INTO fields (name, api_name, type, field_type, related_module, related_id, field_base, search_field, kanban_order, table_order, module, required, disabled, visible_rows)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+                    [name, uniqueApiName, type, field_type, related_module, related_id, field_base, search_field, kanban_order, table_order, module, required, disabled, visible_rows]);
                 idField = result.insertId;
                 console.log("INSERT: ", result);
             } else {
                 const [result] = await connection.execute(`
-                UPDATE fields SET name = ?, api_name = ?, type = ?, field_type = ?, related_module = ?, related_id = ?, field_base = ?, search_field = ?, kanban_order = ?, table_order = ?, module = ?, required = ?, disabled = ? WHERE id = ?;`,
-                    [name, apiName, type, field_type, related_module, related_id, field_base, search_field, kanban_order, table_order, module, required, disabled, searchField[0].id]);
+                UPDATE fields SET name = ?, api_name = ?, type = ?, field_type = ?, related_module = ?, related_id = ?, field_base = ?, search_field = ?, kanban_order = ?, table_order = ?, module = ?, required = ?, disabled = ? visible_rows = ? WHERE id = ?;`,
+                    [name, apiName, type, field_type, related_module, related_id, field_base, search_field, kanban_order, table_order, module, required, disabled, visible_rows, searchField[0].id]);
                 idField = searchField[0].id;
                 console.log("UPDATE: ", result);
             }

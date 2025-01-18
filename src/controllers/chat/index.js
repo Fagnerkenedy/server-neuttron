@@ -13,28 +13,28 @@ module.exports = {
         const connection = await mysql.createConnection({ ...dbConfig, database: `${org}` });
 
         try {
-            // const response = await axios.post(
-            //     WHATSAPP_API_URL,
-            //     {
-            //         messaging_product: 'whatsapp',
-            //         to,
-            //         type: 'text',
-            //         // type: 'template',
-            //         // template: {
-            //         //     name: 'hello_world',
-            //         //     language: {
-            //         //         code: 'en_US'
-            //         //     },
-            //         // },
-            //         text: { body: message },
-            //     },
-            //     {
-            //         headers: {
-            //             'Content-Type': 'application/json',
-            //             Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-            //         },
-            //     }
-            // );
+            const response = await axios.post(
+                WHATSAPP_API_URL,
+                {
+                    messaging_product: 'whatsapp',
+                    to,
+                    type: 'text',
+                    // type: 'template',
+                    // template: {
+                    //     name: 'hello_world',
+                    //     language: {
+                    //         code: 'en_US'
+                    //     },
+                    // },
+                    text: { body: message },
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+                    },
+                }
+            );
             await connection.beginTransaction();
 
             const gerarHash = (dados) => {

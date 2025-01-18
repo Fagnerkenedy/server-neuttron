@@ -8,7 +8,7 @@ require('dotenv').config({ path: envPath });
 const http = require('http');
 const https = require('https');
 const { Server } = require('socket.io');
-let server
+// let server
 // if (process.env.NODE_ENV === 'production') {
 //     try {
 //         const options = {
@@ -24,8 +24,25 @@ let server
 // } else {
 //     console.log('Servidor HTTP configurado para ambiente de desenvolvimento.');
 // }
-server = http.createServer(app);
-const io = new Server(server, { cors: { origin: '*', methods: ['GET', 'POST'] } });
+// server = http.createServer(app);
+// const io = new Server(server, { cors: { origin: '*', methods: ['GET', 'POST'] } });
+
+// Carregar os arquivos do certificado SSL
+const options = {
+    key: fs.readFileSync(process.env.PRIVATE_KEY),
+    cert: fs.readFileSync(process.env.CERTIFICATE),
+};
+
+// Criar um servidor HTTPS
+const server = https.createServer(options, app);
+
+// Configurar o socket.io com o servidor HTTPS
+const io = new Server(server, {
+    cors: {
+        origin: process.env.FRONT_URL, // Substitua pelo domínio do cliente
+        methods: ['GET', 'POST'],
+    },
+});
 
 app.use((req, res, next) => {
     req.io = io;
@@ -62,7 +79,7 @@ app.use("/messages", require('./routes/messages'))
 app.use("/chat", require('./routes/chat'))
 
 io.on("connection", (socket) => {
-    console.log("Socket conectado: ",socket.id);
+    console.log("Socket conectado: ", socket.id);
     socket.on('identify', ({ orgId }) => {
         console.log(`Socket ${socket.id} identificado com orgId: ${JSON.stringify(orgId)}`);
         socket.join(orgId);

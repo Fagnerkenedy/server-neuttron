@@ -9,6 +9,8 @@ router.use(cors());
 
 router.get('/', (req, res) => {res.status(200).json( {success: true, message: "Nothing to see here!"})})
 
-router.post("/send-message", chatController.sendMessage);
+router.post("/:org/send-message", chatController.sendMessage);
+router.get("/:org/conversations", chatController.getConversations);
+router.get("/:org/messages/:conversationId", chatController.getMessages);
 
 module.exports = router

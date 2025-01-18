@@ -61,10 +61,15 @@ app.use("/notifications", require('./routes/notifications'))
 app.use("/messages", require('./routes/messages'))
 app.use("/chat", require('./routes/chat'))
 
-
 io.on("connection", (socket) => {
     console.log("Socket conectado: ",socket.id);
-
+    socket.on('identify', ({ orgId }) => {
+        console.log(`Socket ${socket.id} identificado com orgId: ${JSON.stringify(orgId)}`);
+        socket.join(orgId);
+        socket.join('orgId');
+        // io.to(orgId).emit('newMessage', "message teste");
+        // console.log("io.sockets.adapter.rooms: ", io.sockets.adapter)
+    });
     socket.on("disconnect", () => {
         console.log("Client disconnected:", socket.id);
     });

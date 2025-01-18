@@ -28,6 +28,8 @@ const { Server } = require('socket.io');
 // const io = new Server(server, { cors: { origin: '*', methods: ['GET', 'POST'] } });
 
 // Carregar os arquivos do certificado SSL
+console.log("teste readfile: PRIVATE_KEY: ", fs.readFileSync(process.env.PRIVATE_KEY))
+console.log("teste readfile: CERTIFICATE: ", fs.readFileSync(process.env.CERTIFICATE))
 const options = {
     key: fs.readFileSync(process.env.PRIVATE_KEY),
     cert: fs.readFileSync(process.env.CERTIFICATE),

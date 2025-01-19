@@ -66,8 +66,8 @@ module.exports = {
             let responseMessage = 'Desculpe, não entendi sua mensagem.'
             let jsonData = {
                 messaging_product: "whatsapp",
-                to: "+5545999792202",
-                // to: message.from,
+                // to: "+5545999792202",
+                to: message.from,
                 text: { body: responseMessage },
             }
 
@@ -126,8 +126,8 @@ module.exports = {
                         responseMessage = step.content.body.text
                         return {
                             messaging_product: "whatsapp",
-                            to: "+5545999792202",
-                            // // to: message.from,
+                            // to: "+5545999792202",
+                            to: message.from,
                             type: step.type,
                             interactive: step.content,
                         }
@@ -136,7 +136,8 @@ module.exports = {
                         responseMessage = step.content.text.body
                         return {
                             messaging_product: "whatsapp",
-                            to: "+5545999792202",
+                            // to: "+5545999792202",
+                            to: message.from,
                             text: step.content
                         }
                     }

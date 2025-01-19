@@ -217,14 +217,14 @@ module.exports = {
                     timestamp: value.messages[0].timestamp,
                     conversationId
                 });
-                if (bot.length > 0) {
+                // if (bot.length > 0) {
                     io.to(`org${orgId}`).emit('newMessage', {
                         senderName: name,
                         body: jsonData.text.body,
                         timestamp: value.messages[0].timestamp,
                         conversationId
                     });
-                }
+                // }
             }
 
             res.status(200).send('Webhook recebido com sucesso.');

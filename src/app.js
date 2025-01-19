@@ -25,7 +25,7 @@ if (process.env.NODE_ENV === 'production') {
     server = http.createServer(app);
     console.log('Servidor HTTP configurado para ambiente de desenvolvimento.');
 }
-const io = new Server(server, { cors: { origin: process.env.FRONT_URL, methods: ['GET', 'POST'] } });
+// const io = new Server(server, { cors: { origin: process.env.FRONT_URL, methods: ['GET', 'POST'] } });
 
 // Carregar os arquivos do certificado SSL
 // const options = {
@@ -36,13 +36,13 @@ const io = new Server(server, { cors: { origin: process.env.FRONT_URL, methods: 
 // // Criar um servidor HTTPS
 // const server = https.createServer(options, app);
 
-// // Configurar o socket.io com o servidor HTTPS
-// const io = new Server(server, {
-//     cors: {
-//         origin: process.env.FRONT_URL, // Substitua pelo domínio do cliente
-//         methods: ['GET', 'POST'],
-//     },
-// });
+// Configurar o socket.io com o servidor HTTPS
+const io = new Server(server, {
+    cors: {
+        origin: process.env.FRONT_URL, // Substitua pelo domínio do cliente
+        methods: ['GET', 'POST'],
+    },
+});
 
 app.use((req, res, next) => {
     req.io = io;

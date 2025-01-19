@@ -8,13 +8,16 @@ require('dotenv').config({ path: envPath });
 const http = require('http');
 const https = require('https');
 const { Server } = require('socket.io');
+
 let server
 if (process.env.NODE_ENV === 'production') {
     try {
+        // Carregar os arquivos do certificado SSL
         const options = {
             key: fs.readFileSync(process.env.PRIVATE_KEY),
             cert: fs.readFileSync(process.env.CERTIFICATE),
         };
+        // Criar um servidor HTTPS
         server = https.createServer(options, app);
         console.log('Servidor HTTPS configurado.');
     } catch (error) {
@@ -25,24 +28,8 @@ if (process.env.NODE_ENV === 'production') {
     server = http.createServer(app);
     console.log('Servidor HTTP configurado para ambiente de desenvolvimento.');
 }
+// Configurar o socket.io com o servidor HTTP ou HTTPS
 const io = new Server(server, { cors: { origin: process.env.FRONT_URL, methods: ['GET', 'POST'] } });
-
-// Carregar os arquivos do certificado SSL
-// const options = {
-//     key: fs.readFileSync(process.env.PRIVATE_KEY),
-//     cert: fs.readFileSync(process.env.CERTIFICATE),
-// };
-
-// // Criar um servidor HTTPS
-// const server = https.createServer(options, app);
-
-// // Configurar o socket.io com o servidor HTTPS
-// const io = new Server(server, {
-//     cors: {
-//         origin: process.env.FRONT_URL, // Substitua pelo domínio do cliente
-//         methods: ['GET', 'POST'],
-//     },
-// });
 
 app.use((req, res, next) => {
     req.io = io;

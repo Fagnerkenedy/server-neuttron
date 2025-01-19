@@ -155,7 +155,7 @@ module.exports = {
             } else {
                 systemsUserId = responseSystemUserId[0]?.id
             }
-            if(systemsUserId && bot.length > 0) {
+            if (systemsUserId && bot.length > 0) {
                 const responseMessageId = gerarHash(JSON.stringify({ systemsUserId, phoneNumberId }))
                 await connection.execute('INSERT INTO messages SET id = ?, conversationId = ?, senderId = ?, body = ?;', [responseMessageId, conversationId, systemsUserId, responseMessage])
             }
@@ -200,15 +200,15 @@ module.exports = {
                 }
             }
 
-            console.log("io contact:",contactName)
-            console.log("io body:",body)
-            console.log("io value.messages[0].timestamp:",value.messages[0].timestamp)
-            console.log("io conversationId:",conversationId)
+            console.log("io contact:", contactName)
+            console.log("io body:", body)
+            console.log("io value.messages[0].timestamp:", value.messages[0].timestamp)
+            console.log("io conversationId:", conversationId)
             console.log("io ////////////////:")
-            console.log("io name:",name)
-            console.log("io jsonData.text.body:",jsonData.text.body)
-            console.log("io value.messages[0].timestamp:",value.messages[0].timestamp)
-            console.log("io conversationId:",conversationId)
+            console.log("io name:", name)
+            console.log("io jsonData.text.body:", jsonData.text.body)
+            console.log("io value.messages[0].timestamp:", value.messages[0].timestamp)
+            console.log("io conversationId:", conversationId)
             if (message) {
                 io.to(`org${orgId}`).emit('newMessage', {
                     senderName: contactName,
@@ -216,12 +216,14 @@ module.exports = {
                     timestamp: value.messages[0].timestamp,
                     conversationId
                 });
-                io.to(`org${orgId}`).emit('newMessage', {
-                    senderName: name,
-                    body: jsonData.text.body,
-                    timestamp: value.messages[0].timestamp,
-                    conversationId
-                });
+                if (bot.length > 0) {
+                    io.to(`org${orgId}`).emit('newMessage', {
+                        senderName: name,
+                        body: jsonData.text.body,
+                        timestamp: value.messages[0].timestamp,
+                        conversationId
+                    });
+                }
             }
 
             res.status(200).send('Webhook recebido com sucesso.');

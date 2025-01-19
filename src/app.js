@@ -8,41 +8,41 @@ require('dotenv').config({ path: envPath });
 const http = require('http');
 const https = require('https');
 const { Server } = require('socket.io');
-// let server
-// if (process.env.NODE_ENV === 'production') {
-//     try {
-//         const options = {
-//             key: fs.readFileSync(process.env.PRIVATE_KEY),
-//             cert: fs.readFileSync(process.env.CERTIFICATE),
-//         };
-//         server = https.createServer(options, app);
-//         console.log('Servidor HTTPS configurado.');
-//     } catch (error) {
-//         console.error('Erro ao carregar certificados HTTPS:', error.message);
-//         process.exit(1); // Encerra o processo em caso de erro
-//     }
-// } else {
-//     console.log('Servidor HTTP configurado para ambiente de desenvolvimento.');
-// }
-// server = http.createServer(app);
-// const io = new Server(server, { cors: { origin: '*', methods: ['GET', 'POST'] } });
+let server
+if (process.env.NODE_ENV === 'production') {
+    try {
+        const options = {
+            key: fs.readFileSync(process.env.PRIVATE_KEY),
+            cert: fs.readFileSync(process.env.CERTIFICATE),
+        };
+        server = https.createServer(options, app);
+        console.log('Servidor HTTPS configurado.');
+    } catch (error) {
+        console.error('Erro ao carregar certificados HTTPS:', error.message);
+        process.exit(1); // Encerra o processo em caso de erro
+    }
+} else {
+    server = http.createServer(app);
+    console.log('Servidor HTTP configurado para ambiente de desenvolvimento.');
+}
+const io = new Server(server, { cors: { origin: process.env.FRONT_URL, methods: ['GET', 'POST'] } });
 
 // Carregar os arquivos do certificado SSL
-const options = {
-    key: fs.readFileSync(process.env.PRIVATE_KEY),
-    cert: fs.readFileSync(process.env.CERTIFICATE),
-};
+// const options = {
+//     key: fs.readFileSync(process.env.PRIVATE_KEY),
+//     cert: fs.readFileSync(process.env.CERTIFICATE),
+// };
 
-// Criar um servidor HTTPS
-const server = https.createServer(options, app);
+// // Criar um servidor HTTPS
+// const server = https.createServer(options, app);
 
-// Configurar o socket.io com o servidor HTTPS
-const io = new Server(server, {
-    cors: {
-        origin: process.env.FRONT_URL, // Substitua pelo domínio do cliente
-        methods: ['GET', 'POST'],
-    },
-});
+// // Configurar o socket.io com o servidor HTTPS
+// const io = new Server(server, {
+//     cors: {
+//         origin: process.env.FRONT_URL, // Substitua pelo domínio do cliente
+//         methods: ['GET', 'POST'],
+//     },
+// });
 
 app.use((req, res, next) => {
     req.io = io;

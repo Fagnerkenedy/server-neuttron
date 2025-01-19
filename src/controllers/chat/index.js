@@ -89,7 +89,7 @@ module.exports = {
         const connection = await mysql.createConnection({ ...dbConfig, database: `${org}` });
         try {
             await connection.beginTransaction();
-            const conversation = await connection.execute("SELECT messages.*, contacts.name as senderName FROM messages JOIN contacts ON contacts.id = messages.senderId WHERE conversationId = ? ORDER BY created_at ASC;", [conversationId])
+            const conversation = await connection.execute("SELECT messages.*, contacts.name as senderName, contacts.wa_id as contactNumber FROM messages JOIN contacts ON contacts.id = messages.senderId WHERE conversationId = ? ORDER BY created_at ASC;", [conversationId])
 
             await connection.commit();
             res.status(200).json({ success: true, message: "Conversations recovered successfully", conversation });

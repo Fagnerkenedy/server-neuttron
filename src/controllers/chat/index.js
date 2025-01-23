@@ -76,7 +76,7 @@ module.exports = {
             const offsetNumber = parseInt(offset)
             console.log("limitNumber: ",limitNumber)
             console.log("offsetNumber: ",offsetNumber)
-            const [conversations] = await connection.execute("SELECT * FROM conversations ORDER BY updated_at DESC LIMIT ? OFFSET ?;", [limitNumber, offsetNumber])
+            const [conversations] = await connection.execute("SELECT * FROM conversations ORDER BY updated_at DESC LIMIT '?' OFFSET '?';", [limitNumber, offsetNumber])
             
             const [total] = await connection.query(`SELECT COUNT(*) AS count FROM conversations;`);
 

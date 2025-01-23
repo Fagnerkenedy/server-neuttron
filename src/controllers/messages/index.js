@@ -161,45 +161,45 @@ module.exports = {
                 await connection.execute('INSERT INTO messages SET id = ?, conversationId = ?, senderId = ?, body = ?;', [responseMessageId, conversationId, systemsUserId, responseMessage])
             }
 
-            // if (bot.length > 0) {
-            //     // const business_phone_number_id = req.body.value?.metadata?.phone_number_id;
-            //     const business_phone_number_id = req.body.entry?.[0].changes?.[0].value?.metadata?.phone_number_id;
-            //     try {
+            if (bot.length > 0) {
+                // const business_phone_number_id = req.body.value?.metadata?.phone_number_id;
+                const business_phone_number_id = req.body.entry?.[0].changes?.[0].value?.metadata?.phone_number_id;
+                try {
 
-            //         await axios({
-            //             method: "POST",
-            //             url: `https://graph.facebook.com/v21.0/${business_phone_number_id}/messages`,
-            //             headers: {
-            //                 Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-            //             },
-            //             data: jsonData
-            //             // data: {
-            //             //     messaging_product: "whatsapp",
-            //             //     to: message.from,
-            //             //     text: { body: responseMessage },
-            //             //     // context: {
-            //             //     //     message_id: message.id, // shows the message as a reply to the original user message
-            //             //     // },
-            //             // },
-            //         });
+                    await axios({
+                        method: "POST",
+                        url: `https://graph.facebook.com/v21.0/${business_phone_number_id}/messages`,
+                        headers: {
+                            Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+                        },
+                        data: jsonData
+                        // data: {
+                        //     messaging_product: "whatsapp",
+                        //     to: message.from,
+                        //     text: { body: responseMessage },
+                        //     // context: {
+                        //     //     message_id: message.id, // shows the message as a reply to the original user message
+                        //     // },
+                        // },
+                    });
 
-            //         await axios({
-            //             method: "POST",
-            //             url: `https://graph.facebook.com/v21.0/${business_phone_number_id}/messages`,
-            //             headers: {
-            //                 Authorization: `Bearer ${GRAPH_API_TOKEN}`,
-            //             },
-            //             data: {
-            //                 messaging_product: "whatsapp",
-            //                 status: "read",
-            //                 message_id: message.id,
-            //             },
-            //         });
+                    await axios({
+                        method: "POST",
+                        url: `https://graph.facebook.com/v21.0/${business_phone_number_id}/messages`,
+                        headers: {
+                            Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+                        },
+                        data: {
+                            messaging_product: "whatsapp",
+                            status: "read",
+                            message_id: message.id,
+                        },
+                    });
 
-            //     } catch (error) {
-            //         log("Erro ao tentar enviar mensagem: ", error)
-            //     }
-            // }
+                } catch (error) {
+                    log("Erro ao tentar enviar mensagem: ", error)
+                }
+            }
 
             console.log("io contact:", contactName)
             console.log("io body:", body)

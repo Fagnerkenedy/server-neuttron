@@ -101,7 +101,8 @@ module.exports = {
         try {
             await connection.beginTransaction();
             const offset = (parseInt(page) - 1) * parseInt(limit);
-            const [conversation] = await connection.execute("SELECT messages.*, contacts.name as senderName, contacts.wa_id as contactNumber FROM messages JOIN contacts ON contacts.id = messages.senderId WHERE conversationId = ? ORDER BY created_at ASC LIMIT ? OFFSET ?;", [conversationId, parseInt(limit), parseInt(offset)])
+            const sql = `SELECT messages.*, contacts.name as senderName, contacts.wa_id as contactNumber FROM messages JOIN contacts ON contacts.id = messages.senderId WHERE conversationId = ${conversationId} ORDER BY created_at ASC LIMIT ${parseInt(limit)} OFFSET ${parseInt(offset)};`
+            const [conversation] = await connection.execute(sql)
 
             const [total] = await connection.query(`SELECT COUNT(*) AS count FROM messages WHERE conversationId = ?;`, [conversationId]);
             console.log("totall: ", total)

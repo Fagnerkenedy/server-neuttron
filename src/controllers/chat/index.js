@@ -66,13 +66,18 @@ module.exports = {
     },
     getConversations: async (req, res) => {
         const orgId = req.params.org
+        const { page = 1, limit = 10 } = req.query
+        
         const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
         try {
             await connection.beginTransaction();
-            const conversations = await connection.execute("SELECT * FROM conversations ORDER BY updated_at DESC;")
+            const offset = (page - 1) * limit;
+            const [conversations] = await connection.execute("SELECT * FROM conversations ORDER BY updated_at DESC LIMIT ? OFFSET ?;", [parseInt(limit), parseInt(offset)])
+            
+            const [total] = await connection.query(`SELECT COUNT(*) AS count FROM conversations;`);
 
             await connection.commit();
-            res.status(200).json({ success: true, message: "Conversations recovered successfully", conversations });
+            res.status(200).json({ success: true, message: "Conversations recovered successfully", conversations, hasMore: offset + limit < total[0].count, });
         } catch (error) {
             if (connection) {
                 await connection.rollback();
@@ -86,13 +91,25 @@ module.exports = {
     },
     getMessages: async (req, res) => {
         const { org, conversationId } = req.params
+        const { page = 1, limit = 10 } = req.query
         const connection = await mysql.createConnection({ ...dbConfig, database: `${org}` });
         try {
             await connection.beginTransaction();
-            const conversation = await connection.execute("SELECT messages.*, contacts.name as senderName, contacts.wa_id as contactNumber FROM messages JOIN contacts ON contacts.id = messages.senderId WHERE conversationId = ? ORDER BY created_at ASC;", [conversationId])
+            const offset = (parseInt(page) - 1) * parseInt(limit);
+            const [conversation] = await connection.execute("SELECT messages.*, contacts.name as senderName, contacts.wa_id as contactNumber FROM messages JOIN contacts ON contacts.id = messages.senderId WHERE conversationId = ? ORDER BY created_at ASC LIMIT ? OFFSET ?;", [conversationId, parseInt(limit), parseInt(offset)])
 
+            const [total] = await connection.query(`SELECT COUNT(*) AS count FROM messages WHERE conversationId = ?;`, [conversationId]);
+            console.log("totall: ", total)
+            console.log("total[0].count : ", total[0].count)
+            console.log("parseInt(page) - 1 : ", parseInt(page) - 1)
+            console.log("limit : ", limit)
+            console.log("offset : ", offset)
+            console.log("offset + limit: ", parseInt(offset) + parseInt(limit))
+            console.log("hasMore : ", parseInt(offset) + parseInt(limit) < total[0].count)
+            console.log("Page : ", page)
+            console.log("--------------------------")
             await connection.commit();
-            res.status(200).json({ success: true, message: "Conversations recovered successfully", conversation });
+            res.status(200).json({ success: true, message: "Conversations recovered successfully", conversation, hasMore: parseInt(offset) + parseInt(limit) < total[0].count, page });
         } catch (error) {
             if (connection) {
                 await connection.rollback();

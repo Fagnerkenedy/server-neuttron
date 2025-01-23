@@ -71,13 +71,13 @@ module.exports = {
         const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
         try {
             await connection.beginTransaction();
-            const offset = (page - 1) * limit;
+            const offset = (parseInt(page) - 1) * parseInt(limit);
             const [conversations] = await connection.execute("SELECT * FROM conversations ORDER BY updated_at DESC LIMIT ? OFFSET ?;", [parseInt(limit), parseInt(offset)])
             
             const [total] = await connection.query(`SELECT COUNT(*) AS count FROM conversations;`);
 
             await connection.commit();
-            res.status(200).json({ success: true, message: "Conversations recovered successfully", conversations, hasMore: offset + limit < total[0].count, });
+            res.status(200).json({ success: true, message: "Conversations recovered successfully", conversations, hasMore: parseInt(offset) + parseInt(limit) < total[0].count, });
         } catch (error) {
             if (connection) {
                 await connection.rollback();

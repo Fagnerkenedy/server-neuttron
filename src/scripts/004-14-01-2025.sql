@@ -3,12 +3,12 @@ CREATE TABLE IF NOT EXISTS conversations (
 	name VARCHAR(255),
     wa_id_contact VARCHAR(255),
     unread INT(20),
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+	created_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3),
+	updated_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3)
 );
 
-# INSERT INTO conversations SET name = 'Teste 2', id = 'sdfghusdfgdfghfjnwsjlen';
-# SELECT * FROM conversations;
+INSERT INTO conversations SET name = 'Teste 17', id = 'dsddfsfsdxdfscsdfgddffghfjnwsjlen';
+SELECT * FROM conversations;
 
 
 CREATE TABLE IF NOT EXISTS messages (
@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS steps (
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-# INSERT INTO bots SET id = 'ss61df8s4fs1d36g465ds1', name = 'Atendimento';
+INSERT INTO bots SET id = 'ss61df8s4fs1d36g465ds1', name = 'Atendimento';
 
 # INSERT INTO flows SET id = 'f4sd8f6sd51f8thd345gf3', name = 'Atendimento flow', bot_id = 'ss61df8s4fs1d36g465ds1';
 
@@ -118,8 +118,8 @@ CREATE TABLE IF NOT EXISTS steps (
 
 # UPDATE contacts SET bot_step = 1 WHERE id = 'f1029490699ad9c5820';
 
-# INSERT INTO steps (id, flow_id, name, type, content, step) 
-# VALUES ('sdf164d8g45sf213g6584h', 'f4sd8f6sd51f8thd345gf3', 'Teste de steps', 'text', '{"body": "Olá, seja bem vindo! Em que posso ajudar?"}', 1);
+INSERT INTO steps (id, flow_id, name, type, content, step) 
+VALUES ('sdf164d8g45sf213g6584h', 'f4sd8f6sd51f8thd345gf3', 'Teste de steps', 'text', '{"body": "Olá, seja bem vindo! Em que posso ajudar?"}', 1);
 
 # DELETE FROM steps;
 
@@ -140,5 +140,24 @@ CREATE TABLE IF NOT EXISTS steps (
 
 # SELECT DISTINCT module_id, module_name FROM modulos_relacionados WHERE related_id = '0dad9ec9d49784fe5bf' AND module_name = 'Negocios';
 
+select * from contacts;
 
+
+SELECT * FROM conversations ORDER BY updated_at DESC LIMIT 10 OFFSET 1;
+SELECT COUNT(*) AS count FROM conversations;
+SELECT * FROM messages JOIN contacts ON contacts.id = messages.senderId WHERE conversationId = '2176463721c2d09599b';
+
+SELECT * FROM messages WHERE conversationId = '2176463721c2d09599b';
+
+SELECT messages.*, contacts.name as senderName, contacts.wa_id as contactNumber FROM messages JOIN contacts ON contacts.id = messages.senderId WHERE conversationId = '2176463721c2d09599b' ORDER BY created_at DESC;
+describe messages;
+
+ALTER TABLE contacts MODIFY COLUMN created_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3);
+ALTER TABLE contacts MODIFY COLUMN updated_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3);
+
+ALTER TABLE conversations MODIFY COLUMN created_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3);
+ALTER TABLE conversations MODIFY COLUMN updated_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3);
+
+ALTER TABLE messages MODIFY COLUMN created_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3);
+ALTER TABLE messages MODIFY COLUMN updated_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3);
 

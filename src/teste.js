@@ -45,11 +45,33 @@
 
 
 
-const estaEumaFuncao = () => {
-  console.log("Este é um texto que é exibido quando a função é executada/chamada")
-  const a = 2
-  const b = 4
-  console.log("O valor total é: ", a + b)
-}
+// const estaEumaFuncao = () => {
+//   console.log("Este é um texto que é exibido quando a função é executada/chamada")
+//   const a = 2
+//   const b = 4
+//   console.log("O valor total é: ", a + b)
+// }
 
-estaEumaFuncao()
+// estaEumaFuncao()
+
+
+// const date = new Date();
+// console.log("new Date: ",date)
+// const ISO = date.toISOString('pt-BR').replace('T', ' ').replace('Z', '')
+// console.log("ISO String: ", ISO)
+// const dateISO = new Date(ISO)
+// const newDate = dateISO.toLocaleTimeString('pt-BR');
+// console.log(newDate)
+
+const date = new Date();
+
+// Converter para formato ISO
+const isoString = date.toISOString();
+console.log("ISO String:", isoString);
+
+const brazilianDate = new Date(date.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }))
+console.log(brazilianDate)
+
+
+const toDateTime = date.toLocaleString("pt-br").slice(0, 20).replace(',', '')
+console.log(toDateTime)

@@ -248,3 +248,11 @@
 {"level":"error","message":"Erro ao executar script no banco: org35788897. Erro: Duplicate column name 'field_type'","timestamp":"14:11:51 11-12-2024"}
 {"level":"info","message":"Conectando ao banco de dados: org78090509","timestamp":"14:11:51 11-12-2024"}
 {"code":"ER_BAD_DB_ERROR","errno":1049,"level":"error","message":"Erro ao executar o script: Unknown database 'org78090509'","sqlState":"42000","stack":"Error: Unknown database 'org78090509'\n    at Object.createConnection (C:\\Users\\fagne\\OneDrive\\Área de Trabalho\\Documentos\\Projetos\\Neuttron CRM V3\\server-neuttron\\node_modules\\mysql2\\promise.js:253:31)\n    at executeScriptInEachDatabase (C:\\Users\\fagne\\OneDrive\\Área de Trabalho\\Documentos\\Projetos\\Neuttron CRM V3\\server-neuttron\\src\\utility\\migration.js:70:40)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async main (C:\\Users\\fagne\\OneDrive\\Área de Trabalho\\Documentos\\Projetos\\Neuttron CRM V3\\server-neuttron\\src\\utility\\migration.js:91:9)","timestamp":"14:11:51 11-12-2024"}
+{"level":"info","message":"Recebido mensagem no webhook.","timestamp":"15:57:22 24-01-2025"}
+{"level":"info","message":"Erro no webhook: Cannot access 'body' before initialization","stack":"ReferenceError: Cannot access 'body' before initialization\n    at webhookPost (C:\\Users\\fagne\\OneDrive\\Área de Trabalho\\Documentos\\Projetos\\Neuttron CRM V3\\server-neuttron\\src\\controllers\\messages\\index.js:61:149)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"15:57:22 24-01-2025"}
+{"level":"info","message":"Recebido mensagem no webhook.","timestamp":"15:58:20 24-01-2025"}
+{"level":"info","message":"Webhook recebido com sucesso.","timestamp":"15:58:20 24-01-2025"}
+{"level":"info","message":"Recebido mensagem no webhook.","timestamp":"17:00:46 24-01-2025"}
+{"level":"info","message":"Webhook recebido com sucesso.","timestamp":"17:00:46 24-01-2025"}
+{"level":"info","message":"Recebido mensagem no webhook.","timestamp":"17:04:37 24-01-2025"}
+{"level":"info","message":"Webhook recebido com sucesso.","timestamp":"17:06:26 24-01-2025"}

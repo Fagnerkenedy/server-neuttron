@@ -10,6 +10,7 @@ router.use(cors());
 router.get('/', (req, res) => {res.status(200).json( {success: true, message: "Nothing to see here!"})})
 
 router.post("/:org/send-message", chatController.sendMessage);
+router.post("/:org/conversation/:conversationId", chatController.updateUnread);
 router.get("/:org/conversations", chatController.getConversations);
 router.get("/:org/messages/:conversationId", chatController.getMessages);
 

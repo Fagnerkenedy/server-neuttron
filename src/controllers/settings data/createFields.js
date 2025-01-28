@@ -205,7 +205,56 @@ const createTables = async (connection, orgId, module) => {
 };
 
 const createFields2 = async (fields, connection, orgId, module, idPerfil, userId, fieldType, moduleNameSubform) => {
-    await createTables(connection, orgId, module);
+    // await createTables(connection, orgId, module);
+
+    await connection.execute(`
+        CREATE TABLE IF NOT EXISTS fields (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            name VARCHAR(255),
+            api_name VARCHAR(255),
+            type VARCHAR(255),
+            field_type VARCHAR(255),
+            related_module VARCHAR(255),
+            related_id VARCHAR(255),
+            field_base VARCHAR(255),
+            search_field VARCHAR(255),
+            kanban_order VARCHAR(255),
+            table_order VARCHAR(255),
+            module VARCHAR(255),
+            is_visible_in_kanban BOOLEAN,
+            unused BOOLEAN,
+            required BOOLEAN,
+            disabled BOOLEAN,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    `);
+
+    await connection.execute(`
+        CREATE TABLE IF NOT EXISTS options (
+            id VARCHAR(255) PRIMARY KEY,
+            name VARCHAR(255),
+            field_api_name VARCHAR(255),
+            module VARCHAR(255),
+            option_order VARCHAR(255),
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    `);
+
+    await connection.execute(`
+        CREATE TABLE IF NOT EXISTS modulos_relacionados (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            module_name VARCHAR(255),
+            module_id VARCHAR(255),
+            related_module VARCHAR(255),
+            related_id VARCHAR(255),
+            search_field VARCHAR(255),
+            api_name VARCHAR(255),
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    `);
 
     let idField;
     let results = []

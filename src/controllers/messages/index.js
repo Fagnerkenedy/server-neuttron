@@ -3,6 +3,7 @@ const path = require('path')
 const dbConfig = require('../../database/index')
 const axios = require('axios')
 const crypto = require('crypto')
+const logger = require('../../utility/logger')
 
 const { WEBHOOK_VERIFY_TOKEN, GRAPH_API_TOKEN } = process.env;
 const log = console.log;
@@ -10,7 +11,8 @@ const log = console.log;
 module.exports = {
     webhookPost: async (req, res) => {
         console.log("Incoming webhook message:", JSON.stringify(req.body, null, 2));
-
+        logger.info('Recebido mensagem no webhook.');
+        let connection
         try {
             // Lógica do webhook
             const { io } = req;
@@ -24,9 +26,10 @@ module.exports = {
             const phoneNumberId = value.metadata.phone_number_id
             const displayPhoneNumber = value.metadata.display_phone_number
             const [organization] = await connectionNeuttron.execute('SELECT DISTINCT orgId, name FROM users WHERE phone_number_id = ?', [phoneNumberId])
+            await connectionNeuttron.end()
             const orgId = organization[0].orgId
             const name = organization[0].name
-            const connection = await mysql.createConnection({ ...dbConfig, database: `org${orgId}` });
+            connection = await mysql.createConnection({ ...dbConfig, database: `org${orgId}` });
             const wa_id = value.contacts[0].wa_id
             const [contact] = await connection.execute('SELECT * FROM contacts WHERE wa_id = ?', [wa_id])
 
@@ -47,7 +50,7 @@ module.exports = {
                 contactId = gerarHash(JSON.stringify({ contactName, wa_id, phoneNumberId }))
                 const [contact] = await connection.execute('INSERT INTO contacts SET id = ?, name = ?, wa_id = ?, bot_step = ?;', [contactId, contactName, wa_id, botStep])
                 conversationId = gerarHash(JSON.stringify({ contactId, wa_id, phoneNumberId }))
-                const [conversation] = await connection.execute('INSERT INTO conversations SET id = ?, name = ?, wa_id_contact = ?, unread = ?', [conversationId, contactName, wa_id, 1])
+                const [conversation] = await connection.execute('INSERT INTO conversations SET id = ?, name = ?, wa_id_contact = ?, unread = ?, last_message = ?;', [conversationId, contactName, wa_id, 1, body])
                 const messageId = gerarHash(JSON.stringify({ conversationId, contactId, wa_id, phoneNumberId }))
                 const [insertMessage] = await connection.execute('INSERT INTO messages SET id = ?, conversationId = ?, senderId = ?, body = ?;', [messageId, conversationId, contactId, body])
             } else {
@@ -56,9 +59,9 @@ module.exports = {
                 contactId = contact[0].id
                 conversationId = conversation[0].id
                 const unread = conversation[0].unread + 1
-                const updateConversation = await connection.execute('UPDATE conversations SET unread = ? WHERE id = ?;', [unread, conversationId])
                 const messageId = gerarHash(JSON.stringify({ wa_id, phoneNumberId }))
                 const body = value.messages[0].text.body
+                const updateConversation = await connection.execute('UPDATE conversations SET unread = ?, last_message = ? WHERE id = ?;', [unread, body, conversationId])
                 const [insertMessage] = await connection.execute('INSERT INTO messages SET id = ?, conversationId = ?, senderId = ?, body = ?;', [messageId, conversationId, contactId, body])
             }
 
@@ -195,9 +198,10 @@ module.exports = {
                             message_id: message.id,
                         },
                     });
-
+                    logger.info('Mensagem enviada com sucesso para a API do Whatsapp.');
                 } catch (error) {
                     log("Erro ao tentar enviar mensagem: ", error)
+                    logger.error('Erro ao tentar enviar mensagem para a API do Whatsapp: ', error);
                 }
             }
 
@@ -226,11 +230,15 @@ module.exports = {
                     });
                 // }
             }
-
+            logger.info('Webhook recebido com sucesso.');
             res.status(200).send('Webhook recebido com sucesso.');
         } catch (error) {
-            console.error('Erro no webhook:', error);
+            logger.info('Erro no webhook:', error);
             res.status(500).send('Erro no servidor.');
+        } finally {
+            if (connection) {
+                await connection.end();
+            }
         }
     },
 
@@ -243,7 +251,7 @@ module.exports = {
         if (mode === "subscribe" && token === WEBHOOK_VERIFY_TOKEN) {
             // respond with 200 OK and challenge token from the request
             res.status(200).send(challenge);
-            console.log("Webhook verified successfully!");
+            logger.info('Webhook verified successfully!');
         } else {
             // respond with '403 Forbidden' if verify tokens do not match
             res.sendStatus(403);

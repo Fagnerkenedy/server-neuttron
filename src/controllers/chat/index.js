@@ -7,34 +7,37 @@ const { GRAPH_API_TOKEN } = process.env;
 
 module.exports = {
     sendMessage: async (req, res) => {
-        const { numberId, to, message, conversationId, userName, userId } = req.body;
+        const { numberId, to, message, conversationId, userName, userId, created_at } = req.body;
         const { org } = req.params
         const WHATSAPP_API_URL = `https://graph.facebook.com/v21.0/${numberId}/messages`
         const connection = await mysql.createConnection({ ...dbConfig, database: `${org}` });
 
         try {
-            const response = await axios.post(
-                WHATSAPP_API_URL,
-                {
-                    messaging_product: 'whatsapp',
-                    to,
-                    type: 'text',
-                    // type: 'template',
-                    // template: {
-                    //     name: 'hello_world',
-                    //     language: {
-                    //         code: 'en_US'
-                    //     },
-                    // },
-                    text: { body: message },
-                },
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+            if (process.env.NODE_ENV == "production") {
+
+                const response = await axios.post(
+                    WHATSAPP_API_URL,
+                    {
+                        messaging_product: 'whatsapp',
+                        to,
+                        type: 'text',
+                        // type: 'template',
+                        // template: {
+                        //     name: 'hello_world',
+                        //     language: {
+                        //         code: 'en_US'
+                        //     },
+                        // },
+                        text: { body: message },
                     },
-                }
-            );
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${GRAPH_API_TOKEN}`,
+                        },
+                    }
+                );
+            }
             await connection.beginTransaction();
 
             const gerarHash = (dados) => {
@@ -48,7 +51,8 @@ module.exports = {
             if (contact.length == 0) {
                 const [contact] = await connection.execute('INSERT INTO contacts SET id = ?, name = ?;', [userId, userName])
             }
-            const [insertMessage] = await connection.execute('INSERT INTO messages SET id = ?, conversationId = ?, senderId = ?, body = ?;', [messageId, conversationId, userId, message])
+            await connection.execute('UPDATE conversations SET last_message = ? WHERE id = ?;', [message, conversationId])
+            const [insertMessage] = await connection.execute('INSERT INTO messages SET id = ?, conversationId = ?, senderId = ?, body = ?, created_at = ?;', [messageId, conversationId, userId, message, created_at])
 
             await connection.commit();
             res.status(200).json({ success: true, message: 'Message Sent Successfuly!', insertMessage })
@@ -67,18 +71,18 @@ module.exports = {
     getConversations: async (req, res) => {
         const orgId = req.params.org
         const { page = 1, limit = 10 } = req.query
-        
+
         const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
         try {
             await connection.beginTransaction();
             const offset = (parseInt(page) - 1) * parseInt(limit);
             const limitNumber = parseInt(limit)
             const offsetNumber = parseInt(offset)
-            console.log("limitNumber: ",limitNumber)
-            console.log("offsetNumber: ",offsetNumber)
+            console.log("limitNumber: ", limitNumber)
+            console.log("offsetNumber: ", offsetNumber)
             const sql = `SELECT * FROM conversations ORDER BY updated_at DESC LIMIT ${limitNumber} OFFSET ${offsetNumber};`
             const [conversations] = await connection.execute(sql)
-            
+
             const [total] = await connection.query(`SELECT COUNT(*) AS count FROM conversations;`);
 
             await connection.commit();
@@ -121,6 +125,26 @@ module.exports = {
                 await connection.rollback();
             }
             res.status(500).json({ success: false, message: "Erro ao buscar conversas", error: error.message });
+        } finally {
+            if (connection) {
+                await connection.end();
+            }
+        }
+    },
+    updateUnread: async (req, res) => {
+        const { org, conversationId } = req.params
+        const connection = await mysql.createConnection({ ...dbConfig, database: `${org}` });
+        try {
+            await connection.beginTransaction();
+            await connection.query(`UPDATE conversations SET unread = 0 WHERE id = ?;`, [conversationId]);
+            
+            await connection.commit();
+            res.status(200).json({ success: true, message: "Conversation unread updated successfully" });
+        } catch (error) {
+            if (connection) {
+                await connection.rollback();
+            }
+            res.status(500).json({ success: false, message: "Erro ao atualizar unread de conversations", error: error.message });
         } finally {
             if (connection) {
                 await connection.end();

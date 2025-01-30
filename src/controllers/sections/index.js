@@ -31,7 +31,7 @@ module.exports = {
                 connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
                 await connection.beginTransaction();
                 const querySections = `CREATE TABLE IF NOT EXISTS sections (
-                    id VARCHAR(19) NOT NULL PRIMARY KEY,
+                    id VARCHAR(19) PRIMARY KEY,
                     name VARCHAR(255),
                     module VARCHAR(255),
                     field_type VARCHAR(255),
@@ -43,9 +43,14 @@ module.exports = {
 
                 const index = sections.findIndex(section => section.id === sectionId)
                 const [result] = await connection.execute(
-                    'INSERT INTO sections (id, name, module, sort_order, field_type) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE name = VALUES(name), sort_order = VALUES(sort_order);',
-                    [sectionId, sectionName, moduleName, index, fieldType]
+                    'INSERT INTO sections (id, name, module, sort_order) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE name = VALUES(name), sort_order = VALUES(sort_order);',
+                    [sectionId, sectionName, moduleName, index]
                 )
+                // USADO PARA QUANDO É CRIADO UM SUBFORMULÁRIO MAS O FIELDTYPE DÁ ERRO COM QUALQUER OUTRO SECTION QUE NÃO SEJA SUBFORM. AINDA PRECISA ARRUMAR!
+                // const [result] = await connection.execute(
+                //     'INSERT INTO sections (id, name, module, sort_order, field_type) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE name = VALUES(name), sort_order = VALUES(sort_order);',
+                //     [sectionId, sectionName, moduleName, index, fieldType]
+                // )
 
                 const querySectionFields = `CREATE TABLE IF NOT EXISTS section_fields (
                     id INT AUTO_INCREMENT PRIMARY KEY,

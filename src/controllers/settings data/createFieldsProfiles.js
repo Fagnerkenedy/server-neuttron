@@ -42,6 +42,7 @@ module.exports = {
             unused BOOLEAN,
             required BOOLEAN,
             disabled BOOLEAN,
+            visible_rows VARCHAR(255),
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )`;

@@ -17,7 +17,7 @@ module.exports = {
                 const sectionId = section.id
                 const sectionName = section.name
                 const sort_order = section.sort_order
-                const fieldType = section.field_type
+                const fieldType = section.field_type || null
                 let fields = section.fields
 
                 if (!Array.isArray(fields)) {
@@ -38,7 +38,7 @@ module.exports = {
                     sort_order VARCHAR(255),
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-                )`;
+                );`;
                 await connection.execute(querySections);
 
                 const index = sections.findIndex(section => section.id === sectionId)
@@ -63,25 +63,25 @@ module.exports = {
                 )`;
                 await connection.execute(querySectionFields);
 
-                let moduleNameSubform
-                if(fieldType == "subform") {
-                    moduleNameSubform = sectionName.replace(/[^\w\s]|[\sç]/gi, '_')
-                    const [searchSubform] = await connection.execute('SELECT name FROM modules WHERE name = ? AND api_name = ?;', [sectionName, moduleNameSubform]);
-                    if (searchSubform.length == 0) {                        
-                        const req = {
-                            params: { org: orgId },
-                            body: { name: sectionName }
-                        }
-                        await create(req)
-                    }
-                }
+                // let moduleNameSubform
+                // if(fieldType == "subform") {
+                //     moduleNameSubform = sectionName.replace(/[^\w\s]|[\sç]/gi, '_')
+                //     const [searchSubform] = await connection.execute('SELECT name FROM modules WHERE name = ? AND api_name = ?;', [sectionName, moduleNameSubform]);
+                //     if (searchSubform.length == 0) {                        
+                //         const req = {
+                //             params: { org: orgId },
+                //             body: { name: sectionName }
+                //         }
+                //         await create(req)
+                //     }
+                // }
 
                 let createdFieldsLeft = ''
                 let createdFieldsRight = ''
                 let upsertFieldLeft = []
                 let upsertFieldRight = []
                 if (fields[0].left.length !== 0) {
-                    createdFieldsLeft = await createFields(fields[0].left, connection, orgId, moduleName, fieldType, moduleNameSubform)
+                    createdFieldsLeft = await createFields(fields[0].left, connection, orgId, moduleName, fieldType, sectionName)
                     if (createdFieldsLeft.length !== 0) {
                         for (const result of createdFieldsLeft) {
                             if (result.idField) {

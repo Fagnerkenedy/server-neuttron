@@ -112,7 +112,7 @@ const createFields = async (fields, connection, orgId, module, fieldType, module
                 uniqueApiName = await getUniqueApiName(module, apiName, connection);
                 const [result] = await connection.execute(`
                 INSERT INTO fields (name, api_name, type, field_type, related_module, related_id, search_field, module, unused, required, disabled, visible_rows) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
                     [name, uniqueApiName, type, field_type, related_module, related_id, search_field, module, unused, required, disabled, visible_rows]);
                 idField = result.insertId;
                 console.log("INSERT: ", result);

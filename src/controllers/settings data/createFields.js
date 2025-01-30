@@ -172,6 +172,7 @@ const createTables = async (connection, orgId, module) => {
             unused BOOLEAN,
             required BOOLEAN,
             disabled BOOLEAN,
+            visible_rows VARCHAR(255),
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
@@ -225,6 +226,7 @@ const createFields2 = async (fields, connection, orgId, module, idPerfil, userId
             unused BOOLEAN,
             required BOOLEAN,
             disabled BOOLEAN,
+            visible_rows VARCHAR(255),
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )

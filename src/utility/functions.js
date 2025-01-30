@@ -62,6 +62,7 @@ const createTables = async (connection, orgId, module) => {
             unused BOOLEAN,
             required BOOLEAN,
             disabled BOOLEAN,
+            visible_rows VARCHAR(255),
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
@@ -223,21 +224,26 @@ const createSectionFields = async (sections, connection, orgId, moduleName, idPe
             // connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
             await connection.beginTransaction();
             const querySections = `CREATE TABLE IF NOT EXISTS sections (
-                id VARCHAR(19) NOT NULL PRIMARY KEY,
+                id VARCHAR(19) PRIMARY KEY,
                 name VARCHAR(255),
                 module VARCHAR(255),
                 field_type VARCHAR(255),
                 sort_order VARCHAR(255),
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-            )`;
+            );`;
             await connection.execute(querySections);
 
             const index = sections.findIndex(section => section.id === sectionId)
             const [result] = await connection.execute(
-                'INSERT INTO sections (id, name, module, sort_order, field_type) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE name = VALUES(name), sort_order = VALUES(sort_order);',
-                [sectionId, sectionName, moduleName, index, fieldType]
+                'INSERT INTO sections (id, name, module, sort_order) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE name = VALUES(name), sort_order = VALUES(sort_order);',
+                [sectionId, sectionName, moduleName, index]
             )
+            // USADO PARA QUANDO É CRIADO UM SUBFORMULÁRIO MAS O FIELDTYPE DÁ ERRO COM QUALQUER OUTRO SECTION QUE NÃO SEJA SUBFORM. AINDA PRECISA ARRUMAR!
+            // const [result] = await connection.execute(
+            //     'INSERT INTO sections (id, name, module, sort_order, field_type) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE name = VALUES(name), sort_order = VALUES(sort_order);',
+            //     [sectionId, sectionName, moduleName, index, fieldType]
+            // )
 
             const querySectionFields = `CREATE TABLE IF NOT EXISTS section_fields (
                 id INT AUTO_INCREMENT PRIMARY KEY,
@@ -250,25 +256,26 @@ const createSectionFields = async (sections, connection, orgId, moduleName, idPe
             )`;
             await connection.execute(querySectionFields);
 
-            let moduleNameSubform
-            if (fieldType == "subform") {
-                moduleNameSubform = sectionName.replace(/[^\w\s]|[\sç]/gi, '_')
-                const [searchSubform] = await connection.execute('SELECT name FROM modules WHERE name = ? AND api_name = ?;', [sectionName, moduleNameSubform]);
-                if (searchSubform.length == 0) {
-                    const req = {
-                        params: { org: orgId },
-                        body: { name: sectionName }
-                    }
-                    await create(req)
-                }
-            }
+            // let moduleNameSubform
+            // if (fieldType == "subform") {
+            //     moduleNameSubform = sectionName.replace(/[^\w\s]|[\sç]/gi, '_')
+            //     const [searchSubform] = await connection.execute('SELECT name FROM modules WHERE name = ? AND api_name = ?;', [sectionName, moduleNameSubform]);
+            //     if (searchSubform.length == 0) {
+            //         const req = {
+            //             params: { org: orgId },
+            //             body: { name: sectionName }
+            //         }
+            //         await create(req)
+            //     }
+            // }
 
             let createdFieldsLeft = ''
             let createdFieldsRight = ''
             let upsertFieldLeft = []
             let upsertFieldRight = []
             if (fields[0].left.length !== 0) {
-                createdFieldsLeft = await createFields2(fields[0].left, connection, orgId, moduleName, idPerfil, userId, fieldType, moduleNameSubform)
+                createdFieldsLeft = await createFields2(fields[0].left, connection, orgId, moduleName, idPerfil, userId)
+                // createdFieldsLeft = await createFields2(fields[0].left, connection, orgId, moduleName, idPerfil, userId, fieldType, moduleNameSubform)
                 if (createdFieldsLeft.length !== 0) {
                     for (const result of createdFieldsLeft) {
                         if (result.idField) {

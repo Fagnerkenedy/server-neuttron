@@ -7,6 +7,7 @@ const dbConfig = require('../../database/index')
 const authConfig = require('../../config/auth.json')
 const {sampleData} = require('../sample data/index')
 const {settingsData} = require('../settings data/index')
+const {chatsData} = require('../chats data/index')
 const nodemailer = require('nodemailer')
 
 module.exports = {
@@ -81,6 +82,8 @@ module.exports = {
             const hashedPassword = await bcrypt.hash(password, 10);
 
             await settingsData(orgId, user_id)
+
+            await chatsData(orgId)
             
             const org = await connection2.execute(`INSERT INTO organizations SET orgId = ?, name = ?, email = ?, phone = ?;`, [orgId, empresa, email, phone]);
             const user = await connection2.execute(`INSERT INTO users SET id = ?, orgId = ?, name = ?, email = ?, phone = ?, password = ?, dark_mode = ?, perfil = 'Administrador', open_tour = true;`, [user_id, orgId, name, email, phone, hashedPassword, false]);
@@ -214,7 +217,7 @@ module.exports = {
                 return res.status(200).json({ success: false, message: "invalid_password" })
             }
         } catch (error) {
-            return res.status(500).json({ success: false, message: "Internal server error" });
+            return res.status(500).json({ success: false, message: "Internal server error", error });
         }
     },
 
@@ -392,11 +395,12 @@ module.exports = {
         const { email, orgId } = req.body
         try {
             const connection = await mysql.createConnection({ ...dbConfig });
-            await connection.execute(`DROP DATABASE ${orgId};`);
+            await connection.execute(`DROP DATABASE IF EXISTS ${orgId};`);
             await connection.end();
 
             const connectionNeuttron = await mysql.createConnection({ ...dbConfig, database: process.env.DB_NAME });
-            await connectionNeuttron.execute(`DELETE FROM users WHERE email = '${email}';`);
+            const orgNumber = orgId.slice(3)
+            await connectionNeuttron.execute(`DELETE FROM users WHERE orgId = '${orgNumber}';`);
             await connectionNeuttron.end();
             return  res.status(200).json({ success: true, message: 'Conta excluída com sucesso!' })
         } catch (error) {

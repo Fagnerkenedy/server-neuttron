@@ -90,7 +90,6 @@ module.exports = {
             const insertDataCharts = await insertData(dataCharts, connection, `org${orgId}`, 'charts')
             const insertDataKanban = await insertData(dataKanban, connection, `org${orgId}`, 'kanban')
 
-            console.log("functuions", functionss)
             await connection.end();
         } catch (error) {
             if (connection) {

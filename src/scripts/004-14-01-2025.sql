@@ -1,39 +1,39 @@
-CREATE TABLE IF NOT EXISTS conversations (
-	id VARCHAR(255) PRIMARY KEY,
-	name VARCHAR(255),
-    wa_id_contact VARCHAR(255),
-    unread INT(20),
-    last_message TEXT,
-	created_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3),
-	updated_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3)
-);
+# CREATE TABLE IF NOT EXISTS conversations (
+# 	id VARCHAR(255) PRIMARY KEY,
+# 	name VARCHAR(255),
+#     wa_id_contact VARCHAR(255),
+#     unread INT(20),
+#     last_message TEXT,
+# 	created_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3),
+# 	updated_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3)
+# );
 
 # INSERT INTO conversations SET name = 'Teste 17', id = 'dsddfsfsdxdfscsdfgddffghfjnwsjlen';
 # SELECT * FROM conversations;
 
 
-CREATE TABLE IF NOT EXISTS messages (
-	id VARCHAR(255) PRIMARY KEY,
-	conversationId VARCHAR(255),
-    senderId VARCHAR(255),
-	name VARCHAR(255),
-    body TEXT,
-	created_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3),
-	updated_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3)
-);
+# CREATE TABLE IF NOT EXISTS messages (
+# 	id VARCHAR(255) PRIMARY KEY,
+# 	conversationId VARCHAR(255),
+#     senderId VARCHAR(255),
+# 	name VARCHAR(255),
+#     body TEXT,
+# 	created_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3),
+# 	updated_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3)
+# );
 
 # INSERT INTO messages SET name = 'nome teste da mensagem', body = 'Esta é a SEGUNDA mensagem', conversationId = 'sdfghuiskfjnwsjlen', id = '8348313SDF1843521354', senderId = 'sdlfvsndvvklsdfmk';
 # select * from contacts; delete from messages where id = '8348313SDF1843521354'; UPDATE messages SET senderId = 'sdjyhgsdfbhn' WHERE id = '83483131843521354';
 # ALTER TABLE contacts MODIFY COLUMN wa_id VARCHAR(255);
 
-CREATE TABLE IF NOT EXISTS contacts (
-	id VARCHAR(255) PRIMARY KEY,
-	name VARCHAR(255),
-    wa_id VARCHAR(255),
-    bot_step INT(20),
-	created_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3),
-	updated_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3)
-);
+# CREATE TABLE IF NOT EXISTS contacts (
+# 	id VARCHAR(255) PRIMARY KEY,
+# 	name VARCHAR(255),
+#    wa_id VARCHAR(255),
+#     bot_step INT(20),
+# 	created_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3),
+# 	updated_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3)
+# );
 
 # INSERT INTO contacts SET name = 'Michael', id = 'sdlfvsndvvklsdfmk';
 # INSERT INTO contacts SET name = 'Marcia', id = 'sdjyhgsdfbhn';
@@ -80,32 +80,32 @@ CREATE TABLE IF NOT EXISTS contacts (
 # UPDATE contacts SET wa_id = '554599750447' WHERE id = '0d0fb5074df90c051f6';
 
 ## Bots
-CREATE TABLE IF NOT EXISTS bots (
-	id VARCHAR(255) PRIMARY KEY,
-	name VARCHAR(255),
-    description VARCHAR(255),
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+# CREATE TABLE IF NOT EXISTS bots (
+# 	id VARCHAR(255) PRIMARY KEY,
+# 	name VARCHAR(255),
+#     description VARCHAR(255),
+# 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+# 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+# );
 
-CREATE TABLE IF NOT EXISTS flows (
-	id VARCHAR(255) PRIMARY KEY,
-    bot_id VARCHAR(255),
-	name VARCHAR(255),
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+# CREATE TABLE IF NOT EXISTS flows (
+# 	id VARCHAR(255) PRIMARY KEY,
+#     bot_id VARCHAR(255),
+# 	name VARCHAR(255),
+# 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+# 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+# );
 
-CREATE TABLE IF NOT EXISTS steps (
-	id VARCHAR(255) PRIMARY KEY,
-    flow_id VARCHAR(255),
-	name VARCHAR(255),
-    type VARCHAR(255),
-    content JSON,
-    step VARCHAR(255),
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+# CREATE TABLE IF NOT EXISTS steps (
+# 	id VARCHAR(255) PRIMARY KEY,
+#     flow_id VARCHAR(255),
+# 	name VARCHAR(255),
+#     type VARCHAR(255),
+#     content JSON,
+#     step VARCHAR(255),
+# 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+# 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+# );
 
 # INSERT INTO bots SET id = 'ss61df8s4fs1d36g465ds1', name = 'Atendimento';
 
@@ -164,14 +164,14 @@ CREATE TABLE IF NOT EXISTS steps (
 # SELECT messages.*, contacts.name as senderName, contacts.wa_id as contactNumber FROM messages JOIN contacts ON contacts.id = messages.senderId WHERE conversationId = 'f9519a341663d2f3d17' ORDER BY created_at DESC;
 # describe messages;
 
-# ALTER TABLE contacts MODIFY COLUMN created_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3);
-# ALTER TABLE contacts MODIFY COLUMN updated_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3);
+ALTER TABLE contacts MODIFY COLUMN created_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3);
+ALTER TABLE contacts MODIFY COLUMN updated_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3);
 
-# ALTER TABLE conversations MODIFY COLUMN created_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3);
-# ALTER TABLE conversations MODIFY COLUMN updated_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3);
+ALTER TABLE conversations MODIFY COLUMN created_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3);
+ALTER TABLE conversations MODIFY COLUMN updated_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3);
 
-# ALTER TABLE messages MODIFY COLUMN created_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3);
-# ALTER TABLE messages MODIFY COLUMN updated_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3);
+ALTER TABLE messages MODIFY COLUMN created_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3);
+ALTER TABLE messages MODIFY COLUMN updated_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3);
 
 # delete from contacts;
 
@@ -179,9 +179,10 @@ CREATE TABLE IF NOT EXISTS steps (
 
 # describe messages;
 
-# alter table conversations add column last_message TEXT;
+alter table conversations add column last_message TEXT;
 
 # select * from conversations;
 
 # select * from users where email = 'fagnerkenedy@hotmail.com';
 # UPDATE users SET verificado = true WHERE id = '51818498e20c8244e01';
+

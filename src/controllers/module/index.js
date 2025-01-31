@@ -193,10 +193,16 @@ module.exports = {
             const deleteModuleQuery = 'DELETE FROM modules WHERE api_name = ?;';
             const deleteFieldsQuery = 'DELETE FROM fields WHERE module = ?;';
             const deleteModuleTableQuery = `DROP TABLE ${moduleNameApi};`;
+            const deleteModuloRelacionado = 'DELETE FROM modulos_relacionados WHERE module_name = ?;'
+            const deleteSectionFields = 'DELETE FROM section_fields WHERE section_id IN (SELECT id FROM sections WHERE module = ?);'
+            const deleteSections = 'DELETE FROM sections WHERE module = ?;'
 
             let row = await connection.execute(deleteModuleQuery, [moduleNameApi]);
-            let rowfields = await connection.execute(deleteFieldsQuery, [moduleName]);
+            await connection.execute(deleteFieldsQuery, [moduleName]);
             row = await connection.execute(deleteModuleTableQuery);
+            await connection.execute(deleteModuloRelacionado, [moduleName]);
+            await connection.execute(deleteSectionFields, [moduleName]);
+            await connection.execute(deleteSections, [moduleName]);
 
             await connection.end();
             res.json(row[0]);

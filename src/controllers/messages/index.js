@@ -21,6 +21,7 @@ module.exports = {
             // const message = req.body.value?.messages?.[0];
 
             console.log("message: ", message)
+            console.log("message.id: ", message.id)
 
             const connectionNeuttron = await mysql.createConnection({ ...dbConfig, database: process.env.DB_NAME });
             const phoneNumberId = value.metadata.phone_number_id
@@ -221,14 +222,14 @@ module.exports = {
                     timestamp: value.messages[0].timestamp,
                     conversationId
                 });
-                // if (bot.length > 0) {
+                if (bot.length > 0) {
                     io.to(`org${orgId}`).emit('newMessage', {
                         senderName: name,
                         body: jsonData.text.body,
                         timestamp: value.messages[0].timestamp,
                         conversationId
                     });
-                // }
+                }
             }
             logger.info('Webhook recebido com sucesso.');
             res.status(200).send('Webhook recebido com sucesso.');

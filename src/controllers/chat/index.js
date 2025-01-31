@@ -19,7 +19,7 @@ module.exports = {
                     WHATSAPP_API_URL,
                     {
                         messaging_product: 'whatsapp',
-                        to,
+                        to: to,
                         type: 'text',
                         // type: 'template',
                         // template: {

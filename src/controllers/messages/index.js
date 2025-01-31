@@ -60,7 +60,6 @@ module.exports = {
                 if(conversation.length == 0) {
                     conversationId = gerarHash(JSON.stringify({ contactId, wa_id, phoneNumberId }))
                     contactId = contact[0].id
-                    conversationId = conversation[0].id
                     const body = value.messages[0].text.body
                     await connection.execute('INSERT INTO conversations SET id = ?, name = ?, wa_id_contact = ?, unread = ?, last_message = ?;', [conversationId, contactName, wa_id, 1, body])
                     const messageId = gerarHash(JSON.stringify({ wa_id, phoneNumberId }))

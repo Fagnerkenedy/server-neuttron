@@ -225,14 +225,14 @@ module.exports = {
             console.log("io jsonData.text.body:", jsonData?.text?.body)
             console.log("io value.messages[0].timestamp:", value.messages[0].timestamp)
             console.log("io conversationId:", conversationId)
-            const isoString = new Date(value.messages[0].timestamp * 1000).toISOString().replace('T', ' ').replace('Z', '')
+            const isoString = new Date(value.messages[0].timestamp * 1000).toISOString()
+            console.log("time server: ", isoString)
             if (message) {
                 io.to(`org${orgId}`).emit('newMessage', {
                     senderName: contactName,
                     body,
                     timestamp: value.messages[0].timestamp,
                     conversationId,
-                    last_message: body,
                     updated_at: isoString
                 });
                 if (bot.length > 0) {
@@ -241,7 +241,6 @@ module.exports = {
                         body: jsonData.text.body,
                         timestamp: value.messages[0].timestamp,
                         conversationId,
-                        last_message: jsonData.text.body,
                         updated_at: isoString
                     });
                 }

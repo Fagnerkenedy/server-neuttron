@@ -63,15 +63,23 @@
 // const newDate = dateISO.toLocaleTimeString('pt-BR');
 // console.log(newDate)
 
-const date = new Date();
-
-// Converter para formato ISO
-const isoString = date.toISOString();
-console.log("ISO String:", isoString);
-
-const brazilianDate = new Date(date.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }))
-console.log(brazilianDate)
 
 
-const toDateTime = date.toLocaleString("pt-br").slice(0, 20).replace(',', '')
-console.log(toDateTime)
+
+
+// const date = new Date();
+
+// // Converter para formato ISO
+// const isoString = date.toISOString();
+// console.log("ISO String:", isoString);
+
+// const brazilianDate = new Date(date.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }))
+// console.log(brazilianDate)
+
+
+// const toDateTime = date.toLocaleString("pt-br").slice(0, 20).replace(',', '')
+// console.log(toDateTime)
+
+
+const isoString = new Date("1738350970" * 1000).toISOString().replace('T', ' ').replace('Z', '')
+console.log("time server: ", isoString)

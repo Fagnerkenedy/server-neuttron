@@ -20,9 +20,9 @@ module.exports = {
             const message = req.body.entry?.[0]?.changes[0]?.value?.messages?.[0];
             // const message = req.body.value?.messages?.[0];
 
+            console.log("message: ", message)
             if (message) {
 
-                console.log("message: ", message)
                 console.log("message.id: ", message.id)
 
                 const connectionNeuttron = await mysql.createConnection({ ...dbConfig, database: process.env.DB_NAME });
@@ -249,9 +249,9 @@ module.exports = {
                 }
                 logger.info('Webhook recebido com sucesso.');
                 res.status(200).send('Webhook recebido com sucesso.');
+            } else {
+                res.status(200).send('Webhook recebido com sucesso sem mensagem.');
             }
-            res.status(200).send('Webhook recebido com sucesso sem mensagem.');
-
         } catch (error) {
             logger.info('Erro no webhook:', error);
             res.status(500).send('Erro no servidor.');

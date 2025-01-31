@@ -57,13 +57,24 @@ module.exports = {
             } else {
                 botStep = contact[0].bot_step || 1
                 const [conversation] = await connection.execute('SELECT * FROM conversations WHERE wa_id_contact = ?', [wa_id])
-                contactId = contact[0].id
-                conversationId = conversation[0].id
-                const unread = conversation[0].unread + 1
-                const messageId = gerarHash(JSON.stringify({ wa_id, phoneNumberId }))
-                const body = value.messages[0].text.body
-                const updateConversation = await connection.execute('UPDATE conversations SET unread = ?, last_message = ? WHERE id = ?;', [unread, body, conversationId])
-                const [insertMessage] = await connection.execute('INSERT INTO messages SET id = ?, conversationId = ?, senderId = ?, body = ?;', [messageId, conversationId, contactId, body])
+                if(conversation.length == 0) {
+                    conversationId = gerarHash(JSON.stringify({ contactId, wa_id, phoneNumberId }))
+                    contactId = contact[0].id
+                    conversationId = conversation[0].id
+                    const body = value.messages[0].text.body
+                    await connection.execute('INSERT INTO conversations SET id = ?, name = ?, wa_id_contact = ?, unread = ?, last_message = ?;', [conversationId, contactName, wa_id, 1, body])
+                    const messageId = gerarHash(JSON.stringify({ wa_id, phoneNumberId }))
+                    await connection.execute('INSERT INTO messages SET id = ?, conversationId = ?, senderId = ?, body = ?;', [messageId, conversationId, contactId, body])
+                } else {
+                    contactId = contact[0].id
+                    conversationId = conversation[0].id
+                    const unread = conversation[0].unread + 1
+                    const body = value.messages[0].text.body
+                    await connection.execute('UPDATE conversations SET unread = ?, last_message = ? WHERE id = ?;', [unread, body, conversationId])
+                    const messageId = gerarHash(JSON.stringify({ wa_id, phoneNumberId }))
+                    await connection.execute('INSERT INTO messages SET id = ?, conversationId = ?, senderId = ?, body = ?;', [messageId, conversationId, contactId, body])
+
+                }
             }
 
             const [bot] = await connection.execute('SELECT * FROM bots JOIN flows ON flows.bot_id = bots.id JOIN steps ON steps.flow_id = flows.id WHERE steps.step = ?;', [botStep])

@@ -61,6 +61,8 @@ module.exports = {
                 await connection.rollback();
             }
             console.error('Erro ao enviar mensagem:', error);
+            console.error('Erro ao enviar mensagem data:', error.response.data);
+            console.error('Erro ao enviar mensagem data JSON:', JSON.stringify(error.response.data));
             res.status(500).send(error.response.data);
         } finally {
             if (connection) {

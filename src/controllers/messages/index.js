@@ -46,7 +46,7 @@ module.exports = {
                 let contactId
                 let conversationId
                 const contactName = value.contacts[0].profile.name
-                const body = value.messages[0].text.body
+                let body = value.messages[0].text.body
                 let botStep
 
                 if (contact.length == 0) {
@@ -233,6 +233,9 @@ module.exports = {
                 console.log("io conversationId:", conversationId)
                 const isoString = new Date(value.messages[0].timestamp * 1000).toISOString()
                 console.log("time server: ", isoString)
+                if (message.hasOwnProperty("interactive")) {
+                    body = message.interactive.list_reply.title
+                }
                 if (message) {
                     io.to(`org${orgId}`).emit('newMessage', {
                         senderName: contactName,
@@ -253,11 +256,11 @@ module.exports = {
                     }
                 }
                 const obj = {
-                        ...contact[0],
-                        botStepAtual,
-                        message: body
+                    ...contact[0],
+                    botStepAtual,
+                    message: body
                 }
-                await executeCustomFunctions('Interagir com o Chatbot', `org${orgId}`, 'Leads', obj, contactId )
+                await executeCustomFunctions('Interagir com o Chatbot', `org${orgId}`, 'Leads', obj, contactId)
                 logger.info('Webhook recebido com sucesso.');
                 res.status(200).send('Webhook recebido com sucesso.');
             } else {

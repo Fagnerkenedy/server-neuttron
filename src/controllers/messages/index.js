@@ -46,7 +46,12 @@ module.exports = {
                 let contactId
                 let conversationId
                 const contactName = value.contacts[0].profile.name
-                let body = value.messages[0].text.body
+                let body
+                if (message.hasOwnProperty("interactive")) {
+                    body = message.interactive.list_reply.title
+                } else {
+                    body = value.messages[0].text.body
+                }
                 let botStep
 
                 if (contact.length == 0) {
@@ -63,7 +68,7 @@ module.exports = {
                     if (conversation.length == 0) {
                         conversationId = gerarHash(JSON.stringify({ contactId, wa_id, phoneNumberId }))
                         contactId = contact[0].id
-                        const body = value.messages[0].text.body
+                        // const body = value.messages[0].text.body
                         await connection.execute('INSERT INTO conversations SET id = ?, name = ?, wa_id_contact = ?, unread = ?, last_message = ?;', [conversationId, contactName, wa_id, 1, body])
                         const messageId = gerarHash(JSON.stringify({ wa_id, phoneNumberId }))
                         await connection.execute('INSERT INTO messages SET id = ?, conversationId = ?, senderId = ?, body = ?;', [messageId, conversationId, contactId, body])
@@ -71,7 +76,7 @@ module.exports = {
                         contactId = contact[0].id
                         conversationId = conversation[0].id
                         const unread = conversation[0].unread + 1
-                        const body = value.messages[0].text.body
+                        // const body = value.messages[0].text.body
                         await connection.execute('UPDATE conversations SET unread = ?, last_message = ? WHERE id = ?;', [unread, body, conversationId])
                         const messageId = gerarHash(JSON.stringify({ wa_id, phoneNumberId }))
                         await connection.execute('INSERT INTO messages SET id = ?, conversationId = ?, senderId = ?, body = ?;', [messageId, conversationId, contactId, body])
@@ -233,9 +238,6 @@ module.exports = {
                 console.log("io conversationId:", conversationId)
                 const isoString = new Date(value.messages[0].timestamp * 1000).toISOString()
                 console.log("time server: ", isoString)
-                if (message.hasOwnProperty("interactive")) {
-                    body = message.interactive.list_reply.title
-                }
                 if (message) {
                     io.to(`org${orgId}`).emit('newMessage', {
                         senderName: contactName,

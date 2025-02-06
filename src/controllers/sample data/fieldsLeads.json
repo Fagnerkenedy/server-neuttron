@@ -11,6 +11,12 @@
                     "required": true
                 },
                 {
+                    "name": "CPF/CNPJ",
+                    "type": "VARCHAR(255)",
+                    "field_type": "single_line",
+                    "required": true
+                },
+                {
                     "name": "Cargo",
                     "type": "VARCHAR(255)",
                     "field_type": "single_line"

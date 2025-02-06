@@ -4,6 +4,7 @@ const dbConfig = require('../../database/index')
 const axios = require('axios')
 const crypto = require('crypto')
 const logger = require('../../utility/logger')
+const { executeCustomFunctions } = require('../customFunctions/customFunctions')
 
 const { WEBHOOK_VERIFY_TOKEN, GRAPH_API_TOKEN } = process.env;
 const log = console.log;
@@ -134,11 +135,11 @@ module.exports = {
                         }
                     ]
                 }
-
+                let botStepAtual = botStep
                 if (bot.length > 0) {
                     [jsonData] = bot.map((step) => {
                         if (step.type != "text") {
-                            botStep = botStep + 1
+                            botStep = step.next_step || 1
                             responseMessage = step.content.body.text
                             return {
                                 messaging_product: "whatsapp",
@@ -148,17 +149,20 @@ module.exports = {
                                 interactive: step.content,
                             }
                         } else {
-                            botStep = botStep + 1
-                            responseMessage = step.content.text.body
+                            botStep = step.next_step || 1
+                            responseMessage = step.content.text.body.text
                             return {
                                 messaging_product: "whatsapp",
                                 // to: "+5545999792202",
+                                type: "text",
                                 to: message.from,
-                                text: step.content
+                                text: {
+                                    body: step.content.text.body.text
+                                }
                             }
                         }
                     })
-                    console.log("jsonData: ", jsonData)
+                    console.log("jsonData: ", JSON.stringify(jsonData))
                 }
 
                 await connection.execute('UPDATE contacts SET bot_step = ? WHERE id = ?;', [botStep, contactId])
@@ -213,7 +217,7 @@ module.exports = {
                         });
                         logger.info('Mensagem enviada com sucesso para a API do Whatsapp.');
                     } catch (error) {
-                        log("Erro ao tentar enviar mensagem: ", error)
+                        log("Erro ao tentar enviar mensagem: ", error.response.data)
                         logger.error('Erro ao tentar enviar mensagem para a API do Whatsapp: ', error);
                     }
                 }
@@ -240,13 +244,20 @@ module.exports = {
                     if (bot.length > 0) {
                         io.to(`org${orgId}`).emit('newMessage', {
                             senderName: name,
-                            body: jsonData.text.body,
+                            body: responseMessage,
+                            // body: jsonData.text.body,
                             timestamp: value.messages[0].timestamp,
                             conversationId,
                             updated_at: isoString
                         });
                     }
                 }
+                const obj = {
+                        ...contact[0],
+                        botStepAtual,
+                        message: body
+                }
+                await executeCustomFunctions('Interagir com o Chatbot', `org${orgId}`, 'Leads', obj, contactId )
                 logger.info('Webhook recebido com sucesso.');
                 res.status(200).send('Webhook recebido com sucesso.');
             } else {

@@ -67,9 +67,9 @@
 
 
 
-// const date = new Date();
+const date = new Date();
 
-// // Converter para formato ISO
+// Converter para formato ISO
 // const isoString = date.toISOString();
 // console.log("ISO String:", isoString);
 
@@ -80,6 +80,10 @@
 // const toDateTime = date.toLocaleString("pt-br").slice(0, 20).replace(',', '')
 // console.log(toDateTime)
 
+date.setHours(date.getHours() - 3)
+const formattedDate = date.toISOString().replace("T", " ").replace("Z", "")
 
-const isoString = new Date("1738350970" * 1000).toISOString().replace('T', ' ').replace('Z', '')
-console.log("time server: ", isoString)
+console.log("formattedDate: ", formattedDate)
+
+// const isoString = new Date("1738350970" * 1000).toISOString().replace('T', ' ').replace('Z', '')
+// console.log("time server: ", isoString)

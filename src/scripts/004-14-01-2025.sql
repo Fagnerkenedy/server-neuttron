@@ -180,9 +180,9 @@ ALTER TABLE messages MODIFY COLUMN updated_at TIMESTAMP(3) DEFAULT CURRENT_TIMES
 # describe messages;
 
 alter table conversations add column last_message TEXT;
+alter table conversations add column last_message TEXT;
 
 # select * from conversations;
 
 # select * from users where email = 'fagnerkenedy@hotmail.com';
 # UPDATE users SET verificado = true WHERE id = '51818498e20c8244e01';
-

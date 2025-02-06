@@ -25,7 +25,7 @@
                     "api_name": "executar_quando",
                     "type": "VARCHAR(255)",
                     "field_type": "select",
-                    "options": ["Criar", "Criar ou editar", "Editar", "Excluir"],
+                    "options": ["Criar", "Criar ou editar", "Editar", "Excluir", "Interagir com o Chatbot"],
                     "required": true
                 },
                 {

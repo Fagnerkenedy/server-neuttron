@@ -63,17 +63,8 @@ module.exports = {
             console.log(`INSERT INTO ${module} (id, ${columns}) VALUES (?, ${placeholders});`);
             const [row] = await connection.execute(`INSERT INTO ${module} (id, ${columns}) VALUES (?, ${placeholders});`,[record_id, ...values] );
             console.log("Resultado da query:", row);
-
-            // for (const key in map) {
-            //     if (map.hasOwnProperty(key)) {
-            //         const columns = `${key} = ?`;
-            //         const values = [map[key]];
-            //         console.log(`INSERT INTO ${module} (${columns}) VALUES (${values});`);
-            //         const [row] = await connection.execute(`INSERT INTO ${module} (${columns}) VALUES (${values});`);
-            //         console.log("Resultado da query:", row);
-            //     }
-            // }
-            return map;
+            // map.push(record_id)
+            return { record_id }
         } catch (error) {
             console.log("Erro ao criar o registro:", error);
             throw error;

@@ -57,15 +57,15 @@ module.exports = {
                     })();`
                 );
                 const result = await customFunction(
-                    module, 
-                    fields, 
-                    record_id, 
+                    module,
+                    fields,
+                    record_id,
                     orgId,
-                    related_record, 
-                    customGetRecordById, 
-                    customUpdateRecordById, 
+                    related_record,
+                    customGetRecordById,
+                    customUpdateRecordById,
                     customCreateRecord,
-                    customGetFields, 
+                    customGetFields,
                     today,
                     customSendEmail
                 )

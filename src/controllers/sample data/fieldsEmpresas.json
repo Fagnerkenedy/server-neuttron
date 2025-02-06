@@ -11,6 +11,12 @@
                     "required": true
                 },
                 {
+                    "name": "CPF/CNPJ",
+                    "type": "VARCHAR(255)",
+                    "field_type": "single_line",
+                    "required": true
+                },
+                {
                     "name": "Telefone",
                     "type": "VARCHAR(255)",
                     "field_type": "phone"

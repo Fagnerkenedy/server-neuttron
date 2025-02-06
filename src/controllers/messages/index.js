@@ -33,6 +33,7 @@ module.exports = {
                 await connectionNeuttron.end()
                 const orgId = organization[0].orgId
                 const name = organization[0].name
+                const wa_id_org = organization[0].wa_id
                 connection = await mysql.createConnection({ ...dbConfig, database: `org${orgId}` });
                 const wa_id = value.contacts[0].wa_id
                 const [contact] = await connection.execute('SELECT * FROM contacts WHERE wa_id = ?', [wa_id])
@@ -250,7 +251,7 @@ module.exports = {
                     if (bot.length > 0) {
                         io.to(`org${orgId}`).emit('newMessage', {
                             senderName: name,
-                            contactNumber: wa_id,
+                            contactNumber: wa_id_org,
                             body: responseMessage,
                             // body: jsonData.text.body,
                             timestamp: value.messages[0].timestamp,

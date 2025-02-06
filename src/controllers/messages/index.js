@@ -29,7 +29,7 @@ module.exports = {
                 const connectionNeuttron = await mysql.createConnection({ ...dbConfig, database: process.env.DB_NAME });
                 const phoneNumberId = value.metadata.phone_number_id
                 const displayPhoneNumber = value.metadata.display_phone_number
-                const [organization] = await connectionNeuttron.execute('SELECT DISTINCT orgId, name FROM users WHERE phone_number_id = ?', [phoneNumberId])
+                const [organization] = await connectionNeuttron.execute('SELECT DISTINCT orgId, name, wa_id FROM users WHERE phone_number_id = ?', [phoneNumberId])
                 await connectionNeuttron.end()
                 const orgId = organization[0].orgId
                 const name = organization[0].name
@@ -241,6 +241,7 @@ module.exports = {
                 if (message) {
                     io.to(`org${orgId}`).emit('newMessage', {
                         senderName: contactName,
+                        contactNumber: value.contacts.wa_id,
                         body,
                         timestamp: value.messages[0].timestamp,
                         conversationId,
@@ -249,6 +250,7 @@ module.exports = {
                     if (bot.length > 0) {
                         io.to(`org${orgId}`).emit('newMessage', {
                             senderName: name,
+                            contactNumber: wa_id,
                             body: responseMessage,
                             // body: jsonData.text.body,
                             timestamp: value.messages[0].timestamp,

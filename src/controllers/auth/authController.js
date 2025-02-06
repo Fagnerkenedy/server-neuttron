@@ -180,7 +180,7 @@ module.exports = {
             }
 
             const connectionNeuttron = await mysql.createConnection({ ...dbConfig, database: process.env.DB_NAME });
-            const [rows] = await connectionNeuttron.execute('SELECT orgId, verificado FROM users WHERE email = ?;', [email])
+            const [rows] = await connectionNeuttron.execute('SELECT orgId, verificado, phone_number_id, wa_id FROM users WHERE email = ?;', [email])
             await connectionNeuttron.end();
 
             const userNeuttron = rows[0];
@@ -207,6 +207,8 @@ module.exports = {
             const org = `org${userNeuttron.orgId}`
             if (match) {
                 user.password = undefined;
+                user.phone_number_id = userNeuttron.phone_number_id
+                user.wa_id = userNeuttron.wa_id
                 const token = jwt.sign({ orgId: user.orgId, userId: user.id }, authConfig.secret, {
                     expiresIn: 604800,
                 });

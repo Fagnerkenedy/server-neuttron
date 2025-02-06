@@ -109,15 +109,6 @@ module.exports = {
             const [conversation] = await connection.execute(sql)
 
             const [total] = await connection.query(`SELECT COUNT(*) AS count FROM messages WHERE conversationId = ?;`, [conversationId]);
-            console.log("totall: ", total)
-            console.log("total[0].count : ", total[0].count)
-            console.log("parseInt(page) - 1 : ", parseInt(page) - 1)
-            console.log("limit : ", limit)
-            console.log("offset : ", offset)
-            console.log("offset + limit: ", parseInt(offset) + parseInt(limit))
-            console.log("hasMore : ", parseInt(offset) + parseInt(limit) < total[0].count)
-            console.log("Page : ", page)
-            console.log("--------------------------")
             await connection.commit();
             res.status(200).json({ success: true, message: "Conversations recovered successfully", conversation, hasMore: parseInt(offset) + parseInt(limit) < total[0].count, page });
         } catch (error) {

@@ -31,6 +31,7 @@ module.exports = {
             for (const key in map) {
                 console.log("Map: ",map)
                 console.log("Key: ",key)
+                console.log("id: ",id)
                 if (map.hasOwnProperty(key)) {
                     const columns = `${key} = ?`;
                     const values = [map[key]];

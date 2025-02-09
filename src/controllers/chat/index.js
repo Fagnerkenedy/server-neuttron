@@ -127,7 +127,7 @@ module.exports = {
         const connection = await mysql.createConnection({ ...dbConfig, database: `${org}` });
         try {
             await connection.beginTransaction();
-            await connection.query(`UPDATE conversations SET unread = 0 WHERE id = ?;`, [conversationId]);
+            await connection.query(`UPDATE conversations SET unread = 0, updated_at = updated_at WHERE id = ?;`, [conversationId]);
             
             await connection.commit();
             res.status(200).json({ success: true, message: "Conversation unread updated successfully" });

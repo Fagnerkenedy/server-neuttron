@@ -230,7 +230,7 @@ module.exports = {
                                 option_5: "Segue PDF com maiores informações sobre: Gestão de Cerealista \n\nA ABIGS agradece o seu contato, tenha um ótimo evento!",
                                 option_6: "Segue PDF com maiores informações sobre: Gestão de Armazenagem \n\nA ABIGS agradece o seu contato, tenha um ótimo evento!",
                                 option_7: "Segue PDF com maiores informações sobre: Gestão de Cooperativa \n\nA ABIGS agradece o seu contato, tenha um ótimo evento!",
-                                option_8: "Segue PDF com maiores informações sobre: Gestão de Transporte",
+                                option_8: "Segue PDF com maiores informações sobre: Gestão de Transporte \n\nA ABIGS agradece o seu contato, tenha um ótimo evento!",
                             }
                             const optionsNames = {
                                 option_1: "Nota Fiscal Produtor eletrônica (NFPe)",
@@ -257,7 +257,8 @@ module.exports = {
                                     type: "document",
                                     document: {
                                         id: mediaId,
-                                        caption: responseNames,
+                                        caption: responseMessage,
+                                        filename: responseNames
                                     },
                                 };
                             } catch (error) {
@@ -297,14 +298,6 @@ module.exports = {
                                 Authorization: `Bearer ${GRAPH_API_TOKEN}`,
                             },
                             data: jsonData
-                            // data: {
-                            //     messaging_product: "whatsapp",
-                            //     to: message.from,
-                            //     text: { body: responseMessage },
-                            //     // context: {
-                            //     //     message_id: message.id, // shows the message as a reply to the original user message
-                            //     // },
-                            // },
                         });
 
                         await axios({

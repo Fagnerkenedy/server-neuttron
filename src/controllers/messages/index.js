@@ -232,7 +232,18 @@ module.exports = {
                                 option_7: "Segue PDF com maiores informações sobre: Gestão de Cooperativa \n\nA ABIGS agradece o seu contato, tenha um ótimo evento!",
                                 option_8: "Segue PDF com maiores informações sobre: Gestão de Transporte",
                             }
+                            const optionsNames = {
+                                option_1: "Nota Fiscal Produtor eletrônica (NFPe)",
+                                option_2: "Gestão Agricola",
+                                option_3: "Gestão de Agroindústria",
+                                option_4: "Gestão de Algodoeira",
+                                option_5: "Gestão de Cerealista",
+                                option_6: "Gestão de Armazenagem",
+                                option_7: "Gestão de Cooperativa",
+                                option_8: "Gestão de Transporte",
+                            }
                             responseMessage = options[botStep]
+                            responseNames = optionsNames[botStep]
                             pathFront = pathsFrontend[botStep]
 
                             try {
@@ -246,7 +257,7 @@ module.exports = {
                                     type: "document",
                                     document: {
                                         id: mediaId,
-                                        caption: responseMessage,
+                                        caption: responseNames,
                                     },
                                 };
                             } catch (error) {

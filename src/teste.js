@@ -67,7 +67,7 @@
 
 
 
-const date = new Date();
+// const date = new Date();
 
 // Converter para formato ISO
 // const isoString = date.toISOString();
@@ -80,10 +80,21 @@ const date = new Date();
 // const toDateTime = date.toLocaleString("pt-br").slice(0, 20).replace(',', '')
 // console.log(toDateTime)
 
-date.setHours(date.getHours() - 3)
-const formattedDate = date.toISOString().replace("T", " ").replace("Z", "")
+// date.setHours(date.getHours() - 3)
+// const formattedDate = date.toISOString().replace("T", " ").replace("Z", "")
 
-console.log("formattedDate: ", formattedDate)
+// console.log("formattedDate: ", formattedDate)
 
 // const isoString = new Date("1738350970" * 1000).toISOString().replace('T', ' ').replace('Z', '')
 // console.log("time server: ", isoString)
+
+
+
+const fileName = "Segue PDF com maiores informações sobre: Gestão Agricola \n\nA ABIGS agradece o seu contato, tenha um ótimo evento!";
+    
+// Transformando o texto em um array de strings
+const linhas = fileName.split("\n");
+
+// Exibir no console corretamente
+console.log("Texto formatado:");
+console.log(linhas.join("\n"));

@@ -7,7 +7,7 @@ const { GRAPH_API_TOKEN } = process.env;
 
 module.exports = {
     sendMessage: async (req, res) => {
-        const { numberId, to, message, conversationId, userName, userId, created_at } = req.body;
+        const { numberId, to, message, conversationId, userName, userId, created_at, contactNumber } = req.body;
         const { org } = req.params
         const WHATSAPP_API_URL = `https://graph.facebook.com/v21.0/${numberId}/messages`
         const connection = await mysql.createConnection({ ...dbConfig, database: `${org}` });
@@ -49,7 +49,7 @@ module.exports = {
             const messageId = gerarHash(JSON.stringify({ numberId, to, message }))
             const [contact] = await connection.execute('SELECT * FROM contacts WHERE id = ?', [userId])
             if (contact.length == 0) {
-                const [contact] = await connection.execute('INSERT INTO contacts SET id = ?, name = ?;', [userId, userName])
+                const [contact] = await connection.execute('INSERT INTO contacts SET id = ?, name = ?, wa_id = ?;', [userId, userName, contactNumber])
             }
             await connection.execute('UPDATE conversations SET last_message = ? WHERE id = ?;', [message, conversationId])
             const [insertMessage] = await connection.execute('INSERT INTO messages SET id = ?, conversationId = ?, senderId = ?, body = ?, created_at = ?;', [messageId, conversationId, userId, message, created_at])

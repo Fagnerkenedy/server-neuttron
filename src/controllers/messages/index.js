@@ -223,14 +223,14 @@ module.exports = {
                                 option_8: "/files/8 - Gestão de Transporte.pdf",
                             };
                             const options = {
-                                option_1: "1 - Nota Fiscal Produtor eletrônica (NFPe)",
-                                option_2: "2 - Gestão Agricola",
-                                option_3: "3 - Gestão de Agroindústria",
-                                option_4: "4 - Gestão de Algodoeira",
-                                option_5: "5 - Gestão de Cerealista",
-                                option_6: "6 - Gestão de Armazenagem",
-                                option_7: "7 - Gestão de Cooperativa",
-                                option_8: "8 - Gestão de Transporte",
+                                option_1: "Segue PDF com maiores informações sobre: Nota Fiscal Produtor eletrônica (NFPe) \n\nA ABIGS agradece o seu contato, tenha um ótimo evento!",
+                                option_2: "Segue PDF com maiores informações sobre: Gestão Agricola \n\nA ABIGS agradece o seu contato, tenha um ótimo evento!",
+                                option_3: "Segue PDF com maiores informações sobre: Gestão de Agroindústria \n\nA ABIGS agradece o seu contato, tenha um ótimo evento!",
+                                option_4: "Segue PDF com maiores informações sobre: Gestão de Algodoeira \n\nA ABIGS agradece o seu contato, tenha um ótimo evento!",
+                                option_5: "Segue PDF com maiores informações sobre: Gestão de Cerealista \n\nA ABIGS agradece o seu contato, tenha um ótimo evento!",
+                                option_6: "Segue PDF com maiores informações sobre: Gestão de Armazenagem \n\nA ABIGS agradece o seu contato, tenha um ótimo evento!",
+                                option_7: "Segue PDF com maiores informações sobre: Gestão de Cooperativa \n\nA ABIGS agradece o seu contato, tenha um ótimo evento!",
+                                option_8: "Segue PDF com maiores informações sobre: Gestão de Transporte \n\nA ABIGS agradece o seu contato, tenha um ótimo evento!",
                             }
                             responseMessage = options[botStep]
                             pathFront = pathsFrontend[botStep]

@@ -5,6 +5,8 @@ const axios = require('axios')
 const crypto = require('crypto')
 const logger = require('../../utility/logger')
 const { executeCustomFunctions } = require('../customFunctions/customFunctions')
+const fs = require("fs");
+const FormData = require("form-data");
 
 const { WEBHOOK_VERIFY_TOKEN, GRAPH_API_TOKEN } = process.env;
 const log = console.log;
@@ -48,12 +50,16 @@ module.exports = {
                 let conversationId
                 const contactName = value.contacts[0].profile.name
                 let body
-                if (message.hasOwnProperty("interactive")) {
-                    body = message.interactive.list_reply.title
-                } else {
+                let botStep
+                let selectedId = ''
+
+                if (!message.hasOwnProperty("interactive")) {
                     body = value.messages[0].text.body
                 }
-                let botStep
+
+                if (message.hasOwnProperty("interactive") && message.interactive.type == "list_reply") {
+                    body = message.interactive.list_reply.title
+                }
 
                 if (contact.length == 0) {
                     botStep = 1
@@ -83,6 +89,10 @@ module.exports = {
                         await connection.execute('INSERT INTO messages SET id = ?, conversationId = ?, senderId = ?, body = ?;', [messageId, conversationId, contactId, body])
 
                     }
+                }
+
+                if (message.hasOwnProperty("interactive") && message.interactive.type == "list_reply") {
+                    botStep = message.interactive.list_reply.id
                 }
 
                 const [bot] = await connection.execute('SELECT * FROM bots JOIN flows ON flows.bot_id = bots.id JOIN steps ON steps.flow_id = flows.id WHERE steps.step = ?;', [botStep])
@@ -141,35 +151,112 @@ module.exports = {
                         }
                     ]
                 }
+
+                const batatinha = async (PHONE_NUMBER_ID, ACCESS_TOKEN, FILE_PATH) => {
+                    try {
+                        const form = new FormData();
+                        form.append("file", fs.createReadStream(FILE_PATH));
+                        form.append("type", "application/pdf");
+                        form.append("messaging_product", "whatsapp");
+
+                        const response = await axios.post(
+                            `https://graph.facebook.com/v21.0/${PHONE_NUMBER_ID}/media`,
+                            form,
+                            {
+                                headers: {
+                                    Authorization: `Bearer ${ACCESS_TOKEN}`,
+                                    ...form.getHeaders(),
+                                },
+                            }
+                        );
+
+                        console.log("Upload bem-sucedido! MEDIA_ID:", response.data.id);
+                        return response.data.id;
+                    } catch (error) {
+                        console.error("Erro ao fazer upload:", error.response?.data || error.message);
+                    }
+                }
+
+                let pathFront = ''
                 let botStepAtual = botStep
                 if (bot.length > 0) {
-                    [jsonData] = bot.map((step) => {
-                        if (step.type != "text") {
-                            botStep = step.next_step || 1
-                            responseMessage = step.content.body.text
-                            return {
+                    for (const step of bot) {
+                        console.log("Bot.step: ", step);
+
+                        if (step.type === "interactive") {
+                            botStep = selectedId || 1;
+                            responseMessage = step.content.body.text;
+                            jsonData = {
                                 messaging_product: "whatsapp",
-                                // to: "+5545999792202",
                                 to: message.from,
                                 type: step.type,
                                 interactive: step.content,
-                            }
-                        } else {
-                            botStep = step.next_step || 1
-                            responseMessage = step.content.text.body.text
-                            return {
+                            };
+                        } else if (step.type === "text") {
+                            botStep = step.next_step || 1;
+                            responseMessage = step.content.text.body.text;
+                            jsonData = {
                                 messaging_product: "whatsapp",
-                                // to: "+5545999792202",
-                                type: "text",
                                 to: message.from,
-                                text: {
-                                    body: step.content.text.body.text
-                                }
+                                type: "text",
+                                text: { body: step.content.text.body.text },
+                            };
+                        } else if (step.type === "media") {
+                            const paths = {
+                                option_1: "src/files/1 - Nota Fiscal Produtor eletrônica (NFPe).pdf",
+                                option_2: "src/files/2 - Gestão Agricola.pdf",
+                                option_3: "src/files/3 - Gestão de Agroindústria.pdf",
+                                option_4: "src/files/4 - Gestão de Algodoeira.pdf",
+                                option_5: "src/files/5 - Gestão de Cerealista.pdf",
+                                option_6: "src/files/6 - Gestão de Armazenagem.pdf",
+                                option_7: "src/files/7 - Gestão de Cooperativa.pdf",
+                                option_8: "src/files/8 - Gestão de Transporte.pdf",
+                            };
+                            const pathsFrontend = {
+                                option_1: "/files/1 - Nota Fiscal Produtor eletrônica (NFPe).pdf",
+                                option_2: "/files/2 - Gestão Agricola.pdf",
+                                option_3: "/files/3 - Gestão de Agroindústria.pdf",
+                                option_4: "/files/4 - Gestão de Algodoeira.pdf",
+                                option_5: "/files/5 - Gestão de Cerealista.pdf",
+                                option_6: "/files/6 - Gestão de Armazenagem.pdf",
+                                option_7: "/files/7 - Gestão de Cooperativa.pdf",
+                                option_8: "/files/8 - Gestão de Transporte.pdf",
+                            };
+                            const options = {
+                                option_1: "1 - Nota Fiscal Produtor eletrônica (NFPe)",
+                                option_2: "2 - Gestão Agricola",
+                                option_3: "3 - Gestão de Agroindústria",
+                                option_4: "4 - Gestão de Algodoeira",
+                                option_5: "5 - Gestão de Cerealista",
+                                option_6: "6 - Gestão de Armazenagem",
+                                option_7: "7 - Gestão de Cooperativa",
+                                option_8: "8 - Gestão de Transporte",
+                            }
+                            responseMessage = options[botStep]
+                            pathFront = pathsFrontend[botStep]
+
+                            try {
+                                const mediaId = await batatinha(phoneNumberId, GRAPH_API_TOKEN, paths[botStep]);
+                                console.log("mediaId", mediaId);
+                                botStep = step.next_step;
+                                jsonData = {
+                                    messaging_product: "whatsapp",
+                                    recipient_type: "individual",
+                                    to: message.from,
+                                    type: "document",
+                                    document: {
+                                        id: mediaId,
+                                        caption: responseMessage,
+                                    },
+                                };
+                            } catch (error) {
+                                console.error("Erro no upload do arquivo:", error);
                             }
                         }
-                    })
-                    console.log("jsonData: ", JSON.stringify(jsonData))
+                    }
+                    console.log("jsonData: ", JSON.stringify(jsonData));
                 }
+
 
                 await connection.execute('UPDATE contacts SET bot_step = ? WHERE id = ?;', [botStep, contactId])
 
@@ -237,6 +324,7 @@ module.exports = {
                 console.log("io jsonData.text.body:", jsonData?.text?.body)
                 console.log("io value.messages[0].timestamp:", value.messages[0].timestamp)
                 console.log("io conversationId:", conversationId)
+                console.log("io pathFront:", pathFront)
                 const isoString = new Date(value.messages[0].timestamp * 1000).toISOString()
                 console.log("time server: ", isoString)
                 if (message) {
@@ -256,7 +344,8 @@ module.exports = {
                             // body: jsonData.text.body,
                             timestamp: value.messages[0].timestamp,
                             conversationId,
-                            updated_at: isoString
+                            updated_at: isoString,
+                            pathFront,
                         });
                     }
                 }

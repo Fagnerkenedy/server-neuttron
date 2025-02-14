@@ -95,8 +95,7 @@ module.exports = {
                     botStep = message.interactive.list_reply.id
                 }
 
-                const [bot] = await connection.execute("SELECT * FROM bots JOIN flows ON flows.bot_id = bots.id JOIN steps ON steps.flow_id = flows.id WHERE bots.id = 'dgddfghnmfhmdfgsdfasd';")
-                // const [bot] = await connection.execute('SELECT * FROM bots JOIN flows ON flows.bot_id = bots.id JOIN steps ON steps.flow_id = flows.id WHERE steps.step = ?;', [botStep])
+                const [bot] = await connection.execute("SELECT * FROM bots JOIN flows ON flows.bot_id = bots.id JOIN steps ON steps.flow_id = flows.id WHERE bots.id = 'dgddfghnmfhmdfgsdfasd' and steps.step = ?;", [botStep]) // ss61df8s4fs1d36g465ds1
                 let responseMessage = 'Desculpe, não entendi sua mensagem.'
                 let jsonData = {
                     messaging_product: "whatsapp",

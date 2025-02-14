@@ -95,61 +95,14 @@ module.exports = {
                     botStep = message.interactive.list_reply.id
                 }
 
-                const [bot] = await connection.execute('SELECT * FROM bots JOIN flows ON flows.bot_id = bots.id JOIN steps ON steps.flow_id = flows.id WHERE steps.step = ?;', [botStep])
+                const [bot] = await connection.execute("SELECT * FROM bots JOIN flows ON flows.bot_id = bots.id JOIN steps ON steps.flow_id = flows.id WHERE bots.id = 'dgddfghnmfhmdfgsdfasd';")
+                // const [bot] = await connection.execute('SELECT * FROM bots JOIN flows ON flows.bot_id = bots.id JOIN steps ON steps.flow_id = flows.id WHERE steps.step = ?;', [botStep])
                 let responseMessage = 'Desculpe, não entendi sua mensagem.'
                 let jsonData = {
                     messaging_product: "whatsapp",
                     // to: "+5545999792202",
                     to: message.from,
                     text: { body: responseMessage },
-                }
-
-                let json = {
-                    "object": "whatsapp_business_account",
-                    "entry": [
-                        {
-                            "id": "568659012986958",
-                            "changes": [
-                                {
-                                    "value": {
-                                        "messaging_product": "whatsapp",
-                                        "metadata": {
-                                            "display_phone_number": "554599750447",
-                                            "phone_number_id": "537389792787824"
-                                        },
-                                        "contacts": [
-                                            {
-                                                "profile": {
-                                                    "name": "Fagner"
-                                                },
-                                                "wa_id": "554599792202"
-                                            }
-                                        ],
-                                        "messages": [
-                                            {
-                                                "context": {
-                                                    "from": "554599750447",
-                                                    "id": "wamid.HBgMNTU0NTk5NzkyMjAyFQIAERgSODY4ODY3QkEzQTAzRTk0N0EwAA=="
-                                                },
-                                                "from": "554599792202",
-                                                "id": "wamid.HBgMNTU0NTk5NzkyMjAyFQIAEhgWM0VCMDFCRjAyMTdBOTdDNzc2M0U0NgA=",
-                                                "timestamp": "1736898926",
-                                                "type": "interactive",
-                                                "interactive": {
-                                                    "type": "button_reply",
-                                                    "button_reply": {
-                                                        "id": "option_2",
-                                                        "title": "Boleto"
-                                                    }
-                                                }
-                                            }
-                                        ]
-                                    },
-                                    "field": "messages"
-                                }
-                            ]
-                        }
-                    ]
                 }
 
                 const uploadMedia = async (PHONE_NUMBER_ID, ACCESS_TOKEN, FILE_PATH) => {

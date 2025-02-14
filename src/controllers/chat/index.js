@@ -13,7 +13,7 @@ module.exports = {
         const connection = await mysql.createConnection({ ...dbConfig, database: `${org}` });
 
         try {
-            if (process.env.NODE_ENV == "production") {
+            // if (process.env.NODE_ENV == "production") {
 
                 const response = await axios.post(
                     WHATSAPP_API_URL,
@@ -37,7 +37,7 @@ module.exports = {
                         },
                     }
                 );
-            }
+            // }
             await connection.beginTransaction();
 
             const gerarHash = (dados) => {
@@ -136,6 +136,26 @@ module.exports = {
                 await connection.rollback();
             }
             res.status(500).json({ success: false, message: "Erro ao atualizar unread de conversations", error: error.message });
+        } finally {
+            if (connection) {
+                await connection.end();
+            }
+        }
+    },
+    getConversation: async (req, res) => {
+        const { org, conversationId } = req.params
+        const connection = await mysql.createConnection({ ...dbConfig, database: `${org}` });
+        try {
+            await connection.beginTransaction();
+            const [conversation] = await connection.query(`SELECT * FROM conversations WHERE id = ?;`, [conversationId]);
+            const conversationData = conversation[0]
+            await connection.commit();
+            res.status(200).json({ success: true, message: "Conversation get successfully", data: conversationData });
+        } catch (error) {
+            if (connection) {
+                await connection.rollback();
+            }
+            res.status(500).json({ success: false, message: "Erro ao fazer o get em conversations", error: error.message });
         } finally {
             if (connection) {
                 await connection.end();

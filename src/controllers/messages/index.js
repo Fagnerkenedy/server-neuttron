@@ -152,7 +152,7 @@ module.exports = {
                     ]
                 }
 
-                const batatinha = async (PHONE_NUMBER_ID, ACCESS_TOKEN, FILE_PATH) => {
+                const uploadMedia = async (PHONE_NUMBER_ID, ACCESS_TOKEN, FILE_PATH) => {
                     try {
                         const form = new FormData();
                         form.append("file", fs.createReadStream(FILE_PATH));
@@ -211,6 +211,7 @@ module.exports = {
                                 option_6: "src/files/6 - Gestão de Armazenagem.pdf",
                                 option_7: "src/files/7 - Gestão de Cooperativa.pdf",
                                 option_8: "src/files/8 - Gestão de Transporte.pdf",
+                                nota: "src/files/Modelo Nota Fiscal Eletrônica.pdf",
                             };
                             const pathsFrontend = {
                                 option_1: "/files/1 - Nota Fiscal Produtor eletrônica (NFPe).pdf",
@@ -221,6 +222,7 @@ module.exports = {
                                 option_6: "/files/6 - Gestão de Armazenagem.pdf",
                                 option_7: "/files/7 - Gestão de Cooperativa.pdf",
                                 option_8: "/files/8 - Gestão de Transporte.pdf",
+                                nota: "/files/Modelo Nota Fiscal Eletrônica.pdf",
                             };
                             const options = {
                                 option_1: `Segue PDF com maiores informações sobre: \nNota Fiscal Produtor eletrônica (NFPe) \n\nA ABIGS agradece o seu contato, tenha um ótimo evento!`,
@@ -231,6 +233,7 @@ module.exports = {
                                 option_6: "Segue PDF com maiores informações sobre: \nGestão de Armazenagem \n\nA ABIGS agradece o seu contato, tenha um ótimo evento!",
                                 option_7: "Segue PDF com maiores informações sobre: \nGestão de Cooperativa \n\nA ABIGS agradece o seu contato, tenha um ótimo evento!",
                                 option_8: "Segue PDF com maiores informações sobre: \nGestão de Transporte \n\nA ABIGS agradece o seu contato, tenha um ótimo evento!",
+                                nota: "Segue PDF da Nota Fiscal De Produtor Eletrônica:",
                             }
                             const optionsNames = {
                                 option_1: "Nota Fiscal Produtor eletrônica (NFPe)",
@@ -241,13 +244,15 @@ module.exports = {
                                 option_6: "Gestão de Armazenagem",
                                 option_7: "Gestão de Cooperativa",
                                 option_8: "Gestão de Transporte",
+                                nota: "Modelo Nota Fiscal Eletrônica.pdf",
                             }
                             responseMessage = options[botStep]
+                            if(responseMessage == null) responseMessage = step.content.text.body.text
                             responseNames = optionsNames[botStep]
                             pathFront = pathsFrontend[botStep]
 
                             try {
-                                const mediaId = await batatinha(phoneNumberId, GRAPH_API_TOKEN, paths[botStep]);
+                                const mediaId = await uploadMedia(phoneNumberId, GRAPH_API_TOKEN, paths[botStep]);
                                 console.log("mediaId", mediaId);
                                 botStep = step.next_step;
                                 jsonData = {

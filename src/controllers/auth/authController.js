@@ -210,7 +210,7 @@ module.exports = {
                 user.phone_number_id = userNeuttron.phone_number_id
                 user.wa_id = userNeuttron.wa_id
                 const token = jwt.sign({ orgId: user.orgId, userId: user.id }, authConfig.secret, {
-                    expiresIn: 604800,
+                    // expiresIn: 604800,
                 });
 
                 // user.orgId = undefined
@@ -405,6 +405,14 @@ module.exports = {
             await connectionNeuttron.execute(`DELETE FROM users WHERE orgId = '${orgNumber}';`);
             await connectionNeuttron.end();
             return  res.status(200).json({ success: true, message: 'Conta excluída com sucesso!' })
+        } catch (error) {
+            res.status(400).json({ error })
+        }
+    }, 
+
+    verifyAuthentication: async (req, res) => {
+        try {
+            return  res.status(200).json({ success: true, message: 'Verificado com sucesso!' })
         } catch (error) {
             res.status(400).json({ error })
         }

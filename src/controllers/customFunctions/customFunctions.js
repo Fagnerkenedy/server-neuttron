@@ -1,7 +1,7 @@
 const mysql = require('mysql2/promise');
 const dbConfig = require('../../database/index')
 const vm = require('vm')
-const { getRecordById, updateRecord, createRecord, get, today, sendEmail } = require('./functions.js')
+const { getRecordById, updateRecord, createRecord, get, today, sendEmail, generatePDF } = require('./functions.js')
 
 module.exports = {
     executeCustomFunctions: async (event, orgId, module, fields, record_id, related_record) => {
@@ -32,6 +32,10 @@ module.exports = {
                 return (emailHeader) => sendEmail(emailHeader);
             }
 
+            function generatePDFFunction() {
+                return (text) => generatePDF(text)
+            }
+
             functions.map(async func => {
 
                 const customGetRecordById = getRecordByIdFunction(connection);
@@ -39,6 +43,7 @@ module.exports = {
                 const customCreateRecord = createRecordFunction(connection);
                 const customGetFields = getFields(fields)
                 const customSendEmail = sendEmailFunction()
+                const customGeneratePDF = generatePDFFunction()
 
                 const customFunction = new Function(
                     'module', 
@@ -52,6 +57,7 @@ module.exports = {
                     'get', 
                     'today',
                     'sendEmail',
+                    'generatePDF',
                     `return (async () => {
                         ${func.funcao}
                     })();`
@@ -67,7 +73,8 @@ module.exports = {
                     customCreateRecord,
                     customGetFields,
                     today,
-                    customSendEmail
+                    customSendEmail,
+                    customGeneratePDF
                 )
             })
             // await connection.end()

@@ -2,6 +2,8 @@ const mysql = require('mysql2/promise');
 const dbConfig = require('../../database/index')
 const crypto = require('crypto');
 const nodemailer = require('nodemailer')
+const PDFDocument = require('pdfkit');
+const fs = require('fs');
 
 module.exports = {
     getRecordById: async (module, id, connection) => {
@@ -60,7 +62,7 @@ module.exports = {
             const record_id = gerarHash(JSON.stringify({ orgId, module, map }));
             const columns = Object.keys(map).join(', ');
             const placeholders = Object.keys(map).map(() => '?').join(', ');
-            const values = Object.values(map);
+            const values = Object.values(map).map(value => value === undefined ? null : value);
             console.log(`INSERT INTO ${module} (id, ${columns}) VALUES (?, ${placeholders});`);
             const [row] = await connection.execute(`INSERT INTO ${module} (id, ${columns}) VALUES (?, ${placeholders});`,[record_id, ...values] );
             console.log("Resultado da query:", row);
@@ -111,7 +113,26 @@ module.exports = {
         }).catch(error => {
             return({ success: false, message: error })
         })
+    },
+
+    generatePDF: (text) => {
+        const filePath = `./pdfs/${text.substring(0, 10)}.pdf`
+        const pdf = new Promise((resolve, reject) => {
+            const doc = new PDFDocument({ margin: 50 });
+            const stream = fs.createWriteStream(filePath);
+    
+            doc.pipe(stream);
+    
+            doc.fontSize(12).text(text, { align: 'left' });
+    
+            doc.end();
+    
+            stream.on('finish', () => resolve(filePath));
+            stream.on('error', (err) => reject(err));
+        });
+        return { pdf, filePath }
     }
+    
 
     // updateRecordById: async (module, id, map, connection) => {
     //     map.forEach(async obj => {

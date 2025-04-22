@@ -18,6 +18,7 @@ router.get('/:org/tour/:userId', authForUserApis, authController.getOpenTour)
 router.put('/:org/tour/:userId', authForUserApis, authController.updateOpenTour)
 router.get('/:org/modulesTour/:userId', authForUserApis, authController.getModulesTour)
 router.put('/:org/modulesTour/:userId', authForUserApis, authController.updateModulesTour)
+router.get('/:org/verifyAuthentication', authForUserApis, authController.verifyAuthentication)
 
 router.post('/checkemail', authForUserApis, authController.checkEmail)
 router.get('/:org/checkUsedUsers', authForUserApis, authController.subscriptions)

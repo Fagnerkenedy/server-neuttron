@@ -176,6 +176,18 @@ module.exports = {
             res.status(500).json({ error: error.message });
         }
     },
+    readRelatedModuleList: async (req, res) => {
+        try {
+            const orgId = req.params.org
+            const moduleName = req.params.module
+            const connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
+            const row = await connection.execute(`SELECT DISTINCT module_name FROM modulos_relacionados WHERE related_module = ?;`, [moduleName]);
+            await connection.end();
+            res.json(row[0]);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
     readRelatedField: async (req, res) => {
         try {
             const orgId = req.params.org

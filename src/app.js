@@ -65,6 +65,11 @@ app.use("/notifications", require('./routes/notifications'))
 app.use("/messages", require('./routes/messages'))
 app.use("/chat", require('./routes/chat'))
 
+app.use("/downloadModel", require("./routes/downloadModel"));
+app.use("/fields", require("./routes/fields"));
+app.use("/upload", require("./routes/upload"));
+// app.use("/processing", require("./routes/processing"));
+
 io.on("connection", (socket) => {
     console.log("Socket conectado: ", socket.id);
     socket.on('identify', ({ orgId }) => {

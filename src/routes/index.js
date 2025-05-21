@@ -23,6 +23,7 @@ router.post("/:org/:module/field", authMiddleware.auth,                         
 router.get("/:org/:module/fields", authMiddleware.auth,                              authorize('read'), fieldController.read);
 router.get("/:org/:module/unused_fields", authMiddleware.auth,                       authorize('read'), fieldController.readUnusedFields);
 router.get("/:org/:module/field/:api_name", authMiddleware.auth,                     authorize('read'), fieldController.readOptions);
+router.get("/:org/:module/relatedModuleList", authMiddleware.auth,                   authorize('read'), fieldController.readRelatedModuleList);
 router.get("/:org/:module/relatedField/:record_id", authMiddleware.auth,             authorize('read'), fieldController.readRelatedField);
 router.put("/:org/:module/field", authMiddleware.auth,                               authorize('update'), fieldController.update);
 router.put("/:org/:module/unused_field", authMiddleware.auth,                        authorize('update'), fieldController.updateUnusedFields);

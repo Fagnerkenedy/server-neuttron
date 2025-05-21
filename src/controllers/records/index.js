@@ -141,7 +141,6 @@ module.exports = {
             let records = await Promise.all(recordsPromises);
             records = records.filter(record => !!record);
             const sortedRecords = [...records].sort((a, b) => descending = true ? new Date(b.created_at) - new Date(a.created_at) : new Date(a.created_at) - new Date(b.created_at));
-            console.log("descending? ",sortedRecords)
             await connection.end();
 
             res.json(sortedRecords);

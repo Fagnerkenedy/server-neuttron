@@ -21,17 +21,22 @@ module.exports = {
                 return;
             }
 
-            const [fields] = await connection.execute(`SELECT api_name FROM fields WHERE module = ? AND is_visible_in_kanban = true ORDER BY kanban_order;`,[moduleName]);
+            const [fields] = await connection.execute(`SELECT name, api_name FROM fields WHERE module = ? AND is_visible_in_kanban = true ORDER BY kanban_order;`, [moduleName]);
 
+            const fieldMetaMap = {};
+            fields.forEach(field => {
+                fieldMetaMap[field.api_name] = field.name;
+            });
+            
             const fieldNames = fields.map(field => `${moduleName}.${field.api_name}`).join(', ');
 
             const sqlOptions = `SELECT ${moduleName}.id, ${fieldNames != '' ? `${fieldNames},` : ''} options.name FROM options LEFT JOIN ${moduleName} ON options.name = ${moduleName}.${kanbanResults[0].field} WHERE options.field_api_name = '${kanbanResults[0].field}' AND options.module = '${moduleName}' ORDER BY option_order;`
 
             const [options] = await connection.execute(sqlOptions);
 
-            console.log("options: ",options)
+            console.log("options: ", options)
             let separatedOptions = groupBy.group(options, ['name']);
-            console.log("separatedOptions: ",separatedOptions)
+            console.log("separatedOptions: ", separatedOptions)
             const resultObject = {};
 
             Object.keys(separatedOptions).forEach((optionName) => {
@@ -39,10 +44,20 @@ module.exports = {
                     name: optionName,
                     items: separatedOptions[optionName].filter(field => field.id !== null).map(option => {
                         // delete option.name
+                        const contentWithMeta = {};
+                        Object.keys(option).forEach(key => {
+                            if (key !== 'id' && key !== 'name') {
+                                contentWithMeta[key] = {
+                                    value: option[key],
+                                    field_name: fieldMetaMap[key] || key, // fallback se não tiver nome
+                                };
+                            }
+                        });
+
                         return {
                             id: option['id'],
-                            content: option,
-                        }
+                            content: contentWithMeta,
+                        };
                     })
                 };
             });
@@ -69,7 +84,7 @@ module.exports = {
             connection = await mysql.createConnection({ ...dbConfig, database: `${orgId}` });
             await connection.beginTransaction();
 
-            const [kanbanFieldsOrder] = await connection.execute('SELECT id, name, api_name, kanban_order, is_visible_in_kanban FROM fields WHERE module = ? ORDER BY kanban_order;',[moduleName]);
+            const [kanbanFieldsOrder] = await connection.execute('SELECT id, name, api_name, kanban_order, is_visible_in_kanban FROM fields WHERE module = ? ORDER BY kanban_order;', [moduleName]);
 
             if (kanbanFieldsOrder.length === 0) {
                 res.status(404).json({ success: true, message: "No kanbans fields found", kanbanFieldsOrder: [] });

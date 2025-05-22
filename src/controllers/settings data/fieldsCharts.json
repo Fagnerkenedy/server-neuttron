@@ -1,0 +1,47 @@
+[
+    {
+        "id": "36343820",
+        "name": "Gráfico",
+        "fields": {
+            "left": [
+                {
+                    "name": "Nome",
+                    "api_name": "name",
+                    "type": "VARCHAR(255)",
+                    "field_type": "single_line"
+                },
+                {
+                    "name": "Módulo",
+                    "api_name": "modulo",
+                    "type": "VARCHAR(255)",
+                    "field_type": "loockup",
+                    "related_module": "modules",
+                    "search_field": "name",
+                    "required": true
+                },
+                {
+                    "name": "Executar quando",
+                    "api_name": "executar_quando",
+                    "type": "VARCHAR(255)",
+                    "field_type": "select",
+                    "options": ["Criar", "Criar ou editar", "Editar", "Excluir", "Interagir com o Chatbot"],
+                    "required": true
+                },
+                {
+                    "name": "Descrição",
+                    "api_name": "descricao",
+                    "type": "TEXT(16000)",
+                    "field_type": "multi_line"
+                }
+            ],
+            "right": [
+                {
+                    "name": "Função",
+                    "api_name": "funcao",
+                    "type": "TEXT",
+                    "field_type": "function"
+                }
+            ]
+        }
+    }
+]

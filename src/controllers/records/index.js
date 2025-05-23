@@ -53,8 +53,16 @@ module.exports = {
                 }
                 console.log("record_id",record_id)
                 const placeholders = fieldValues.map(() => '?').join(', ');
-                const query = `INSERT INTO ${module} (id, ${fieldNames}) VALUES (?, ${placeholders})`;
-                const [insertRow] = await connection.execute(query, [record_id, ...fieldValues]);
+                let query
+                let insertRow
+                if (module == "charts") {
+                    const queryChart = `SELECT ${obj.operation}(${obj.module}.${obj.yField}) as ${obj.yField}, options.name as name, options.option_order FROM ${obj.module} JOIN options ON options.name = ${obj.module}.${obj.xField} WHERE options.module = '${obj.module}' GROUP BY options.name, options.option_order ORDER BY options.option_order;`
+                    query = `INSERT INTO ${module} (id, query, ${fieldNames}) VALUES (?, ?, ${placeholders})`;
+                    [insertRow] = await connection.execute(query, [record_id, queryChart, ...fieldValues]);
+                } else {
+                    query = `INSERT INTO ${module} (id, ${fieldNames}) VALUES (?, ${placeholders})`;
+                    [insertRow] = await connection.execute(query, [record_id, ...fieldValues]);
+                }
                 inserts.push({ record_id, ...insertRow[0] });
                 [obj].forEach(item => {
                     if (related_record != null) {

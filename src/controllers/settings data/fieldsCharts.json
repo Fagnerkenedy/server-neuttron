@@ -11,35 +11,54 @@
                     "field_type": "single_line"
                 },
                 {
-                    "name": "Módulo",
-                    "api_name": "modulo",
-                    "type": "VARCHAR(255)",
-                    "field_type": "loockup",
-                    "related_module": "modules",
-                    "search_field": "name",
-                    "required": true
-                },
-                {
-                    "name": "Executar quando",
-                    "api_name": "executar_quando",
+                    "name": "Tipo de Gráfico",
+                    "api_name": "type",
                     "type": "VARCHAR(255)",
                     "field_type": "select",
-                    "options": ["Criar", "Criar ou editar", "Editar", "Excluir", "Interagir com o Chatbot"],
+                    "options": ["Linha", "Área", "Coluna", "Barra", "Pizza", "Funil", "Rosca", "Rosa"],
                     "required": true
                 },
                 {
-                    "name": "Descrição",
-                    "api_name": "descricao",
-                    "type": "TEXT(16000)",
-                    "field_type": "multi_line"
+                    "name": "Campo X",
+                    "type": "VARCHAR(255)",
+                    "field_type": "loockup_field",
+                    "related_module": "fields",
+                    "alter_table": true,
+                    "api_name": "xField",
+                    "field_base": "module",
+                    "search_field": "name",
+                    "required": true
                 }
             ],
             "right": [
                 {
-                    "name": "Função",
-                    "api_name": "funcao",
-                    "type": "TEXT",
-                    "field_type": "function"
+                    "name": "Módulo",
+                    "type": "VARCHAR(255)",
+                    "field_type": "loockup",
+                    "related_module": "modules",
+                    "alter_table": true,
+                    "api_name": "module",
+                    "search_field": "name",
+                    "required": true
+                },
+                {
+                    "name": "Tipo de Cálculo",
+                    "api_name": "operation",
+                    "type": "VARCHAR(255)",
+                    "field_type": "select",
+                    "options": ["Soma", "Porcentagem", "Contagem"],
+                    "required": true
+                },
+                {
+                    "name": "Campo Y",
+                    "type": "VARCHAR(255)",
+                    "field_type": "loockup_field",
+                    "related_module": "fields",
+                    "alter_table": true,
+                    "api_name": "yField",
+                    "field_base": "module",
+                    "search_field": "name",
+                    "required": true
                 }
             ]
         }

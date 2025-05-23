@@ -13,7 +13,7 @@ const nodemailer = require('nodemailer')
 module.exports = {
     registerOrg: async (req, res) => {
         console.log("Registrando organização e usuário administrador")
-        const { empresa, email, CPF, name, phone, password } = req.body
+        const { empresa, email, name, phone, password } = req.body
 
         try {
             const connection = await mysql.createConnection(dbConfig);
@@ -92,7 +92,7 @@ module.exports = {
             user.password = undefined
             
             await connectionNeuttron.execute(`INSERT INTO subscriptions SET id = ?, orgId = ?, name = ?, external_reference = ?, users = ?, active_users = ?;`, [subscription_id, orgId, "Free", "free", 2, 1]);
-            await connectionNeuttron.execute(`INSERT INTO users SET id = ?, name = ?, email = ?, CPF = ?, phone = ?, organization = ?, orgId = ?;`, [uuid, name, email, CPF, phone, empresa, orgId]);
+            await connectionNeuttron.execute(`INSERT INTO users SET id = ?, name = ?, email = ?, phone = ?, organization = ?, orgId = ?;`, [uuid, name, email, phone, empresa, orgId]);
             await connectionNeuttron.end();
             
             return res.status(200).json({ success: true, message: 'User and Organization Created Successfuly!', organizationTable, userTable, org, user, email, uuid })

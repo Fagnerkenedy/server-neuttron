@@ -87,7 +87,7 @@ module.exports = {
             );`)
             // const functionss = await createFieldsProfiles(fieldsFunctions, connection, `org${orgId}`, 'functions')
             const functionss = await createSectionFields(fieldsFunctions, connection, `org${orgId}`, 'functions')
-            // await createSectionFields(fieldsCharts, connection, `org${orgId}`, 'charts')
+            await createSectionFields(fieldsCharts, connection, `org${orgId}`, 'charts')
             const insertDataFunctions = await insertData(dataFunctions, connection, `org${orgId}`, 'functions')
             const insertDataCharts = await insertData(dataCharts, connection, `org${orgId}`, 'charts')
             const insertDataKanban = await insertData(dataKanban, connection, `org${orgId}`, 'kanban')

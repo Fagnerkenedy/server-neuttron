@@ -102,7 +102,7 @@ const createFields = async (fields, connection, orgId, module, fieldType, module
     let results = []
     for (const field of fields) {
         try {
-            const { name, type, id, position = null, sort_order = null, related_module = null, related_id = null, required = null, disabled = null, visible_rows = null, search_field = null, field_type = null, options = null, unused = null } = field;
+            const { name, type, id = null, position = null, sort_order = null, related_module = null, related_id = null, required = null, disabled = null, visible_rows = null, search_field = null, field_type = null, options = null, unused = null } = field;
             let apiName = field.api_name || name.replace(/[^\w\s]|[\sç]/gi, '_').toLowerCase();
 
             const [searchField] = await connection.execute('SELECT id FROM fields WHERE module = ? and api_name = ? and id = ?;', [module, apiName, id]);

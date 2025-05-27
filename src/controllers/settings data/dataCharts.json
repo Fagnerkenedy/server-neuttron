@@ -6,7 +6,8 @@
         "xField_layout": "est_gio",
         "yField": "montante",
         "type": "Funil",
-        "operation": "Soma"
+        "operation": "Soma",
+        "module": "Negocios"
     },
     {
         "name": "Gráfico de Coluna",
@@ -15,7 +16,8 @@
         "xField_layout": "est_gio",
         "yField": "montante",
         "type": "Coluna",
-        "operation": "Soma"
+        "operation": "Soma",
+        "module": "Negocios"
     },
     {
         "name": "Gráfico de Linha",
@@ -24,7 +26,8 @@
         "xField_layout": "est_gio",
         "yField": "montante",
         "type": "Linha",
-        "operation": "Soma"
+        "operation": "Soma",
+        "module": "Negocios"
     },
     {
         "name": "Gráfico de Área",
@@ -33,7 +36,8 @@
         "xField_layout": "est_gio",
         "yField": "montante",
         "type": "Área",
-        "operation": "Soma"
+        "operation": "Soma",
+        "module": "Negocios"
     },
     {
         "name": "Gráfico de Barra",
@@ -42,7 +46,8 @@
         "xField_layout": "est_gio",
         "yField": "montante",
         "type": "Barra",
-        "operation": "Soma"
+        "operation": "Soma",
+        "module": "Negocios"
     },
     {
         "name": "Gráfico de Pizza",
@@ -51,7 +56,8 @@
         "xField_layout": "est_gio",
         "yField": "montante",
         "type": "Pizza",
-        "operation": "Soma"
+        "operation": "Soma",
+        "module": "Negocios"
     },
     {
         "name": "Gráfico de Rosca",
@@ -60,7 +66,8 @@
         "xField_layout": "est_gio",
         "yField": "montante",
         "type": "Rosca",
-        "operation": "Soma"
+        "operation": "Soma",
+        "module": "Negocios"
     },
     {
         "name": "Gráfico de Rosas",
@@ -69,6 +76,7 @@
         "xField_layout": "est_gio",
         "yField": "montante",
         "type": "Rosa",
-        "operation": "Soma"
+        "operation": "Soma",
+        "module": "Negocios"
     }
 ]

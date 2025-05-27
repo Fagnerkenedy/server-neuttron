@@ -66,7 +66,7 @@ module.exports = {
                         default:
                             break;
                     }
-                    const queryChart = `SELECT ${operation}(${obj.module}.${obj.yField}) as ${obj.yField}, options.name as name, options.option_order FROM ${obj.module} JOIN options ON options.name = ${obj.module}.${obj.xField} WHERE options.module = '${obj.module}' GROUP BY options.name, options.option_order ORDER BY options.option_order;`
+                    const queryChart = `SELECT ${operation}(${obj.module}.${obj.yField}) as ${obj.yField}, options.name as name, options.option_order FROM ${obj.module} JOIN options ON options.name = ${obj.module}.${obj.xField_layout} WHERE options.module = '${obj.module}' GROUP BY options.name, options.option_order ORDER BY options.option_order;`
                     query = `INSERT INTO ${module} (id, query, xField, ${fieldNames}) VALUES (?, ?, ?, ${placeholders})`;
                     [insertRow] = await connection.execute(query, [record_id, queryChart, 'name', ...fieldValues]);
                 } else {

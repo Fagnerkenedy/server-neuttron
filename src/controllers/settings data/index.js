@@ -28,6 +28,7 @@ module.exports = {
                 name VARCHAR(255),
                 query VARCHAR(2000),
                 xField VARCHAR(255),
+                xField_layout VARCHAR(255),
                 yField VARCHAR(255),
                 type VARCHAR(255)
             )`;

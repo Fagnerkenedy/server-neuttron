@@ -213,8 +213,28 @@ module.exports = {
                 const fieldValues = Object.values(obj)
                 if (fieldValues.length === 0) continue
                 const setClause = Object.entries(obj).map(([fieldName, fieldValue]) => `${fieldName} = ?`).join(', ');
-                const query = `UPDATE ${module} SET ${setClause} WHERE id = ?`;
-                const [updateRow] = await connection.execute(query, [...fieldValues, record_id]);
+                // const query = `UPDATE ${module} SET ${setClause} WHERE id = ?`;
+                // const [updateRow] = await connection.execute(query, [...fieldValues, record_id]);
+                let query
+                let updateRow
+                if (module == "charts") {
+                    let operation = ''
+                    switch (obj.operation) {
+                        case "Soma":
+                            operation = "SUM"
+                            break
+                        case "Contagem":
+                            operation = "COUNT"
+                        default:
+                            break;
+                    }
+                    const queryChart = `SELECT ${operation}(${obj.module}.${obj.yField}) as ${obj.yField}, options.name as name, options.option_order FROM ${obj.module} JOIN options ON options.name = ${obj.module}.${obj.xField_layout} WHERE options.module = '${obj.module}' GROUP BY options.name, options.option_order ORDER BY options.option_order;`
+                    query = `UPDATE ${module} SET query = ?, xField = ?, ${setClause} WHERE id = ?`;
+                    [updateRow] = await connection.execute(query, [ queryChart, 'name', ...fieldValues, record_id]);
+                } else {
+                    query = `UPDATE ${module} SET ${setClause} WHERE id = ?`;
+                    [updateRow] = await connection.execute(query, [...fieldValues, record_id]);
+                }
                 update.push({ ...updateRow[0] });
                 [obj].forEach(item => {
                     if (related_record != null) {

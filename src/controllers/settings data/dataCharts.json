@@ -3,56 +3,72 @@
         "name": "Funil de Vendas",
         "query": "SELECT SUM(Negocios.montante) as montante, options.name as name, options.option_order FROM Negocios JOIN options ON options.name = Negocios.est_gio WHERE options.module = 'Negocios' GROUP BY options.name, options.option_order ORDER BY options.option_order;",
         "xField": "name",
+        "xField_layout": "est_gio",
         "yField": "montante",
-        "type": "funil"
+        "type": "Funil",
+        "operation": "Soma"
     },
     {
         "name": "Gráfico de Coluna",
         "query": "SELECT SUM(Negocios.montante) as montante, options.name as name, options.option_order FROM Negocios JOIN options ON options.name = Negocios.est_gio WHERE options.module = 'Negocios' GROUP BY options.name, options.option_order ORDER BY options.option_order;",
         "xField": "name",
+        "xField_layout": "est_gio",
         "yField": "montante",
-        "type": "barra"
+        "type": "Coluna",
+        "operation": "Soma"
     },
     {
         "name": "Gráfico de Linha",
         "query": "SELECT SUM(Negocios.montante) as montante, options.name as name, options.option_order FROM Negocios JOIN options ON options.name = Negocios.est_gio WHERE options.module = 'Negocios' GROUP BY options.name, options.option_order ORDER BY options.option_order;",
         "xField": "name",
+        "xField_layout": "est_gio",
         "yField": "montante",
-        "type": "linha"
+        "type": "Linha",
+        "operation": "Soma"
     },
     {
         "name": "Gráfico de Área",
         "query": "SELECT SUM(Negocios.montante) as montante, options.name as name, options.option_order FROM Negocios JOIN options ON options.name = Negocios.est_gio WHERE options.module = 'Negocios' GROUP BY options.name, options.option_order ORDER BY options.option_order;",
         "xField": "name",
+        "xField_layout": "est_gio",
         "yField": "montante",
-        "type": "area"
+        "type": "Área",
+        "operation": "Soma"
     },
     {
         "name": "Gráfico de Barra",
         "query": "SELECT SUM(Negocios.montante) as montante, options.name as name, options.option_order FROM Negocios JOIN options ON options.name = Negocios.est_gio WHERE options.module = 'Negocios' GROUP BY options.name, options.option_order ORDER BY options.option_order;",
         "xField": "name",
+        "xField_layout": "est_gio",
         "yField": "montante",
-        "type": "bar"
+        "type": "Barra",
+        "operation": "Soma"
     },
     {
         "name": "Gráfico de Pizza",
         "query": "SELECT SUM(Negocios.montante) as montante, options.name as name, options.option_order FROM Negocios JOIN options ON options.name = Negocios.est_gio WHERE options.module = 'Negocios' GROUP BY options.name, options.option_order ORDER BY options.option_order;",
         "xField": "name",
+        "xField_layout": "est_gio",
         "yField": "montante",
-        "type": "pie"
+        "type": "Pizza",
+        "operation": "Soma"
     },
     {
         "name": "Gráfico de Rosca",
         "query": "SELECT SUM(Negocios.montante) as montante, options.name as name, options.option_order FROM Negocios JOIN options ON options.name = Negocios.est_gio WHERE options.module = 'Negocios' GROUP BY options.name, options.option_order ORDER BY options.option_order;",
         "xField": "name",
+        "xField_layout": "est_gio",
         "yField": "montante",
-        "type": "donut"
+        "type": "Rosca",
+        "operation": "Soma"
     },
     {
         "name": "Gráfico de Rosas",
         "query": "SELECT SUM(Negocios.montante) as montante, options.name as name, options.option_order FROM Negocios JOIN options ON options.name = Negocios.est_gio WHERE options.module = 'Negocios' GROUP BY options.name, options.option_order ORDER BY options.option_order;",
         "xField": "name",
+        "xField_layout": "est_gio",
         "yField": "montante",
-        "type": "rose"
+        "type": "Rosa",
+        "operation": "Soma"
     }
 ]

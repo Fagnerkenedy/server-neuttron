@@ -21,11 +21,14 @@ module.exports = {
                 return;
             }
 
-            const [fields] = await connection.execute(`SELECT name, api_name FROM fields WHERE module = ? AND is_visible_in_kanban = true ORDER BY kanban_order;`, [moduleName]);
+            const [fields] = await connection.execute(`SELECT name, api_name, field_type FROM fields WHERE module = ? AND is_visible_in_kanban = true ORDER BY kanban_order;`, [moduleName]);
 
             const fieldMetaMap = {};
             fields.forEach(field => {
-                fieldMetaMap[field.api_name] = field.name;
+                fieldMetaMap[field.api_name] = {
+                    name: field.name,
+                    field_type: field.field_type
+                }
             });
             
             const fieldNames = fields.map(field => `${moduleName}.${field.api_name}`).join(', ');
@@ -49,7 +52,8 @@ module.exports = {
                             if (key !== 'id' && key !== 'name') {
                                 contentWithMeta[key] = {
                                     value: option[key],
-                                    field_name: fieldMetaMap[key] || key, // fallback se não tiver nome
+                                    field_name: fieldMetaMap[key].name || key, // fallback se não tiver nome
+                                    field_type: fieldMetaMap[key].field_type || 'unknown',
                                 };
                             }
                         });

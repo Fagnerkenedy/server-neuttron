@@ -33,8 +33,9 @@ module.exports = {
             
             const fieldNames = fields.map(field => `${moduleName}.${field.api_name}`).join(', ');
 
-            const sqlOptions = `SELECT ${moduleName}.id, ${fieldNames != '' ? `${fieldNames},` : ''} options.name FROM options LEFT JOIN ${moduleName} ON options.name = ${moduleName}.${kanbanResults[0].field} WHERE options.field_api_name = '${kanbanResults[0].field}' AND options.module = '${moduleName}' ORDER BY option_order;`
+            const sqlOptions = `SELECT ${moduleName}.id, ${fieldNames != '' ? `${fieldNames},` : ''} options.name, options.color FROM options LEFT JOIN ${moduleName} ON options.name = ${moduleName}.${kanbanResults[0].field} WHERE options.field_api_name = '${kanbanResults[0].field}' AND options.module = '${moduleName}' ORDER BY option_order;`
 
+            console.log("sql :",sqlOptions)
             const [options] = await connection.execute(sqlOptions);
 
             console.log("options: ", options)
@@ -45,15 +46,16 @@ module.exports = {
             Object.keys(separatedOptions).forEach((optionName) => {
                 resultObject[optionName] = {
                     name: optionName,
+                    color: separatedOptions[optionName].length > 0 ? separatedOptions[optionName][0].color : null,
                     items: separatedOptions[optionName].filter(field => field.id !== null).map(option => {
-                        // delete option.name
+                        delete option.color
                         const contentWithMeta = {};
                         Object.keys(option).forEach(key => {
                             if (key !== 'id' && key !== 'name') {
                                 contentWithMeta[key] = {
                                     value: option[key],
-                                    field_name: fieldMetaMap[key].name || key, // fallback se não tiver nome
-                                    field_type: fieldMetaMap[key].field_type || 'unknown',
+                                    field_name: fieldMetaMap[key]?.name || key, // fallback se não tiver nome
+                                    field_type: fieldMetaMap[key]?.field_type || 'unknown',
                                 };
                             }
                         });

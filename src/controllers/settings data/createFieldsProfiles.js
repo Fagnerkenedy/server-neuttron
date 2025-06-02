@@ -71,14 +71,14 @@ module.exports = {
                         console.log("index: ", index);
 
                         await connection.execute(
-                            `INSERT INTO options (id, name, field_api_name, module, option_order) VALUES (?, ?, ?, ?, ?);`,
-                            [option_id, name, uniqueApiName, module, index]
+                            `INSERT INTO options (id, name, field_api_name, module, option_order, color) VALUES (?, ?, ?, ?, ?, ?);`,
+                            [option_id, name, uniqueApiName, module, index, color]
                         );
                     } else {
                         // Atualizar opções existentes
                         await connection.execute(
-                            `UPDATE options SET name = ?, option_order = ? WHERE id = ?;`,
-                            [name, index, id]
+                            `UPDATE options SET name = ?, option_order = ?, color = ? WHERE id = ?;`,
+                            [name, index, color, id]
                         );
                     }
                 }

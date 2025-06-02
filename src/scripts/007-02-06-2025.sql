@@ -1,0 +1,2 @@
+ALTER TABLE options
+ADD color VARCHAR(255);

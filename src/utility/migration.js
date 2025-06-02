@@ -24,6 +24,7 @@ const logger = require('./logger')
 // Função para buscar orgIds
 async function fetchOrgIds() {
     logger.info('Conectando ao banco de dados Neuttron para buscar orgIds.');
+    console.log("usdere", dbConfig)
     const connectionNeuttron = await mysql.createConnection({ ...dbConfig, database: process.env.DB_NAME });
     const [rows] = await connectionNeuttron.execute('SELECT DISTINCT orgId FROM users;');
     await connectionNeuttron.end();

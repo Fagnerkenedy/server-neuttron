@@ -297,13 +297,13 @@ const createFields2 = async (fields, connection, orgId, module, idPerfil, userId
                     if (id == null) {
                         const option_id = gerarHash(JSON.stringify(option, module, orgId));
                         await connection.execute(
-                            `INSERT INTO options (id, name, field_api_name, module, option_order) VALUES (?, ?, ?, ?, ?);`,
-                            [option_id, name, uniqueApiName, module, index]
+                            `INSERT INTO options (id, name, field_api_name, module, option_order, color) VALUES (?, ?, ?, ?, ?, ?);`,
+                            [option_id, name, uniqueApiName, module, index, color]
                         );
                     } else {
                         await connection.execute(
-                            `UPDATE options SET name = ?, option_order = ? WHERE id = ?;`,
-                            [name, index, id]
+                            `UPDATE options SET name = ?, option_order = ?, color = ? WHERE id = ?;`,
+                            [name, index, color, id]
                         );
                     }
                 }
